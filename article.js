@@ -2,6 +2,16 @@ import { readFileSync } from "fs"
 import { Surface, Text, ZoomedImg } from "./circuits-components/core/ui"
 import { featureVis } from "./circuits-components/core/helpers"
 import Article from "./circuits-components/core/article"
+import Curves from "./circuits-components/zoomIn/curves"
+import HighLow from "./circuits-components/zoomIn/highLow"
+import PoseDog from "./circuits-components/zoomIn/poseDog"
+import DogOrientation from "./circuits-components/zoomIn/dogOrientation"
+import Superposition from "./circuits-components/zoomIn/superposition"
+import Weights1 from "./circuits-components/curveCircuit/weights1"
+import CurveWeights2 from "./circuits-components/curveCircuit/curveWeights2"
+import CurveCircuit from "./circuits-components/zoomIn/curveCircuit"
+import OrientedDogHeads from "./circuits-components/zoomIn/orientedDogs"
+import Polysemantic from "./circuits-components/zoomIn/polysemantic"
 import React from "react"
 import Banner from "./circuits-components/core/banner"
 
@@ -29,10 +39,15 @@ class CurvesAcrossModels extends React.Component {
         alignItems="center"
         marginY={20}
         paddingY={10}
-        background="rgb(23,18,72)"
       >
         <Surface flexFlow="row">
-          <Text color="white" width={100} marginTop={20}>
+          <Text
+            color="#222"
+            size={600}
+            width={100}
+            marginRight={10}
+            marginTop={20}
+          >
             InceptionV1
           </Text>
           <Surface flexFlow="row" flexWrap="wrap">
@@ -47,7 +62,13 @@ class CurvesAcrossModels extends React.Component {
           </Surface>
         </Surface>
         <Surface flexFlow="row">
-          <Text color="white" width={100} marginTop={20}>
+          <Text
+            color="#222"
+            size={600}
+            width={100}
+            marginRight={10}
+            marginTop={20}
+          >
             AlexNet
           </Text>
           <Surface flexFlow="row" flexWrap="wrap">
@@ -69,11 +90,8 @@ class CurvesAcrossModels extends React.Component {
 export class Content extends React.Component {
   render() {
     const images = {
-      micrographia: "/micrographia.png",
       schwann: "/schwann.png",
-      deepdream: "/deepdream.png",
       dataset: "/dataset.png",
-      curves: "/curves.png",
       curveWeights: "/curve-weights.png",
       curveOrientation: "/curve-orientations.png",
       polysemantic: "/polysemantic.png",
@@ -82,13 +100,10 @@ export class Content extends React.Component {
       // curveWeights: require("./curve-weights.png"),
       curveOrientations: "/curve-orientations.png",
       curveCircuit: "/curve-circuit.png",
-      orientedDogHeads: "/oriented-dog-heads.png",
       dogCircuit: "/dog-circuit.png",
-      superposition: "/superposition.png",
       freq: "/freq.png",
     }
-
-    const figures = {
+    let figures = {
       CurvesAcrossModels,
     }
 
@@ -98,7 +113,7 @@ export class Content extends React.Component {
           gridColumn="screen"
           alignItems="center"
           marginY={20}
-          paddingY={10}
+          paddingY={20}
           background="rgb(23,18,72)"
         >
           <div>
@@ -107,6 +122,42 @@ export class Content extends React.Component {
         </Surface>
       )
     })
+
+    figures = {
+      ...figures,
+      Curves,
+      CurveCircuit,
+      HighLow,
+      Polysemantic,
+      DogOrientation,
+      PoseDog,
+      CurveWeights2: () => <CurveWeights2 includeNegativeWeights={false} />,
+      Weights1,
+      Superposition,
+      OrientedDogHeads,
+      deepdream: () => (
+        <Surface>
+          <figure>
+            <img src="/deepdream.png" />
+            <figcaption style={{ paddingLeft: 40, paddingRight: 40 }}>
+              DeepDream hints at a rich world of visual features inside modern
+              vision models.
+            </figcaption>
+          </figure>
+        </Surface>
+      ),
+      micrographia: () => (
+        <Surface>
+          <figure>
+            <img src="/micrographia.png" />
+            <figcaption style={{ paddingLeft: 40, paddingRight: 40 }}>
+              Hooke’s Micrographia revealed a rich microscopic world as seen
+              through a microscope, including the initial discovery of cells.
+            </figcaption>
+          </figure>
+        </Surface>
+      ),
+    }
 
     return (
       <React.Fragment>

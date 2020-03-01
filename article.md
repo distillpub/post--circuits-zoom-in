@@ -4,7 +4,7 @@ For example, the invention of the microscope led to the discovery of cells, and 
 
 These transitions weren’t just a change in precision: they were qualitative changes in what the objects of scientific inquiry are. For example, cellular biology isn’t just more careful zoology.
 
-![caption: Hooke’s Micrographia revealed a rich microscopic world as seen through a microscope, including the initial discovery of cells.](micrographia)
+figure: micrographia
 
 Just as the microscope revealed a tantalizing microscopic world, visualizations of artificial neural networks have revealed tantalizing hints and glimpses of a rich inner world within our models. This has led us to wonder: Is it possible that deep learning is at a similar transition point? Could there be a kind of cellular biology or neuroscience analogue of deep learning? And if so, what might such a field look like? What are its objects of study, and what would rigorous inquiry into them look like?
 
@@ -12,7 +12,7 @@ Our tentative answer is that you get the study of features and the neural circui
 
 Exploring these objects over the last year and a half has led to the circuits project, an open scientific collaboration hosted on the Distill slack. In future articles, the collaboration will publish detailed explorations of this inner world. But before we do that, we wanted to offer a high-level overview of our thinking and some of the working principles that we’ve found useful in this line of research.
 
-![caption: DeepDream hints at a rich world of visual features inside modern vision models.](deepdream)
+figure: deepdream
 
 # Three Speculative Claims
 
@@ -55,7 +55,7 @@ In InceptionV1 mixed3b (an early layer layer), we observe a family of neurons we
 
 There are many other features that respond to curve-like objects including features with a curved sub-component (eg. circles or spirals) or units responding curve like objects (eg. a corner). But curve detectors remain a highly distinctive family.
 
-figure: curves
+figure: Curves
 
 Are the curve detectors really curve detectors? We’ve dedicated an entire article to exploring this in depth, but the summary is that we think the evidence is quite strong. We offer six arguments. The first four arguments are based on the properties of the features in isolation:
 
@@ -81,7 +81,7 @@ Now, you might worry that curve detectors are a special case. Curves are, after 
 
 High-low frequency detectors are units that look for low-frequency patterns on one side of their receptive field, and high-frequency patterns on the other side. We observe them in early vision, again as a family of units with different angular orientations.
 
-figure: freq
+figure: HighLow
 
 (Why is this useful? This seems to be a useful heuristic for detecting the boundaries of objects, especially when the background is out of focus. In future articles, we’ll explore how they’re used in the construction of sophisticated boundary detectors.)
 
@@ -93,7 +93,7 @@ So far, we’ve looked at low-level visual features. What about high-level featu
 
 Let’s consider this unit which we believe to be a pose-invariant dog detector. As with any neuron, we can create a feature visualization and collect dataset examples. If you look at the feature visualization, the geometry is… not possible, but very informative about what it’s looking for! The dataset examples back this up!
 
-figure: dataset
+figure: PoseDog
 
 The combination of feature visualization and dataset examples are quite a strong argument. Feature visualization gets at the undelry cause of a neuron firing, while dataset examples get at whether there’s other cases.
 
@@ -107,7 +107,7 @@ This essay may be giving you an overly rosy picture: perhaps every neuron yields
 
 Alas, this is not the case. Neural networks often contain “polysemantic neurons” which respond to multiple unrelated inputs. The classic example is this neuron, which responds to cat faces, fronts of cars, and cat legs.
 
-![polysemantic neurons](polysemantic)
+figure: Polysemantic
 
 To be clear, this neuron isn’t responding to some commonality of cars and cat faces. Feature visualization shows us that it’s looking for the eyes and whiskers of a cat, for furry legs, and for shiny fronts of cars &mdash; not some subtle shared feature.
 
@@ -131,7 +131,7 @@ Of course, there’s a long tail of small connections to different parts of earl
 
 For this introduction, we’ll focus on the interaction of the early curve detectors and our full curve detectors.
 
-figure: curveCircuit
+figure: CurveCircuit
 
 Let’s focus even more and look at how a single early curve detector connects to sophisticated curve detector in the same orientation.
 
@@ -139,11 +139,11 @@ In this case, our model is implementing a 5x5 convolution, so the weights linkin
 
 What we see are strong positive weights, arranged in the shape of the curve detector. We can think of this as meaning that, at each point along the curve, our curve detector is looking for a “tangent curve” using the earlier curve detector.
 
-figure: curveWeights
+figure: Weights1
 
 This is true for every pair of early and full curve detectors in similar orientations. At every point along the curve, it detects the curve in a similar orientation. Similarly, curves in the opposite orientation are inhibitory at every point along the curve.
 
-figure: curveOrientation
+figure: CurveWeights2
 
 It’s worth reflecting here that we’re looking at neural network weights and they’re meaningful.
 
@@ -161,15 +161,15 @@ Remember that a huge part of what an ImageNet model has to do is tell apart diff
 
 Within this “dog recognition” system, one circuit strikes us as particularly interesting: a collection of neurons that handle dog heads facing to the left and dog heads facing to the right. Over three layers, the network maintains two mirrored pathways, detecting analogous units facing to the left and to the right. At each step, these pathways try to inhibit each other, sharpening the contrast. Finally, it creates invariant neurons which respond to both pathways.
 
-figure: dogCircuit
+figure: DogOrientation
 
 We call this pattern “unioning over cases”. The network separately detects two cases (left and right) and then unions over them to create invariant units.
 
-This circuit is striking because the network could have easily done something much less sophisticated. It could easily create invariant neurons by not caring very much about where the eyes, fur and snout went, and just looking for a jumble of them together. But instead, the network has learned to carve apart the left and right cases and handle the separately. We’re somewhat surprised that gradient descent could learn to do this! [footnote: To be clear, there are also more direct pathways by which various constituents of heads influence these later head detectors, without going through the left and right pathways]
+This circuit is striking because the network could have easily done something much less sophisticated. It could easily create invariant neurons by not caring very much about where the eyes, fur and snout went, and just looking for a jumble of them together. But instead, the network has learned to carve apart the left and right cases and handle the separately. We’re somewhat surprised that gradient descent could learn to do this! <d-footnote id="dog-head" children="To be clear, there are also more direct pathways by which various constituents of heads influence these later head detectors, without going through the left and right pathways" />
 
 But this summary of the circuit is only scratching the surface of what is going on. Ever connection between neurons is a convolution, so we can also look at where an input neuron excites the the next one. And the models tends to be doing what you might have optimistically hoped. For example, consider these “head with neck” units. The head is only detected on the correct side:
 
-figure: orientedDogHeads
+figure: OrientedDogHeads
 
 There’s a lot more to say about this circuit, so we’ve dedicated an entire article to analyzing it in depth, including testing our theory of the circuit by editinging the weights.
 
@@ -181,13 +181,13 @@ In mixed4c, a mid-late layer of InceptionV1, there is a car detecting neuron. Us
 
 But then the model does something surprising. Rather than create another car detector at the next layer, it spreads its car feature over a number of neurons that seem to primarily be doing something else &mdash; in particular, dog detectors.
 
-figure: superposition
+figure: Superposition
 
 This circuit suggests that polysemantic neurons are, in some sense, deliberate. That is, you could imagine a world where the process of detecting cars and dogs were deeply intertwined in the model for some reason, and as a result polysemantic neurons were difficult to avoid. But what we’re seeing here is that the model had a “pure neuron” and then mixed it up with other features.
 
 We call this phenomenon “superposition.”
 
-Why would it do such a thing? We believe superposition allows the model to use fewer neurons, conserving them for more important tasks. As long as cars and dogs don’t co-occur, the model can accurately retrieve the dog feature in a later layer, allowing it to store the feature without dedicating a neuron. [Footnote: Fundamentally, this is a property of the geometry of high-dimensional spaces, which only allow for n orthogonal vectors, but exponentially many almost orthogonal vectors.]
+Why would it do such a thing? We believe superposition allows the model to use fewer neurons, conserving them for more important tasks. As long as cars and dogs don’t co-occur, the model can accurately retrieve the dog feature in a later layer, allowing it to store the feature without dedicating a neuron. <d-footnote id="dimensional" children="Fundamentally, this is a property of the geometry of high-dimensional spaces, which only allow for n orthogonal vectors, but exponentially many almost orthogonal vectors." />
 
 ## Claim 3: Universality
 
