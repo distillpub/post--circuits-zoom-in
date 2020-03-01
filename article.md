@@ -18,7 +18,7 @@ figure: deepdream
 
 One of the earliest articulations of something approaching modern cell theory were three claims by Schwann in 1839 (Rhoads 2007):
 
-![schwann claims](schwann)
+figure: schwann
 
 The first two of these claims are likely familiar, persisting in modern cellular theory. The third is likely not familiar, since it turned out to be horribly wrong.
 

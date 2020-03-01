@@ -89,43 +89,9 @@ class CurvesAcrossModels extends React.Component {
 
 export class Content extends React.Component {
   render() {
-    const images = {
-      schwann: "/schwann.png",
-      dataset: "/dataset.png",
-      curveWeights: "/curve-weights.png",
-      curveOrientation: "/curve-orientations.png",
-      polysemantic: "/polysemantic.png",
-      dogCircuit: "/dog-circuit.png",
-      curvesAcrossModels: "/curves-across-models.png",
-      // curveWeights: require("./curve-weights.png"),
-      curveOrientations: "/curve-orientations.png",
-      curveCircuit: "/curve-circuit.png",
-      dogCircuit: "/dog-circuit.png",
-      freq: "/freq.png",
-    }
-    let figures = {
-      CurvesAcrossModels,
-    }
-
-    Object.keys(images).forEach(key => {
-      figures[key] = () => (
-        <Surface
-          gridColumn="screen"
-          alignItems="center"
-          marginY={20}
-          paddingY={20}
-          background="rgb(23,18,72)"
-        >
-          <div>
-            <img src={images[key]} width={700} />
-          </div>
-        </Surface>
-      )
-    })
-
-    figures = {
-      ...figures,
+    const figures = {
       Curves,
+      CurvesAcrossModels,
       CurveCircuit,
       HighLow,
       Polysemantic,
@@ -138,7 +104,7 @@ export class Content extends React.Component {
       deepdream: () => (
         <Surface>
           <figure>
-            <img src="/deepdream.png" />
+            <img src={require("./static/deepdream.png")} />
             <figcaption style={{ paddingLeft: 40, paddingRight: 40 }}>
               DeepDream hints at a rich world of visual features inside modern
               vision models.
@@ -146,10 +112,15 @@ export class Content extends React.Component {
           </figure>
         </Surface>
       ),
+      schwann: () => (
+        <Surface gridColumn="screen" alignItems="center" marginY={20}>
+          <img src={require("./static/schwann.png")} width={700} />
+        </Surface>
+      ),
       micrographia: () => (
         <Surface>
           <figure>
-            <img src="/micrographia.png" />
+            <img src={require("./static/micrographia.png")} />
             <figcaption style={{ paddingLeft: 40, paddingRight: 40 }}>
               Hooke’s Micrographia revealed a rich microscopic world as seen
               through a microscope, including the initial discovery of cells.
@@ -164,7 +135,6 @@ export class Content extends React.Component {
         <Article
           markdown={article}
           figures={figures}
-          images={images}
           next={{
             title: "Curve Detectors",
             href: "https://drafts.distill.pub/circuits--curve-detectors/",
