@@ -14,6 +14,8 @@ Exploring these objects over the last year and a half has led to the circuits pr
 
 figure: deepdream
 
+<hr>
+
 # Three Speculative Claims
 
 One of the earliest articulations of something approaching modern cell theory were three claims by Schwann in 1839 (Rhoads 2007):
@@ -38,6 +40,8 @@ Analogous features and circuits form across models and tasks.
 These claims are deliberately speculative. But we believe that, if true, they could be a basis for a “zoomed in” field. And we think that there’s enough evidence pointing in the direction of all three of these claims for them to be worth serious consideration and investigation.
 
 In the following sections, we’ll discuss each of these claims individually and present some of the evidence that has led us to believe they might be true.
+
+<hr>
 
 # Claim 1: Features
 
@@ -112,6 +116,8 @@ figure: Polysemantic
 To be clear, this neuron isn’t responding to some commonality of cars and cat faces. Feature visualization shows us that it’s looking for the eyes and whiskers of a cat, for furry legs, and for shiny fronts of cars &mdash; not some subtle shared feature.
 
 We can still study such features, characterizing each different case they fire. But it’s still a major source of difficulty in understanding neural networks. (Our hope is that there might someday be alternative basis for describing neural networks that avoids this.) Despite these challenges, we’ll see in the next section that it’s still possible to reason about circuits with polysemantic neurons, and in fact that circuits will hint at why polysemantic neurons form.
+
+<hr>
 
 # Claim 2: Circuits
 
@@ -189,6 +195,8 @@ We call this phenomenon “superposition.”
 
 Why would it do such a thing? We believe superposition allows the model to use fewer neurons, conserving them for more important tasks. As long as cars and dogs don’t co-occur, the model can accurately retrieve the dog feature in a later layer, allowing it to store the feature without dedicating a neuron. <d-footnote id="dimensional" children="Fundamentally, this is a property of the geometry of high-dimensional spaces, which only allow for n orthogonal vectors, but exponentially many almost orthogonal vectors." />
 
+<hr>
+
 # Claim 3: Universality
 
 Our third claim is “Analogous features and circuits form across models and tasks.”
@@ -209,6 +217,8 @@ Beyond that, we only have anecdotes, where we know that some feature has a simil
 
 This has led us to believe that a weak version of the universality hypothesis is very likely true &mdash; some higher level features form across models &mdash; but further work will be needed to understand if these are the exception or the rule.
 
+<hr>
+
 # Interpretability as a Natural Science
 
 The Structure of Scientific Revolutions is a classic text on the history and sociology of science. In it, Kuhn distinguishes between “normal science” in which a scientific community has a paradigm, and “extraordinary science” in which a community lacks a paradigm, either because it never had one or because it was weakened by crisis.
@@ -222,6 +232,8 @@ But interpretability could borrow from a third paradigm: natural science. In thi
 Why don’t we see more of this kind of evaluation of work in interpretability and visualization? (Especially given that there’s adjacent ML work which does adopt this frame!) One reason might be that it’s very difficult to make robustly true statements about the behavior of a neural network as a whole. They’re incredibly complicated objects. It’s also hard to formalize exactly what the interesting empirical statements about them would, exactly, be. And so we often get standards of evaluations more targeted about whether an interpretability method is useful rather than whether we’re learning true statements.
 
 Circuits side steps these challenges by focusing on tiny subgraphs of a neural network for which rigorous empirical investigation is tractable. And they’re very much falsifiable: if you understand a circuit, you should be able to predict what will change if you edit the weights. (In fact, once you zoom in enough, statements about the behavior of circuits become questions of mathematical logic.)
+
+<hr>
 
 # Closing Thoughts
 

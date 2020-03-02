@@ -102,31 +102,27 @@ export class Content extends React.Component {
       Superposition,
       OrientedDogHeads,
       deepdream: () => (
-        <Surface>
-          <figure>
+          <figure class="l-body-outset">
             <img src={require("./static/deepdream.png")} />
-            <figcaption style={{ paddingLeft: 40, paddingRight: 40 }}>
+            <figcaption>
               DeepDream hints at a rich world of visual features inside modern
               vision models.
             </figcaption>
           </figure>
-        </Surface>
       ),
       schwann: () => (
-        <Surface gridColumn="screen" alignItems="center" marginY={20}>
+        <figure class="l-body-outset">
           <img src={require("./static/schwann.png")} width={700} />
-        </Surface>
+        </figure>
       ),
       micrographia: () => (
-        <Surface>
-          <figure>
+          <figure class="l-body-outset">
             <img src={require("./static/micrographia.png")} />
-            <figcaption style={{ paddingLeft: 40, paddingRight: 40 }}>
+            <figcaption>
               Hooke’s Micrographia revealed a rich microscopic world as seen
               through a microscope, including the initial discovery of cells.
             </figcaption>
           </figure>
-        </Surface>
       ),
     }
 
