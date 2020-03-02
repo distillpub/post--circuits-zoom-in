@@ -49,7 +49,7 @@ The research community seems divided on this point. Some researchers treat the e
 
 In light of the existing disagreement, we will try to hold ourselves to a high evidentiary standard in making such claims. This introductory essay will only give an overview of some of the examples we’ve found most compelling, but it will be followed by several deep dives characterizing individual features.
 
-# Example 1: Curve Detectors
+## Example 1: Curve Detectors
 
 In InceptionV1 mixed3b (an early layer layer), we observe a family of neurons we call “curve detectors.” These units responded to curved lines and boundaries with a size on the order of 40 pixels. They are also slightly additionally excited by perpendicular lines along the boundary of the curve. Each unit in the family responds to curves in a different orientation, spanning the space.
 
@@ -75,7 +75,7 @@ The last two arguments rely on circuits, which we’ll discuss in a little bit. 
 
 These experiments don’t fully rule out the possibility of some rare secondary case where these neurons also fire. But it seems to us that they establish that curves cause these neurons to fire, that each unit responds to curves at different angular orientations, and that if there are other stimuluses that cause them to fire those are rare or cause much weaker firing.
 
-# Example 2: High-Low Frequency Detectors
+## Example 2: High-Low Frequency Detectors
 
 Now, you might worry that curve detectors are a special case. Curves are, after all, a very natural visual concept that you might have hoped for a neural network to have. But we can also understand features that would have been very challenging to anticipate in advance.
 
@@ -87,7 +87,7 @@ figure: HighLow
 
 We can repeat all the experiments we conducted on curves. This includes creating synthetic examples, since it’s easy to construct images with different frequency patterns on each side. We believe the results strongly support the idea that these really are caused to fire by high-low frequency contrasts, that they are excited by such patterns very generally, and that each unit detects a different angular orientation. If there are other cases where these units fire, they must be rare and cause it to fire more weakly.
 
-# Example 3: Pose-Invariant Dog Head Detector
+## Example 3: Pose-Invariant Dog Head Detector
 
 So far, we’ve looked at low-level visual features. What about high-level features?
 
@@ -189,7 +189,7 @@ We call this phenomenon “superposition.”
 
 Why would it do such a thing? We believe superposition allows the model to use fewer neurons, conserving them for more important tasks. As long as cars and dogs don’t co-occur, the model can accurately retrieve the dog feature in a later layer, allowing it to store the feature without dedicating a neuron. <d-footnote id="dimensional" children="Fundamentally, this is a property of the geometry of high-dimensional spaces, which only allow for n orthogonal vectors, but exponentially many almost orthogonal vectors." />
 
-## Claim 3: Universality
+# Claim 3: Universality
 
 Our third claim is “Analogous features and circuits form across models and tasks.”
 
