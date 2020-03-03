@@ -2,6 +2,7 @@ import { readFileSync } from "fs"
 import { Surface, Text, ZoomedImg } from "./circuits-components/core/ui"
 import { featureVis } from "./circuits-components/core/helpers"
 import Article from "./circuits-components/core/article"
+import TOC from "./circuits-components/zoomIn/toc"
 import Curves from "./circuits-components/zoomIn/curves"
 import HighLow from "./circuits-components/zoomIn/highLow"
 import PoseDog from "./circuits-components/zoomIn/poseDog"
@@ -90,6 +91,7 @@ class CurvesAcrossModels extends React.Component {
 export class Content extends React.Component {
   render() {
     const figures = {
+      TOC,
       Curves,
       CurvesAcrossModels,
       CurveCircuit,
@@ -121,6 +123,7 @@ export class Content extends React.Component {
             <figcaption>
               Hooke’s Micrographia revealed a rich microscopic world as seen
               through a microscope, including the initial discovery of cells.
+              <br />Images from the National Library of Wales.
             </figcaption>
           </figure>
       ),
