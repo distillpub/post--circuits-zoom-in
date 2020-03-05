@@ -390,7 +390,7 @@ at each point along the curve.</figcaption>
         But instead, the network has learned to carve apart the left and right cases and handle the separately. We’re somewhat surprised that gradient descent could learn to do this!<d-footnote>To be clear, there are also more direct pathways by which various constituents of heads influence these later head detectors, without going through the left and right pathways</d-footnote>
       </p>
 
-      <p>But this summary of the circuit is only scratching the surface of what is going on. Ever connection between neurons is a convolution, so we can also look at where an input neuron excites the the next one. And the models tends to be doing what you might have optimistically hoped. For example, consider these “head with neck” units. The head is only detected on the correct side:
+      <p>But this summary of the circuit is only scratching the surface of what is going on. Every connection between neurons is a convolution, so we can also look at where an input neuron excites the the next one. And the models tends to be doing what you might have optimistically hoped. For example, consider these “head with neck” units. The head is only detected on the correct side:
 
       <figure style="max-width: 550px;">
         <img src="./images/oriented-dog-heads.png"/>
