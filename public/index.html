@@ -62,7 +62,7 @@
       </p></div>
 
       <figure class="l-body-outset">
-        <img src="./static/micrographia2.png" />
+        <img src="./images/micrographia2.png" />
         <figcaption>
           Hooke’s Micrographia revealed a rich microscopic world as seen
           through a microscope, including the initial discovery of cells.
@@ -77,7 +77,7 @@
       <p>Exploring these objects over the last year and a half has led to the circuits project, an open scientific collaboration hosted on the Distill slack. In future articles, the collaboration will publish detailed explorations of this inner world. But before we do that, we wanted to offer a high-level overview of our thinking and some of the working principles that we’ve found useful in this line of research.</p>
 
       <figure class="l-body-outset" style="margin-bottom: 0px;">
-        <img src="./static/deepdream.png" />
+        <img src="./images/deepdream.png" />
         <figcaption>
           Over the last few years, we've seen many incredible visualizations<d-cite bibtex-key='karpathy2015visualizing,erhan2009visualizing,olah2017feature,simonyan2013deep,nguyen2015deep,mordvintsev2015inceptionism,nguyen2016plug,zeiler2014visualizing,fong2017interpretable,kindermans2017patternnet,reif2019visualizing,carter2019activation'></d-cite> and analyses<d-cite bibtex-key='mikolov2013distributed,radford2017learning,zhou2014object,netdissect2017'></d-cite> hinting at a rich world of internal features in modern
           neural networks. Above, we see a <a href="https://ai.googleblog.com/2015/06/inceptionism-going-deeper-into-neural.html">DeepDream</a><d-cite bibtex-key="mordvintsev2015inceptionism"></d-cite> image, which sparked a great deal of excitement in this space.
@@ -93,7 +93,7 @@
 
       <figure class="l-body-outset claim-figure">
         <div>
-          <img src="./static/schwann-book.png" />
+          <img src="./images/schwann-book.png" />
           <div style="">
             <h4>Schwann’s Claims about Cells</h4>
 
@@ -127,7 +127,7 @@
 
       <figure class="l-body-outset claim-figure">
         <div>
-          <img src="./static/atlas-book-crop.png" style="width: 220px;"/>
+          <img src="./images/atlas-book-crop.png" style="width: 220px;"/>
           <div style="margin-left: 40px;">
             <h4 style="margin-top: 0px;">Three Speculative Claims about Neural Networks</h4>
 
@@ -197,7 +197,7 @@
       <p>There are many other features that respond to curve-like objects including features with a curved sub-component (eg. circles or spirals) or units responding curve like objects (eg. a corner). But curve detectors remain a highly distinctive family.
 
       <figure style="grid-column-start: text-start; grid-column-end: text-end;">
-        <img src="./static/curves.png"/>
+        <img src="./images/curves.png"/>
         <!--<figcaption></figcaption>-->
       </figure>
 
@@ -231,7 +231,7 @@
       <p>High-low frequency detectors are units that look for low-frequency patterns on one side of their receptive field, and high-frequency patterns on the other side. We observe them in early vision, again as a family of units with different angular orientations.
 
       <figure style="grid-column-start: text-start; grid-column-end: page-end;">
-        <img src="./static/high-low.png" />
+        <img src="./images/high-low.png" />
         <!--<figcaption></figcaption>-->
       </figure>
 
@@ -246,7 +246,7 @@
       <p>Let’s consider this unit which we believe to be a pose-invariant dog detector. As with any neuron, we can create a feature visualization and collect dataset examples. If you look at the feature visualization, the geometry is… not possible, but very informative about what it’s looking for! The dataset examples back this up!
 
       <figure style="grid-column-start: text-start; grid-column-end: text-end;">
-        <img src="./static/dog-pose.png" style="max-width: 650px;"/>
+        <img src="./images/dog-pose.png" style="max-width: 650px;"/>
         <!--<figcaption></figcaption>-->
       </figure>
 
@@ -266,7 +266,7 @@
         For example, InceptionV1 contains one neuron that responds to cat faces, fronts of cars, and cat legs.
 
       <figure style="max-width: 600px; ">
-        <img src="./static/polysemantic.png"/>
+        <img src="./images/polysemantic.png"/>
         <figcaption>4e:55 is a polysemantic neuron which responds to cat faces, fronts of cars, and cat legs. It was dicussed in more depth in <a href="https://distill.pub/2017/feature-visualization/">Feature Visualization</a> <d-cite key="olah2017feature"></d-cite>.</figcaption>
       </figure>
 
@@ -299,7 +299,7 @@
       <p>For this introduction, we’ll focus on the interaction of the early curve detectors and our full curve detectors.
 
         <figure class="l-page">
-          <img src="./static/curve-circuit.png"/>
+          <img src="./images/curve-circuit.png"/>
           <!--<figcaption></figcaption>-->
         </figure>
 
@@ -336,11 +336,11 @@
 
       <figure class="curve-figure l-body-outset">
         <div>
-          <img src="./static/curve-weights-a.png"/>
+          <img src="./images/curve-weights-a.png"/>
           <figcaption>The raw weights between the early curve detector and late curve detector in the same orientation are curve of positive weights</figcaption>
         </div>
         <div>
-          <img src="./static/curve-weights-b.png"/>
+          <img src="./images/curve-weights-b.png"/>
           <figcaption>This can be interpreted as looking for “tangent curves”
 at each point along the curve.</figcaption>
         </div>
@@ -352,13 +352,13 @@ at each point along the curve.</figcaption>
       <figure class="curve-oreientaions-figure ">
         <div style="flex-basis: 45%;">
           <div class="figcaption" style="height: 30px; margin-bottom: 20px;">Curve detectors are excited by earlier detectors <br> in <b>similar orientations</b>...</div>
-          <img src="./static/curve-orientations-a.png" />
+          <img src="./images/curve-orientations-a.png" />
         </div>
         <div style="flex-basis: 5%; margin-right: 60px;">
         </div>
         <div style="flex-basis: 44.8%;">
           <div class="figcaption" style="height: 30px; margin-bottom: 20px;">... and inhibited by earlier detectors in <br> <b>opposing orientations</b>.</div>
-          <img src="./static/curve-orientations-b.png" />
+          <img src="./images/curve-orientations-b.png" />
         </div>
       </figure>
 
@@ -379,7 +379,7 @@ at each point along the curve.</figcaption>
       <p>Within this “dog recognition” system, one circuit strikes us as particularly interesting: a collection of neurons that handle dog heads facing to the left and dog heads facing to the right. Over three layers, the network maintains two mirrored pathways, detecting analogous units facing to the left and to the right. At each step, these pathways try to inhibit each other, sharpening the contrast. Finally, it creates invariant neurons which respond to both pathways.
 
       <figure class="l-page-outset">
-        <img src="./static/dog-circuit.png"/>
+        <img src="./images/dog-circuit.png"/>
         <!--<figcaption></figcaption>-->
       </figure>
 
@@ -393,7 +393,7 @@ at each point along the curve.</figcaption>
       <p>But this summary of the circuit is only scratching the surface of what is going on. Ever connection between neurons is a convolution, so we can also look at where an input neuron excites the the next one. And the models tends to be doing what you might have optimistically hoped. For example, consider these “head with neck” units. The head is only detected on the correct side:
 
       <figure style="max-width: 550px;">
-        <img src="./static/oriented-dog-heads.png"/>
+        <img src="./images/oriented-dog-heads.png"/>
         <!--<figcaption></figcaption>-->
       </figure>
 
@@ -408,7 +408,7 @@ at each point along the curve.</figcaption>
       <p>But then the model does something surprising. Rather than create another pure car detector at the next layer, it spreads its car feature over a number of neurons that seem to primarily be doing something else &mdash; in particular, dog detectors.
 
         <figure>
-          <img src="./static/superposition.png"/>
+          <img src="./images/superposition.png"/>
           <!--<figcaption></figcaption>-->
         </figure>
 
@@ -435,7 +435,7 @@ at each point along the curve.</figcaption>
       <p>The main piece of evidence is that we’ve observed curve detectors in a large variety of vision models (including AlexNet, InceptionV1, InceptionV3, and residual networks) and in InceptionV1 trained on Places instead of ImageNet. We’ve also observed them repeatedly form in vanilla conv nets trained from scratch on ImageNet. This is discussed in more depth in the article on curve detectors.
 
         <figure>
-          <img src="./static/curves-across-models.png"/>
+          <img src="./images/curves-across-models.png"/>
           <!--<figcaption></figcaption>-->
         </figure>
 
@@ -497,7 +497,7 @@ at each point along the curve.</figcaption>
           #thread-nav .icon-multiple-pages {
               grid-area: icon;
               padding: 0.5em;
-              content: url(static/multiple-pages.svg);
+              content: url(images/multiple-pages.svg);
           }
 
           #thread-nav .explanation {
@@ -583,7 +583,7 @@ at each point along the curve.</figcaption>
       <d-citation-list></d-citation-list>
     </d-appendix>
 
-    <d-bibliography src="static/bibliography.bib"></d-bibliography>
+    <d-bibliography src="bibliography.bib"></d-bibliography>
 
     <script src="https://distill.pub/template.v2.js"></script>
     <link rel="stylesheet" type="text/css" href="index.css">
