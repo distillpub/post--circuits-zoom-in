@@ -113,7 +113,7 @@
             </div>
 
             <div class="figcaption" style="margin-top: 20px;">
-              This translation/summmarization of Schwann's claims can be found in many biology texts; we were unable to determine what the original source of the translation is. The image of Schwann's book <i>Mikroskopische Untersuchungen über die Uebereinstimmung in der Struktur und dem Wachsthum der Thiere und Pflanzen</i> from the <a href="http://www.deutschestextarchiv.de/book/show/schwann_mikroskopische_1839">Deutsches Textarchiv</a>.
+              This translation/summarization of Schwann's claims can be found in many biology texts; we were unable to determine what the original source of the translation is. The image of Schwann's book <i>Mikroskopische Untersuchungen über die Uebereinstimmung in der Struktur und dem Wachsthum der Thiere und Pflanzen</i> from the <a href="http://www.deutschestextarchiv.de/book/show/schwann_mikroskopische_1839">Deutsches Textarchiv</a>.
             </div>
 
           </div>
@@ -148,7 +148,8 @@
               <div class="claim-header">Claim 2: Circuits</div>
               Features are connected by weights, forming circuits.<d-footnote>
                 A "circuit" is a computational subgraph of a neural network.
-                It cosists of a set of features, and the weighted edges that go between them in the original network.
+                It consists of a set of features, and the weighted edges that go between them in the original
+                network.
                 Often, we study quite small circuits -- say with less than a dozen features -- but they can also be much larger.
               </d-footnote><br>
               These circuits can also be rigorously studied and understood.
@@ -211,7 +212,10 @@
       <ol>
       <li><b>Feature Visualization</b>: If we optimize the input to create an image that maximally activates these units we produce curves as seen above. Note that this is without a generative model prior, so anything in the resulting image must have caused the neuron to fire more. Running the optimization process from different random seeds reliably produces curves.
 
-      <li><b>Dataset examples</b>: If we look at places where ImageNet images cause these neurons to strongly fire, they are reliably curves in the expected orientation. If we look at examples where the neurons fired moderately, they are generally less perfect curves or curves off orientation.
+      <li><b>Dataset examples</b>:
+      If we look at places where ImageNet images cause these neurons to strongly fire, they are reliably curves in the expected orientation. If we look at examples where the neurons fired moderately,
+      they are generally less perfect curves or curves off
+      orientation.
 
       <li><b>Synthetic Examples</b>: Based on our theory that these are curve detectors, we can synthesize artificial curves in varying orientations, curvatures, and backgrounds. The curve detectors fire reliably for curves in the correct orientation.
 
@@ -397,7 +401,7 @@ at each point along the curve.</figcaption>
         <!--<figcaption></figcaption>-->
       </figure>
 
-      <p>There’s a lot more to say about this circuit, so we’ve dedicated an entire article to analyzing it in depth, including testing our theory of the circuit by editinging the weights.
+      <p>There’s a lot more to say about this circuit, so we’ve dedicated an entire article to analyzing it in depth, including testing our theory of the circuit by editing the weights.
 
       [Read more about the oriented dog head circuit]
 
@@ -424,7 +428,7 @@ at each point along the curve.</figcaption>
 
       <p>Our third claim is “Analogous features and circuits form across models and tasks.”
 
-      <p>In some ways, it may not be that surprising once you accept the earlier claims. It’s a widely accepted fact that the first layer of vision models trained on natural images will learn gabor filters. There’s also significant research showing that, in some aggregate sense, neural networks learn representations at hidden layers that share a lot of information. Once you accept that there are meaningful features in later layers, is it surprising that the same features would also form in layers beyond the first one? And once you believe there are analogous features, isn’t it expected that they’d connect in the same ways?
+      <p>In some ways, it may not be that surprising once you accept the earlier claims. It’s a widely accepted fact that the first layer of vision models trained on natural images will learn Gabor filters. There’s also significant research showing that, in some aggregate sense, neural networks learn representations at hidden layers that share a lot of information. Once you accept that there are meaningful features in later layers, is it surprising that the same features would also form in layers beyond the first one? And once you believe there are analogous features, isn’t it expected that they’d connect in the same ways?
 
       <p>Unlike the first two claims, it wouldn’t be completely fatal to circuits research if this claim turned out to be false. But it does greatly inform what kind of research makes sense. We introduced circuits as a kind of “cellular biology of deep learning.” But imagine a world where every species had cells with a completely different set of organelles and proteins. Would it still make sense to study cells in general, or would we limit ourselves to the narrow study of a few kinds of particularly important species of cells? Similarly, imagine the study of anatomy in a world where every species of animal had a completely unrelated anatomy: would we seriously study anything other than humans and a couple domestic animals?
 
@@ -451,11 +455,11 @@ at each point along the curve.</figcaption>
 
       <p>Interpretability seems to match Kuhn’s description of a pre-paradigmatic field to a tee: there isn’t consensus on what the objects of study are, what methods we should use to answer them, or how to evaluate research results. The lack of consensus on evaluation feels particularly challenging for us as a field.
 
-      <p>There are two common proposals for how to evaluate work in interpretability, drawing on the standards of adjacent fields. Some researchers, especially those with a deep learning background, want an “interpretability benchmark” which can evaluate how effective an intepretability method is. Other researchers with an HCI background may wish to evaluate interpretability methods through user studies.
+      <p>There are two common proposals for how to evaluate work in interpretability, drawing on the standards of adjacent fields. Some researchers, especially those with a deep learning background, want an “interpretability benchmark” which can evaluate how effective an interpretability method is. Other researchers with an HCI background may wish to evaluate interpretability methods through user studies.
 
       <p>But interpretability could borrow from a third paradigm: natural science. In this view, neural networks are an object of empirical investigation, perhaps similar to an organism in biology. Such work would try to make empirical claims about a given network, which could be held to the standard of falsifiability.
 
-      <p>Why don’t we see more of this kind of evaluation of work in interpretability and visualization? (Especially given that there’s adjacent ML work which does adopt this frame!) One reason might be that it’s very difficult to make robustly true statements about the behavior of a neural network as a whole. They’re incredibly complicated objects. It’s also hard to formalize exactly what the interesting empirical statements about them would, exactly, be. And so we often get standards of evaluations more targeted about whether an interpretability method is useful rather than whether we’re learning true statements.
+      <p>Why don’t we see more of this kind of evaluation of work in interpretability and visualization? (Especially given that there’s adjacent ML work which does adopt this frame!) One reason might be that it’s very difficult to make robustly true statements about the behavior of a neural network as a whole. They’re incredibly complicated objects. It’s also hard to formalize exactly what the interesting empirical statements about them would, exactly, be. And so we often get standards of evaluations more targeted at whether an interpretability method is useful rather than whether we’re learning true statements.
 
       <p>Circuits side steps these challenges by focusing on tiny subgraphs of a neural network for which rigorous empirical investigation is tractable. And they’re very much falsifiable: if you understand a circuit, you should be able to predict what will change if you edit the weights. (In fact, once you zoom in enough, statements about the behavior of circuits become questions of mathematical logic.)
 
@@ -465,7 +469,7 @@ at each point along the curve.</figcaption>
 
       <p>We take it for granted that the microscope is an important scientific instrument. It’s practically a symbol of science. But this wasn’t always the case, and microscopes didn’t initially take off as a scientific tool. In fact, they seem to have languished for around fifty years. The turning point was when Robert Hooke published Micrographia, a collection of drawings of things he’d seen using a microscope, including the first picture of a cell.
 
-      <p>My impression is that there is some anxiety in the interpretability community that we aren’t taken very seriously and aren’t very scientific. But the lesson of micrographia is that perhaps this is expected.
+      <p>My impression is that there is some anxiety in the interpretability community that we aren’t taken very seriously and aren’t very scientific. But the lesson of Micrographia is that perhaps this is expected.
 
       <p>Let’s discover cells.</p>
 
