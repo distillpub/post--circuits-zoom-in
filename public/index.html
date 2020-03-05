@@ -438,10 +438,169 @@ at each point along the curve.</figcaption>
 
       <p>The main piece of evidence is that we’ve observed curve detectors in a large variety of vision models (including AlexNet, InceptionV1, InceptionV3, and residual networks) and in InceptionV1 trained on Places instead of ImageNet. We’ve also observed them repeatedly form in vanilla conv nets trained from scratch on ImageNet. This is discussed in more depth in the article on curve detectors.
 
+      <style>
+        .diagram-universality {
+          display: grid;
+          grid-column: text-start / page-end;
+          grid-gap: 1rem;
+          grid-template-columns: 1fr;
+          justify-content: center;
+        }
+
+        @media (min-width: 1180px) {
+          .diagram-universality {
+            grid-column: page;
+            grid-template-columns: 528px 448px;
+          }
+          .diagram-universality > figure:last-of-type h4 {
+            display: none;
+          }
+          .diagram-universality > figure:last-of-type li {
+            grid-template-columns: 1fr;
+          }
+          .diagram-universality > figure:last-of-type > figcaption {
+            padding-left: unset;
+          }
+        }
+
+        .diagram-universality h4 {
+          margin: 4px 0;
+        }
+
+        .diagram-universality > figure {
+          margin: 0;
+        }
+
+        .diagram-universality > figure > figcaption {
+          padding-left: 9rem;
+        }
+        
+        .diagram-universality ul {
+          list-style: none;
+          padding-left: unset;
+        }
+
+        .diagram-universality li {
+          display: grid;
+          grid-template-columns: 9rem 1fr;
+        }
+
+        .diagram-universality li .images {
+          display: grid;
+          grid-template-columns: repeat( auto-fill, 88px);
+          grid-gap: 8px;
+        }
+
+        .diagram-universality img {
+          width: 88px;
+          height: 88px;
+          background-color: gray;
+          border-radius: 4px;
+        }
+      </style>
+      <figure class="diagram-universality" role="group">
         <figure>
-          <img src="./images/curves-across-models.png"/>
-          <!--<figcaption></figcaption>-->
+          <figcaption>
+            <h3>Curve detectors</h3>
+          </figcaption>
+          <ul>
+            <li>
+              <div>
+                <h4>AlexNet</h4>
+                <span class="figcaption">Krizhevsky et&#8239;al.<d-cite key="krizhevsky2012alexnet"></d-cite></span>
+              </div>
+              <div class="images">
+                <img/>
+                <img/>
+                <img/>
+                <img/>
+              </div>
+            </li>
+            <li>
+              <div>
+                <h4>GoogLeNet</h4>
+                <span class="figcaption">Szegedy et&#8239;al.<d-cite key="szegedy2015googlenet"></d-cite></span>
+              </div>
+              <div class="images">
+                <img/>
+              <img/>
+              <img/>
+              <img/>
+              </div>
+              
+            </li>
+            <li>
+              <div>
+                <h4>InceptionV3</h4>
+                <span class="figcaption">Szegedy et&#8239;al.<d-cite key="szegedy2015rethinking"></d-cite></span>
+              </div>
+              <div class="images">
+              <img/>
+              <img/>
+              <img/>
+              <img/>
+              </div>
+            </li>
+            <li>
+              <div>
+                <h4>ResNetV2-50</h4>
+                <span class="figcaption">Kaiming et&#8239;al.<d-cite key="kaiming2015resnet"></d-cite></span>
+              </div>
+              <div class="images">
+              <img/>
+              <img/>
+              <img/>
+              <img/>
+              </div>
+            </li>
+          </ul>
         </figure>
+        <figure>
+          <figcaption>
+            <h3>High-Low Frequency detectors</h3>
+          </figcaption>
+          <ul>
+            <li>
+              <h4>Model A</h4>
+              <div class="images">
+                <img/>
+                <img/>
+                <img/>
+                <img/>
+              </div>
+            </li>
+            <li>
+              <h4>Model B</h4>
+              <div class="images">
+                <img/>
+                <img/>
+                <img/>
+                <img/>
+              </div>
+            </li>
+            <li>
+              <h4>Model C</h4>
+              <div class="images">
+                <img/>
+                <img/>
+                <img/>
+                <img/>
+              </div>
+            </li>
+            <li>
+              <h4>Model D</h4>
+              <div class="images">
+                <img/>
+                <img/>
+                <img/>
+                <img/>
+              </div>
+            </li>
+          </ul>
+        </figure>
+
+        <figcaption>Text</figcaption>
+      </figure>
 
       <p>Beyond that, we only have anecdotes, where we know that some feature has a similar analogue in another model or two. For example, high-low frequency detectors also exist in [which model?]. Spiral detectors exist in [], [], and []. And so on.
 
