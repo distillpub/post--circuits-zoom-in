@@ -1,0 +1,16 @@
+<svg width="43" height="50" viewBox="0 0 43 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 12H20.7238V23.442H31V50H0V12Z" fill="black" fill-opacity="0.12"/>
+<path d="M20.7238 12V23.442H31L20.7238 12Z" fill="black" fill-opacity="0.12"/>
+<path d="M32.5 10.5V46.5H3.5V10.5H32.5Z" fill="white" stroke="#ABABAB"/>
+<mask id="path-3-inside-1" fill="white">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M22 5H8V42H38V22H22V5Z"/>
+</mask>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M22 5H8V42H38V22H22V5Z" fill="white"/>
+<path d="M22 5H23V4H22V5ZM8 5V4H7V5H8ZM8 42H7V43H8V42ZM38 42V43H39V42H38ZM38 22H39V21H38V22ZM22 22H21V23H22V22ZM22 4H8V6H22V4ZM7 5V42H9V5H7ZM8 43H38V41H8V43ZM39 42V22H37V42H39ZM38 21H22V23H38V21ZM23 22V5H21V22H23Z" fill="#ABABAB" mask="url(#path-3-inside-1)"/>
+<path d="M32 11.5V12H32.5H42.5V36.5H13.5V0.5H32V11.5ZM33 11V1.28916L41.8664 11H33Z" fill="white" stroke="#ABABAB"/>
+<line x1="19" y1="6.5" x2="27" y2="6.5" stroke="#ABABAB"/>
+<line x1="19" y1="12.5" x2="27" y2="12.5" stroke="#ABABAB"/>
+<line x1="19" y1="18.5" x2="37" y2="18.5" stroke="#ABABAB"/>
+<line x1="19" y1="24.5" x2="37" y2="24.5" stroke="#ABABAB"/>
+<line x1="19" y1="30.5" x2="37" y2="30.5" stroke="#ABABAB"/>
+</svg>
