@@ -122,7 +122,7 @@
 
       <p>The first two of these claims are likely familiar, persisting in modern cellular theory. The third is likely not familiar, since it turned out to be horribly wrong.</p>
 
-      <p>We believe there’s a lot of value in articulating a strong version of something you believe may be true, even if might be false like Shwann’s third claim. In this spirit, we offer three claims about neural networks. They are intended both as empirical claims about the nature of neural networks, and also as normative claims about how it’s useful to understand neural networks.</p>
+      <p>We believe there’s a lot of value in articulating a strong version of something you believe may be true, even it might be false like Schwann’s third claim. In this spirit, we offer three claims about neural networks. They are intended both as empirical claims about the nature of neural networks, and also as normative claims about how it’s useful to understand neural networks.</p>
 
 
       <figure class="l-body-outset claim-figure">
@@ -192,9 +192,9 @@
 
       <h3>Example 1: Curve Detectors</h3>
 
-      <p>In InceptionV1 mixed3b (an early layer layer), we observe a family of neurons we call “curve detectors.” These units responded to curved lines and boundaries with a size on the order of 40 pixels. They are also slightly additionally excited by perpendicular lines along the boundary of the curve. Each unit in the family responds to curves in a different orientation, spanning the space.
+      <p>In InceptionV1 mixed3b (an early layer), we observe a family of neurons we call “curve detectors.” These units responded to curved lines and boundaries with a size on the order of 40 pixels. They are also slightly additionally excited by perpendicular lines along the boundary of the curve. Each unit in the family responds to curves in a different orientation, spanning the space.
 
-      <p>There are many other features that respond to curve-like objects including features with a curved sub-component (eg. circles or spirals) or units responding curve like objects (eg. a corner). But curve detectors remain a highly distinctive family.
+      <p>There are many other features that respond to curve-like objects including features with a curved sub-component (eg. circles or spirals) or units responding to curve like objects (eg. a corner). But curve detectors remain a highly distinctive family.
 
       <figure style="grid-column-start: text-start; grid-column-end: text-end;">
         <img src="./images/curves.png"/>
@@ -209,20 +209,20 @@
         while the last two arguments rely on circuits, which we’ll discuss later.</p>
 
       <ol>
-      <li><b>Feature Visualization</b>: If we optimize the input to create an image that maximally activates these units we produce curves, as seen above. Note that this is without a generative model prior, so anything in the resulting image must have caused the neuron to fire more. Running the optimization process from different random seeds reliably produces curves.
+      <li><b>Feature Visualization</b>: If we optimize the input to create an image that maximally activates these units we produce curves as seen above. Note that this is without a generative model prior, so anything in the resulting image must have caused the neuron to fire more. Running the optimization process from different random seeds reliably produces curves.
 
       <li><b>Dataset examples</b>: If we look at places where ImageNet images cause these neurons to strongly fire, they are reliably curves in the expected orientation. If we look at examples where the neurons fired moderately, they are generally less perfect curves or curves off orientation.
 
       <li><b>Synthetic Examples</b>: Based on our theory that these are curve detectors, we can synthesize artificial curves in varying orientations, curvatures, and backgrounds. The curve detectors fire reliably for curves in the correct orientation.
 
-      <li><b>Tuning Curves</b>: If we take dataset examples that cause a neuron to fire and rotate them, they gradually stop firing and the curve detectors in the next orientation begins firing. This shows that they detect they are detecting rotated versions of the same thing.
+      <li><b>Tuning Curves</b>: If we take dataset examples that cause a neuron to fire and rotate them, they gradually stop firing and the curve detectors in the next orientation begins firing. This shows that they detect rotated versions of the same thing.
 
       <li><b>Feature implementation</b>: By looking at the circuit constructing the curve detectors, we can literally read a curve detection algorithm off of the weights. We also don’t see anything obviously suggestive of a second case, although there are many smaller weights we don’t understand the role of.
 
       <li><b>Feature usage</b>: The downstream clients of curve detectors are features that naturally involve curves (eg. circles, 3d curvature, spirals…). The curve detectors are used by these clients in the way our theory of the two features would predict.
       </ol>
 
-      <p>These experiments don’t fully rule out the possibility of some rare secondary case where these neurons also fire. But it seems to us that they establish that curves cause these neurons to fire, that each unit responds to curves at different angular orientations, and that if there are other stimuluses that cause them to fire those are rare or cause much weaker firing.
+      <p>These experiments don’t fully rule out the possibility of some rare secondary case where these neurons also fire. But it seems to us that they establish that curves cause these neurons to fire, that each unit responds to curves at different angular orientations, and that if there are other stimuli that cause them to fire those are rare or cause much weaker firing.
 
       <h3>Example 2: High-Low Frequency Detectors</h3>
 
@@ -250,7 +250,7 @@
         <!--<figcaption></figcaption>-->
       </figure>
 
-      <p>The combination of feature visualization and dataset examples are quite a strong argument. Feature visualization gets at the undelry cause of a neuron firing, while dataset examples get at whether there’s other cases.
+      <p>The combination of feature visualization and dataset examples are quite a strong argument. Feature visualization gets at the underlying cause of a neuron firing, while dataset examples get at whether there’s other cases.
 
       <p>Unfortunately, we generally don’t have the ability to test our theory with synthetic inputs &mdash; creating synthetic images of dogs (without using another neural net, which would open up lots of additional analysis challenges) is too difficult.
 
@@ -576,8 +576,35 @@ at each point along the curve.</figcaption>
     <d-appendix>
       <h3>Historical Note</h3>
       <p>
-        The content of this essay was originally presented as a keynote talk by Chris Olah at <a href="https://visxai.io/">VISxAI</a> 2019.
+        The content of this essay was previously presented as a keynote talk by Chris Olah at <a href="https://visxai.io/">VISxAI</a> 2019.
+        It was also informally presented at MILA, the Vector Institute, the Redwood Center for Neuroscience, and a private workshop.
       </p>
+
+      <h3>Acknowledgments</h3>
+      <p>
+        All our work understaning InceptionV1 is endebted to Alex Mordvintsev, who's early explorations of vision models paved pathways we still follow.
+        We're also deeply grateful to Nick Barry, and Sophia Sanborn for their deep engagement on potential connections between our work and neuroscience,
+        and to Tom McGrath who pointed out the similiarities between Kuhn's "pre-paradigmatic science" and the state interpretability as a field to us.
+      </p>
+      <p>
+        In addition to Nick and Sophia's deep engagement, we're more generally appreciative of the neuroscience community's engagement with us,
+        especially in sharing hard-won lessons about methodological weaknesses in our work.
+        In particular, we appreciate Brian Wandell pushing us in 2018 on not usng tuning curves and the importance of families of neurons, which we think has made our  work much stronger.
+        We're also very grateful for the comments of Mareike Grotheer, Natalia Bilenko, Bruno Olshausen, and Jascha Sohl-Dickstein.
+        [MORE]
+        We think we have a lot to learn from the neuroscience community and are excited to continue doing so.
+      </p>
+      <p>
+        One of the  biggest priviledges of working on circits has been the open collaboration and feedback in the <a href="https://slack.distill.pub">Distill slack</a>'s #circuits channel.
+        We've especially appreciated the detailed feedback we received from Stefan Sietzen, Shahab Bakhtiari, and Flora Liu.
+        [MORE]
+        (Stefan has additionally run with many of these ideas, and we're excited to see his work in future articles in this thread!)
+      </p>
+      <p>
+        Finally, we're grateful for the insitutional support of OpenAI, and for the support and comments of all our colleagues and friends across institutions, including Dario Amodei, Daniela Amodei, Taco Cohen, Katarina Slama, Alethea Power, Jacob Hilton, Jacob Steinhardt, Tom Brown, Preetum Nakkiran, Ilya Sutskever, and Arvind Satyanarayan.
+        [MORE]
+      </p>
+
 
       <d-footnote-list></d-footnote-list>
       <d-citation-list></d-citation-list>
