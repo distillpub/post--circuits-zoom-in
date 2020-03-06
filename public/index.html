@@ -52,9 +52,7 @@
       At these points, we develop some visualization or tool that allows us to see the world in a new level of detail, and a new field of science develops to study the world through this lens.
       </p>
       <p>
-      For example, the invention of the microscope led to the discovery of cells, and eventually cellular biology. Science zoomed in.
-      The invention of a number of techniques including x-ray crystallography enabled the discovery of DNA and the “molecular revolution” in biology.
-      Science zoomed in. Atomic theory, subatomic particles, and neuroscience are other examples of science zooming in.
+      For example, microscopes let us see cells, leading to cellular biology. Science zoomed in. Several techniques including x-ray crystallography let us see DNA, leading to the molecular revolution. Science zoomed in. Atomic theory. Subatomic particles. Neuroscience. Science zoomed in.
       </p>
       <p>
       These transitions weren’t just a change in precision: they were qualitative changes in what the objects of scientific inquiry are.
@@ -209,22 +207,83 @@
         The first four arguments are based on the properties of the features in isolation,
         while the last two arguments rely on circuits, which we’ll discuss later.</p>
 
-      <ol>
-      <li><b>Feature Visualization</b>: If we optimize the input to create an image that maximally activates these units we produce curves as seen above. Note that this is without a generative model prior, so anything in the resulting image must have caused the neuron to fire more. Running the optimization process from different random seeds reliably produces curves.
+        <style>
+          .arguments-figure {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: space-around;
+          }
+          .arguments-figure > div {
+            max-width: 700px;
+            margin-bottom: 40px;
+            margin-left: 0px;
+            margin-right: 0px;
+            display: flex;
+            align-items: flex-start;
+          }
+          .arguments-figure > div:last-child {
+            margin-bottom: 0px;
+          }
+          .arguments-figure div img {
+            --width: calc(100% - 60px);
+            max-width: 140px;
+            border-radius: 8px;
+            margin-right: 40px;
+            flex-shrink: 3;
+          }
+          .arguments-figure div h4 {
+            margin-top: 0px;
+          }
+        </style>
 
-      <li><b>Dataset examples</b>:
-      If we look at places where ImageNet images cause these neurons to strongly fire, they are reliably curves in the expected orientation. If we look at examples where the neurons fired moderately,
-      they are generally less perfect curves or curves off
-      orientation.
+        <figure class="arguments-figure">
+          <div>
+            <img src="images/arg-fv.png"></img>
+            <div>
+              <h4>Argument 1: Feature Visualization</h4>
+              <p>Optimizing the input to cause curve detectors to fire reliably produces curves. This establishes a causal link, since everything in the resulting image was added to cause the neuron to fire more. (You can learn more about feature visualization <a href="https://distill.pub/2017/feature-visualization/">here</a>.)</p>
+            </div>
+          </div>
+          <div>
+            <img src="images/arg-data.png"></img>
+            <div>
+              <h4>Argument 2: Dataset Examples</h4>
+              <p>The ImageNet images that cause these neurons to strongly fire are reliably curves in the expected orientation. The images that cause them to fire moderately are generally less perfect curves or curves off orientation.</p>
+            </div>
+          </div>
+          <div>
+            <img src="images/arg-synthetic.png" style="filter: brightness(97%);"></img>
+            <div>
+              <h4>Argument 3: Synthetic Examples</h4>
+              <p>Curve detectors respond as expected to a range of synthetic curves stimuli in varying orientations, curvatures, and backgrounds. They fire only near the expected orientation, and do not fire strongly for straight lines or sharp corners.</p>
+            </div>
+          </div>
+          <div>
+            <img src="images/arg-tune.png" style="filter: brightness(97%);"></img>
+            <div>
+              <h4>Argument 4: Joint Tuning</h4>
+              <p>If we take dataset examples that cause a neuron to fire and rotate them, they gradually stop firing and the curve detectors in the next orientation begins firing. This shows that they detect rotated versions of the same thing.</p>
+            </div>
+          </div>
+          <div>
+            <img src="images/arg-weights.png"></img>
+            <div>
+              <h4>Argument 5: Feature implementation</h4>
+              <p>By looking at the circuit constructing the curve detectors, we can literally read a curve detection algorithm off of the weights. We also don’t see anything obviously suggestive of a second case, although there are many smaller weights we don’t understand the role of.</p>
+            </div>
+          </div>
+          <div>
+            <img src="images/arg-use.png"></img>
+            <div>
+              <h4>Argument 6: Feature usage</h4>
+              <p>The downstream clients of curve detectors are features that naturally involve curves (eg. circles, 3d curvature, spirals…). The curve detectors are used by these clients in the way our theory of the two features would predict.</p>
+            </div>
+          </div>
+        </figure>
 
-      <li><b>Synthetic Examples</b>: Based on our theory that these are curve detectors, we can synthesize artificial curves in varying orientations, curvatures, and backgrounds. The curve detectors fire reliably for curves in the correct orientation.
 
-      <li><b>Tuning Curves</b>: If we take dataset examples that cause a neuron to fire and rotate them, they gradually stop firing and the curve detectors in the next orientation begins firing. This shows that they detect rotated versions of the same thing.
-
-      <li><b>Feature implementation</b>: By looking at the circuit constructing the curve detectors, we can literally read a curve detection algorithm off of the weights. We also don’t see anything obviously suggestive of a second case, although there are many smaller weights we don’t understand the role of.
-
-      <li><b>Feature usage</b>: The downstream clients of curve detectors are features that naturally involve curves (eg. circles, 3d curvature, spirals…). The curve detectors are used by these clients in the way our theory of the two features would predict.
-      </ol>
+      <p>All of these arguments will be explored in detail in the forthcoming article on curve detectors.
 
       <p>These experiments don’t fully rule out the possibility of some rare secondary case where these neurons also fire. But it seems to us that they establish that curves cause these neurons to fire, that each unit responds to curves at different angular orientations, and that if there are other stimuli that cause them to fire those are rare or cause much weaker firing.
 
@@ -241,7 +300,7 @@
 
       <p>(Why is this useful? This seems to be a useful heuristic for detecting the boundaries of objects, especially when the background is out of focus. In future articles, we’ll explore how they’re used in the construction of sophisticated boundary detectors.)
 
-      <p>We can repeat all the experiments we conducted on curves. This includes creating synthetic examples, since it’s easy to construct images with different frequency patterns on each side. We believe the results strongly support the idea that these really are caused to fire by high-low frequency contrasts, that they are excited by such patterns very generally, and that each unit detects a different angular orientation. If there are other cases where these units fire, they must be rare and cause it to fire more weakly.
+      <p>All six of the techniques we used to interrogate curve neurons can also be used to study high-low frequency neurons with some tweaking -- for instance, rendering synthetic high-low frequency examples. Again we believe these arguments collectively provide strong support for the idea that these really are a family of high-low frequency contrast detectors
 
       <h3>Example 3: Pose-Invariant Dog Head Detector</h3>
 
@@ -474,7 +533,7 @@ at each point along the curve.</figcaption>
         .diagram-universality > figure > figcaption {
           padding-left: 9rem;
         }
-        
+
         .diagram-universality ul {
           list-style: none;
           padding-left: unset;
@@ -528,7 +587,7 @@ at each point along the curve.</figcaption>
                 <img src="images/universality/GoogLeNet/unit-2.png"/>
                 <img src="images/universality/GoogLeNet/unit-3.png"/>
               </div>
-              
+
             </li>
             <li>
               <div class="info">
@@ -584,7 +643,7 @@ at each point along the curve.</figcaption>
                 <img src="images/universality/GoogLeNet/unit-2.png"/>
                 <img src="images/universality/GoogLeNet/unit-3.png"/>
               </div>
-              
+
             </li>
             <li>
               <div class="info">
@@ -624,17 +683,45 @@ at each point along the curve.</figcaption>
 
       <h2>Interpretability as a Natural Science</h2>
 
-      <p><i>The Structure of Scientific Revolutions</i> by Thomas Kuhn <d-cite bibtex-key="kuhn1962structure"></d-cite>is a classic text on the history and sociology of science. In it, Kuhn distinguishes between “normal science” in which a scientific community has a paradigm, and “extraordinary science” in which a community lacks a paradigm, either because it never had one or because it was weakened by crisis.
+      <p>
+        <i>The Structure of Scientific Revolutions</i> by Thomas Kuhn<d-cite bibtex-key="kuhn1962structure"></d-cite> is a classic text on the history and sociology of science.
+        In it, Kuhn distinguishes between “normal science” in which a scientific community has a paradigm, and “extraordinary science” in which a community lacks a paradigm, either because it never had one or because it was weakened by crisis.
+        It's worth noting that "extraordinary science" is not a desirable state: it's a period where researchers struggle to be productive.
 
-      <p>Interpretability seems to match Kuhn’s description of a pre-paradigmatic field to a tee: there isn’t consensus on what the objects of study are, what methods we should use to answer them, or how to evaluate research results. The lack of consensus on evaluation feels particularly challenging for us as a field.
+      <p>
+        Kuhn's description of pre-paradigmatic fields feel eerily reminiscent of interpretability today.<d-footnote>
+          We were introduced to Kuhn's work and this connection by conversations with Tom McGrath at DeepMind</d-footnote>
+        There isn’t consensus on what the objects of study are, what methods we should use to answer them, or how to evaluate research results.
+        Our sense is that many researchers, both within interpretability research and beyond it, share this sense.
+        To quote a recent interview with Ian Goodfellow: "For interpretability, I don't think we even have the right definitions."<d-cite bibtex-key="goodfellow2019interview"></d-cite>
+      </P>
 
-      <p>There are two common proposals for how to evaluate work in interpretability, drawing on the standards of adjacent fields. Some researchers, especially those with a deep learning background, want an “interpretability benchmark” which can evaluate how effective an interpretability method is. Other researchers with an HCI background may wish to evaluate interpretability methods through user studies.
+      <p>
+        One particularly challenging aspect of being in a pre-paradigmatic is that there isn't a shared sense of how to evaluate work in interpretability.
+        There are two common proposals for dealing with this, drawing on the standards of adjacent fields. Some researchers, especially those with a deep learning background, want an “interpretability benchmark” which can evaluate how effective an interpretability method is. Other researchers with an HCI background may wish to evaluate interpretability methods through user studies.
 
-      <p>But interpretability could borrow from a third paradigm: natural science. In this view, neural networks are an object of empirical investigation, perhaps similar to an organism in biology. Such work would try to make empirical claims about a given network, which could be held to the standard of falsifiability.
+      <p>
+        But interpretability could also borrow from a third paradigm: natural science.
+        In this view, neural networks are an object of empirical investigation, perhaps similar to an organism in biology. Such work would try to make empirical claims about a given network, which could be held to the standard of falsifiability.
 
-      <p>Why don’t we see more of this kind of evaluation of work in interpretability and visualization? (Especially given that there’s adjacent ML work which does adopt this frame!) One reason might be that it’s very difficult to make robustly true statements about the behavior of a neural network as a whole. They’re incredibly complicated objects. It’s also hard to formalize exactly what the interesting empirical statements about them would, exactly, be. And so we often get standards of evaluations more targeted at whether an interpretability method is useful rather than whether we’re learning true statements.
+      <p>
+        Why don’t we see more of this kind of evaluation of work in interpretability and visualization?<d-footnote>
+          To be clear, we do see researchers who take more of this natural science appproach, especially in earlier interpretability research. It just seems less common right now.</d-footnote>
+        Especially given that there’s so much adjacent ML work which does adopt this frame!
+        One reason might be that it’s very difficult to make robustly true statements about the behavior of a neural network as a whole.
+        They’re incredibly complicated objects.
+        It’s also hard to formalize exactly what the interesting empirical statements about them would, exactly, be.
+        And so we often get standards of evaluations more targeted at whether an interpretability method is useful rather than whether we’re learning true statements.
 
-      <p>Circuits side steps these challenges by focusing on tiny subgraphs of a neural network for which rigorous empirical investigation is tractable. And they’re very much falsifiable: if you understand a circuit, you should be able to predict what will change if you edit the weights. (In fact, once you zoom in enough, statements about the behavior of circuits become questions of mathematical logic.)
+      <p>
+        Circuits side steps these challenges by focusing on tiny subgraphs of a neural network for which rigorous empirical investigation is tractable.
+        They’re very much falsifiable: for example, if you understand a circuit, you should be able to predict what will change if you edit the weights.
+        In fact, for small enough circuits, statements about the behavior of circuits become questions of mathematical logic.
+        Of course, the cost of this rigor is that statements about circuits are much smaller in scope than overall model behvior.
+        But it seems like, with sufficient effort, statements about model behavior could be broken down into statements about circuits.
+        If so, perhaps circuits could act as a kind of epsitemtic foundation for interpretability.
+      </p>
+
 
       <hr>
 
@@ -642,9 +729,14 @@ at each point along the curve.</figcaption>
 
       <p>We take it for granted that the microscope is an important scientific instrument. It’s practically a symbol of science. But this wasn’t always the case, and microscopes didn’t initially take off as a scientific tool. In fact, they seem to have languished for around fifty years. The turning point was when Robert Hooke published Micrographia, a collection of drawings of things he’d seen using a microscope, including the first picture of a cell.
 
-      <p>My impression is that there is some anxiety in the interpretability community that we aren’t taken very seriously and aren’t very scientific. But the lesson of Micrographia is that perhaps this is expected.
+      <p>
+        My impression is that there is some anxiety in the interpretability community that we aren’t taken very seriously.
+        That this research is too qualitative.
+        That it isn't very scientific.
+        But the lesson of the microscope and cellular biology is that perhaps this is expected.
+      </p>
 
-      <p>Let’s discover cells.</p>
+      <p>The discovery of cells was, after all, a qualitative research result. And it changed the world.</p>
 
       <br><br><br><br>
 
