@@ -557,7 +557,8 @@ at each point along the curve.</figcaption>
 
       <p>So, is the universality hypothesis true? Unfortunately, it’s the claim we have the least evidence for. To date, we simply haven’t invested enough in the comparative study of features and circuits to give strong answers.
 
-      <p>The main piece of evidence is that we’ve observed curve detectors in a large variety of vision models (including AlexNet, InceptionV1, InceptionV3, and residual networks) and in InceptionV1 trained on Places instead of ImageNet. We’ve also observed them repeatedly form in vanilla conv nets trained from scratch on ImageNet. This is discussed in more depth in the article on curve detectors.
+      <p>The main piece of evidence is that we quite reliably observe the same low level features across a large variety of vision model architectures (including AlexNet, InceptionV1, InceptionV3, and residual networks) and in models trained on Places365 instead of ImageNet. We’ve also observed them repeatedly form in vanilla conv nets trained from scratch on ImageNet. For high-level features, we only have very anecdotal evidence that sometimes similar features, such as various kinds of head detectors, form repeatedly.
+      </p>
 
       <style>
         .diagram-universality {
@@ -742,9 +743,10 @@ at each point along the curve.</figcaption>
         </figure>
       </figure>
 
-      <p>Beyond that, we only have anecdotes, where we know that some feature has a similar analogue in another model or two. For example, high-low frequency detectors also exist in [which model?]. Spiral detectors exist in [], [], and []. And so on.
-
-      <p>This has led us to believe that a weak version of the universality hypothesis is very likely true &mdash; some higher level features form across models &mdash; but further work will be needed to understand if these are the exception or the rule.
+      <p>
+        These results have led us to believe that a weak version of the universality hypothesis is likely true, but further work will be needed to understand if the apparent universality of some low-level vision features is the exception or the rule.
+        If it turns out that the universality hypothesis is broadly true in neural networks,
+        it will be really tempting to speculate: might biological neural networks also learn similar features?
 
       <hr>
 
@@ -759,12 +761,11 @@ at each point along the curve.</figcaption>
         Kuhn's description of pre-paradigmatic fields feel eerily reminiscent of interpretability today.<d-footnote>
           We were introduced to Kuhn's work and this connection by conversations with Tom McGrath at DeepMind</d-footnote>
         There isn’t consensus on what the objects of study are, what methods we should use to answer them, or how to evaluate research results.
-        Our sense is that many researchers, both within interpretability research and beyond it, share this sense.
         To quote a recent interview with Ian Goodfellow: "For interpretability, I don't think we even have the right definitions."<d-cite bibtex-key="goodfellow2019interview"></d-cite>
       </P>
 
       <p>
-        One particularly challenging aspect of being in a pre-paradigmatic is that there isn't a shared sense of how to evaluate work in interpretability.
+        One particularly challenging aspect of being in a pre-paradigmatic field is that there isn't a shared sense of how to evaluate work in interpretability.
         There are two common proposals for dealing with this, drawing on the standards of adjacent fields. Some researchers, especially those with a deep learning background, want an “interpretability benchmark” which can evaluate how effective an interpretability method is. Other researchers with an HCI background may wish to evaluate interpretability methods through user studies.
 
       <p>
@@ -773,18 +774,18 @@ at each point along the curve.</figcaption>
 
       <p>
         Why don’t we see more of this kind of evaluation of work in interpretability and visualization?<d-footnote>
-          To be clear, we do see researchers who take more of this natural science appproach, especially in earlier interpretability research. It just seems less common right now.</d-footnote>
+          To be clear, we do see researchers who take more of this natural science approach, especially in earlier interpretability research. It just seems less common right now.</d-footnote>
         Especially given that there’s so much adjacent ML work which does adopt this frame!
         One reason might be that it’s very difficult to make robustly true statements about the behavior of a neural network as a whole.
         They’re incredibly complicated objects.
-        It’s also hard to formalize exactly what the interesting empirical statements about them would, exactly, be.
+        It’s also hard to formalize what the interesting empirical statements about them would, exactly, be.
         And so we often get standards of evaluations more targeted at whether an interpretability method is useful rather than whether we’re learning true statements.
 
       <p>
         Circuits side steps these challenges by focusing on tiny subgraphs of a neural network for which rigorous empirical investigation is tractable.
         They’re very much falsifiable: for example, if you understand a circuit, you should be able to predict what will change if you edit the weights.
-        In fact, for small enough circuits, statements about the behavior of circuits become questions of mathematical logic.
-        Of course, the cost of this rigor is that statements about circuits are much smaller in scope than overall model behvior.
+        In fact, for small enough circuits, statements about their behavior become questions of mathematical reasoning.
+        Of course, the cost of this rigor is that statements about circuits are much smaller in scope than overall model behavior.
         But it seems like, with sufficient effort, statements about model behavior could be broken down into statements about circuits.
         If so, perhaps circuits could act as a kind of epsitemtic foundation for interpretability.
       </p>
