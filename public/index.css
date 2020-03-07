@@ -3,6 +3,79 @@ figure {
   margin-bottom: 50px;
 }
 
+
+/* ****************************************
+ * Arguments figure
+ ******************************************/
+
+.arguments-figure {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.arguments-figure > div {
+  max-width: 700px;
+  margin-bottom: 20px;
+  margin-left: 0px;
+  margin-right: 0px;
+  display: flex;
+  align-items: flex-start;
+}
+.arguments-figure > div:last-child {
+  margin-bottom: 0px;
+}
+.arguments-figure div img {
+  flex-basis: 120px;
+  max-width: 120px;
+  border-radius: 8px;
+  margin-right: 30px;
+  flex-shrink: 4;
+}
+.arguments-figure div div {
+  flex-basis: 550px;
+  flex-shrink: 1;
+}
+.arguments-figure div h4 {
+  margin-top: -4px;
+  margin-bottom: 8px;
+}
+
+
+
+/* ****************************************
+ * curve-figure; curve-orientations-figure
+ ******************************************/
+
+.curve-figure {
+  display: flex;
+  flex-direction: row;
+}
+.curve-figure div:first-child  {
+  margin-right: 60px;
+}
+
+.curve-oreientaions-figure {
+  display: flex;
+  flex-direction: row;
+}
+.curve-oreientaions-figure > div:first-child  {
+  flex-basis: 45%;
+  flex-grow: 1;
+}
+
+.curve-oreientaions-figure div:last-child {
+  flex-basis: 44.8%;
+  flex-grow: 1;
+}
+
+
+
+
+/* ****************************************
+ * Claims Figures
+ ******************************************/
+
 @media (min-width: 600px){
   .claim-figure h4 {
     --border-bottom: 1px solid #CCC;
@@ -18,6 +91,7 @@ figure {
   .claim-figure > div {
     margin-top: 20px;
     margin-bottom: 20px;
+    border-left: 1px solid #CCC;
   }
   .claim-figure > div > div {
     margin-left: 20px;
@@ -66,7 +140,11 @@ h2 {
 
 
 
-/* TOC */
+
+
+/* ****************************************
+ * TOC
+ ******************************************/
     @media(max-width: 1000px){
       d-contents {
         justify-self: start;
@@ -149,4 +227,91 @@ h2 {
     d-contents nav>div>a {
       font-size: 13px;
       font-weight: 600;
+    }
+
+
+
+
+
+  /* ****************************************
+   * Thread Info
+   ******************************************/
+
+    .thread-info {
+        background-color: hsl(54, 78%, 96%);
+        border-left: solid hsl(54, 33%, 67%) 1px;
+        padding: 1em;
+        color: hsla(0, 0%, 0%, 0.67);
+    }
+
+    #thread-nav {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        display: grid;
+        grid-template-columns: 65px 1fr 1fr;
+        grid-template-areas:
+            "icon explanation explanation "
+            "icon overview overview "
+            "icon prev next";
+        grid-column-gap: 1.5em;
+    }
+
+    #thread-nav .icon-multiple-pages {
+        grid-area: icon;
+        padding: 0.5em;
+        content: url(images/multiple-pages.svg);
+    }
+
+    #thread-nav .explanation {
+        grid-area: explanation;
+        font-size: 85%;
+        color: hsl(0, 0%, 0.33);
+    }
+
+    #thread-nav .prev {
+        grid-area: prev;
+    }
+
+    #thread-nav .prev::before {
+        content: "← Previous Article";
+    }
+
+    #thread-nav .overview {
+        scroll-behavior: smooth;
+    }
+
+    #thread-nav .overview::before {
+        content: "↑";
+        margin-right: 0.5em;
+    }
+
+    #thread-nav .next {
+        grid-area: next;
+        scroll-behavior: smooth;
+    }
+
+    #thread-nav .next::before {
+        content: "Next Article →";
+    }
+
+    #thread-nav .next::before, #thread-nav .prev::before {
+      display: block;
+      font-size: 80%;
+      font-weight: bold;
+      margin-top: 10px;
+      margin-right: 0.5em;
+      text-transform: uppercase;
+    }
+
+
+
+    #thread-nav a.prev,
+    #thread-nav a.next,
+    #thread-nav a.overview {
+        font-size: 80%;
+        font-weight: 600;
+        border-bottom: none;
+        color: #2e6db7;
+        margin-top: 0.25em;
+        letter-spacing: 0.25px;
     }

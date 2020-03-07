@@ -8,7 +8,7 @@
     />
     <meta name="theme-color" content="#000000" />
 
-    <title>Circuits: Zoom In</title>
+    <title>Zoom In: Features and Circuits</title>
   </head>
 
   <body>
@@ -127,7 +127,7 @@
       <figure class="l-body-outset claim-figure">
         <div>
           <img src="./images/atlas-book-crop.png" style="width: 220px;"/>
-          <div style="margin-left: 40px;">
+          <div>
             <h4 style="margin-top: 0px;">Three Speculative Claims about Neural Networks</h4>
 
             <div class="claim">
@@ -139,6 +139,7 @@
                 Often, we find it most helpful to talk about individual neurons,
                 but we'll see that there are some cases where other combinations are a more useful way to analyze networks
                 -- especially when neurons are "polysemantic."
+                (See the <a href="glossary">glossary</a> for a detailed definition.)
               </d-footnote>
               They can be rigorously studied and understood.
             </div>
@@ -150,6 +151,7 @@
                 It consists of a set of features, and the weighted edges that go between them in the original
                 network.
                 Often, we study quite small circuits -- say with less than a dozen features -- but they can also be much larger.
+                (See the <a href="glossary">glossary</a> for a detailed definition.)
               </d-footnote><br>
               These circuits can also be rigorously studied and understood.
             </div>
@@ -160,7 +162,7 @@
             </div>
 
             <div class="figcaption big-only" style="margin-top: 20px;">
-              Left: An <a href="https://distill.pub/2019/activation-atlas/">activation atlas</a> visualizing the space neural network features can represent.
+              Left: An <a href="https://distill.pub/2019/activation-atlas/">activation atlas</a><d-cite bibtex-key="carter2019activation"></d-cite> visualizing the space neural network features can represent.
             </div>
 
           </div>
@@ -192,7 +194,7 @@
       <p class="claim-quote">
         Features are the fundamental unit of neural networks.
         They correspond to directions. They can be rigorously studied and understood.
-      </div>
+      </p>
 
       <p>
         We believe that neural networks consist of meaningful, understandable features. Early layers consist of features like edge or curve detectors, while later layers have features like floppy ear detectors or wheel detectors.
@@ -236,9 +238,18 @@
 
       <h3 id="claim-1-curves">Example 1: Curve Detectors</h3>
 
-      <p>In InceptionV1 mixed3b (an early layer), we observe a family of neurons we call “curve detectors.” These units responded to curved lines and boundaries with a size on the order of 40 pixels. They are also slightly additionally excited by perpendicular lines along the boundary of the curve. Each unit in the family responds to curves in a different orientation, spanning the space.
+      <p>
+        Curve detecting neurons can be found in every non-trivial vision model we've carefully examined.
+        These units are interesting because they straddle the boundary between features the community broadly agrees exist (eg. edge detectors) and features for which there's significant skepticism (more complex shapes).
+      </p>
 
-      <p>There are many other features that respond to curve-like objects including features with a curved sub-component (eg. circles or spirals) or units responding to curve like objects (eg. a corner). But curve detectors remain a highly distinctive family.
+      <p>We'll focus on curve detectors in InceptionV1 layer mixed3b (an early layer). These units responded to curved lines and boundaries with a size on the order of 40 pixels. They are also slightly additionally excited by perpendicular lines along the boundary of the curve, and prefer the two sides of the curve to be different colors. Each unit in the family responds to curves in a different orientation, jointly spanning the full range of orientations.
+
+      <p>
+        It's important to distinguish curve detectors from other units which may seem superficially similar.
+        In particular, there are many units which use curves to detect a curved sub-component (eg. circles, spirals, S-curves, hourglass shape, 3d curvature, ...).
+        There are also units which respond to curve related shapes like lines or sharp corners.
+        We do not consider these units to be curve detectors.
 
       <figure style="grid-column-start: text-start; grid-column-end: text-end;">
         <img src="./images/curves.png"/>
@@ -253,44 +264,13 @@
         Are the curve detectors really curve detectors?
         We’ve dedicated an entire article to exploring this in depth,
         but the summary is that we think the evidence is quite strong.
-        We offer six arguments.
-        The first four arguments are based on the properties of the features in isolation,
-        while the last two arguments rely on circuits, which we’ll discuss later.
+        We offer seven arguments.
+        (The last three arguments are based on circuits, which we’ll discuss in the next section.)
       </p>
       <p>
-        It's worth noting that none of these arguments is curve specific -- they're a useful, general toolkit for test our understanding of other neurons as well.
+        It's worth noting that none of these arguments is curve specific -- they're a useful, general toolkit for testing our understanding of other neurons as well.
       </p>
 
-        <style>
-          .arguments-figure {
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
-            justify-content: space-around;
-          }
-          .arguments-figure > div {
-            max-width: 700px;
-            margin-bottom: 20px;
-            margin-left: 0px;
-            margin-right: 0px;
-            display: flex;
-            align-items: flex-start;
-          }
-          .arguments-figure > div:last-child {
-            margin-bottom: 0px;
-          }
-          .arguments-figure div img {
-            --width: calc(100% - 60px);
-            max-width: 120px;
-            border-radius: 8px;
-            margin-right: 30px;
-            flex-shrink: 3;
-          }
-          .arguments-figure div h4 {
-            margin-top: -4px;
-            margin-bottom: 8px;
-          }
-        </style>
 
         <figure class="arguments-figure">
           <div>
@@ -311,51 +291,76 @@
             <img src="images/arg-synthetic.png" style="filter: brightness(97%);"></img>
             <div>
               <h4>Argument 3: Synthetic Examples</h4>
-              <p>Curve detectors respond as expected to a range of synthetic curves stimuli in varying orientations, curvatures, and backgrounds. They fire only near the expected orientation, and do not fire strongly for straight lines or sharp corners.</p>
+              <p>Curve detectors respond as expected to a range of synthetic curves images created with varying orientations, curvatures, and backgrounds. They fire only near the expected orientation, and do not fire strongly for straight lines or sharp corners.</p>
             </div>
           </div>
           <div>
             <img src="images/arg-tune.png" style="filter: brightness(97%);"></img>
             <div>
               <h4>Argument 4: Joint Tuning</h4>
-              <p>If we take dataset examples that cause a neuron to fire and rotate them, they gradually stop firing and the curve detectors in the next orientation begins firing. This shows that they detect rotated versions of the same thing.</p>
+              <p>If we take dataset examples that cause a neuron to fire and rotate them, they gradually stop firing and the curve detectors in the next orientation begins firing. This shows that they detect rotated versions of the same thing. Together, they tile the full 360 degrees of potential orientations.</p>
             </div>
           </div>
           <div>
             <img src="images/arg-weights.png"></img>
             <div>
-              <h4>Argument 5: Feature implementation</h4>
-              <p>By looking at the circuit constructing the curve detectors, we can literally read a curve detection algorithm off of the weights. We also don’t see anything obviously suggestive of a second case, although there are many smaller weights we don’t understand the role of.</p>
+              <h4>Argument 5: Feature implementation
+                <span style='color: #888; margin-left: 14px;'>(circuit-based argument)</span></h4>
+              <p>By looking at the circuit constructing the curve detectors, we can literally read a curve detection algorithm off of the weights. We also don’t see anything suggestive of a second alternative cause of firing, although there are many smaller weights we don’t understand the role of.</p>
             </div>
           </div>
           <div>
             <img src="images/arg-use.png"></img>
             <div>
-              <h4>Argument 6: Feature usage</h4>
+              <h4>Argument 6: Feature use
+                <span style='color: #888; margin-left: 14px;'>(circuit-based argument)</span></h4>
               <p>The downstream clients of curve detectors are features that naturally involve curves (eg. circles, 3d curvature, spirals…). The curve detectors are used by these clients in the way our theory of the two features would predict.</p>
+            </div>
+          </div>
+          <div>
+            <img src="images/arg-hand.png"></img>
+            <div>
+              <h4>Argument 7: Handwritten Circuits
+                <span style='color: #888; margin-left: 14px;'>(circuit-based argument)</span></h4>
+              <p>Base on our understanding of how curve detectors are implemented,
+                we can do a clean room reimplementation,
+                taking a network with all zero weights and hand setting weights to reimplement curve detection.
+                These weights are an understandable curve detection algorithm, and significantly mimic the original curve detectors.</p>
             </div>
           </div>
         </figure>
 
-      <p>These experiments don’t fully rule out the possibility of some rare secondary case where these neurons also fire. But it seems to us that they establish that curves cause these neurons to fire, that each unit responds to curves at different angular orientations, and that if there are other stimuli that cause them to fire those are rare or cause much weaker firing.
+      <p>These experiments don’t rule out the possibility of some rare secondary case where curve detectors fire for a  different kind of stimulus. But they do seem to establish
+        that curves cause these neurons to fire,
+        that each unit responds to curves at different angular orientations,
+        and that if there are other stimuli that cause them to fire those are rare or cause much weaker activations.
 
       <p>
-        All of these arguments will be explored in detail in the forthcoming article on curve detectors.
+        All of these arguments will be explored in detail in the forthcoming articles on curve detectors and curve detection circuits.
 
       <h3 id="claim-1-hilo">Example 2: High-Low Frequency Detectors</h3>
 
-      <p>Now, you might worry that curve detectors are a special case. Curves are, after all, a very natural visual concept that you might have hoped for a neural network to have. But we can also understand features that would have been very challenging to anticipate in advance.
+      <p>
+        Curve detectors are the kind of feature one might guess a priori exist in neural networks.
+        Give that they're present, it's not surprising we can understand them.
+        But what about features that aren't intuitive? Can we also understand those?
 
-      <p>High-low frequency detectors are units that look for low-frequency patterns on one side of their receptive field, and high-frequency patterns on the other side. We observe them in early vision, again as a family of units with different angular orientations.
+
+      <p>
+        High-low frequency detectors are an example of a less type of features that are, in retrospect, elegant and simple. We find them in early vision. They look for low-frequency patterns on one side of their receptive field, and high-frequency patterns on the other side. Like curve detectors, high-low frequency detectors are found in families of features that look for the  same thing in different orientations.
 
       <figure style="grid-column-start: text-start; grid-column-end: page-end;">
         <img src="./images/high-low.png" />
         <!--<figcaption></figcaption>-->
       </figure>
 
-      <p>(Why is this useful? This seems to be a useful heuristic for detecting the boundaries of objects, especially when the background is out of focus. In future articles, we’ll explore how they’re used in the construction of sophisticated boundary detectors.)
 
-      <p>All six of the techniques we used to interrogate curve neurons can also be used to study high-low frequency neurons with some tweaking -- for instance, rendering synthetic high-low frequency examples. Again we believe these arguments collectively provide strong support for the idea that these really are a family of high-low frequency contrast detectors
+      <p>Why are high-low frequency detectors useful to the network? They seem to be one of several heuristics for detecting the boundaries of objects, especially when the background is out of focus. In future articles, we’ll explore how they’re used in the construction of sophisticated boundary detectors.
+
+        <p>
+          (One hope some researchers have for interpretability is that understanding models will be able to teach us better abstractions for thinking about the world <d-cite bibtex-key="carter2017using"></d-cite>. High-low frequency detectors are, perhaps, an example of a small success in this: a natural, useful visual feature that we didn't anticipate in advance.)
+
+      <p>All six of the techniques we used to interrogate curve neurons can also be used to study high-low frequency neurons with some tweaking -- for instance, rendering synthetic high-low frequency examples. Again we believe these arguments collectively provide strong support for the idea that these really are a family of high-low frequency contrast detectors.
 
       <h3 id="claim-1-dog">Example 3: Pose-Invariant Dog Head Detector</h3>
 
@@ -433,30 +438,6 @@
       <p>What we see are strong positive weights, arranged in the shape of the curve detector. We can think of this as meaning that, at each point along the curve, our curve detector is looking for a “tangent curve” using the earlier curve detector.
 
 
-      <style>
-        .curve-figure {
-          display: flex;
-          flex-direction: row;
-        }
-        .curve-figure div:first-child  {
-          margin-right: 60px;
-        }
-
-        .curve-oreientaions-figure {
-          display: flex;
-          flex-direction: row;
-        }
-        .curve-oreientaions-figure > div:first-child  {
-          flex-basis: 45%;
-          flex-grow: 1;
-        }
-
-        .curve-oreientaions-figure div:last-child {
-          flex-basis: 44.8%;
-          flex-grow: 1;
-        }
-      </style>
-
       <figure class="curve-figure l-body-outset">
         <div>
           <img src="./images/curve-weights-a.png"/>
@@ -474,13 +455,13 @@ at each point along the curve.</figcaption>
 
       <figure class="curve-oreientaions-figure ">
         <div style="flex-basis: 45%;">
-          <div class="figcaption" style="height: 30px; margin-bottom: 20px;">Curve detectors are excited by earlier detectors <br> in <b>similar orientations</b>...</div>
+          <div class="figcaption" style="height: 30px; margin-bottom: 20px;">Curve detectors are <span style="color: #191;">excited</span> by earlier detectors <br> in <b>similar orientations</b>...</div>
           <img src="./images/curve-orientations-a.png" />
         </div>
         <div style="flex-basis: 5%; margin-right: 60px;">
         </div>
         <div style="flex-basis: 44.8%;">
-          <div class="figcaption" style="height: 30px; margin-bottom: 20px;">... and inhibited by earlier detectors in <br> <b>opposing orientations</b>.</div>
+          <div class="figcaption" style="height: 30px; margin-bottom: 20px;">... and <span style="color: #911;">inhibited</span> by earlier detectors in <br> <b>opposing orientations</b>.</div>
           <img src="./images/curve-orientations-b.png" />
         </div>
       </figure>
@@ -489,9 +470,9 @@ at each point along the curve.</figcaption>
 
       <p>And the structure gets richer the closer you look. For example, if you look at an early curve detector and full curve detector in similar, but not exactly the same orientation you can often see it have stronger positive weights on the side of the curve it is more aligned with.
 
-      <p>It’s also worth noting how the weights kind of rotate with the orientation of the curve detector. The symmetry of the problem is reflected as a symmetry in the weights. This is what we call an equivariant circuit, a phenomenon we’ll discuss in detail in a later article.
+      <p>It’s also worth noting how the weights rotate with the orientation of the curve detector. The symmetry of the problem is reflected as a symmetry in the weights. We call circuits with exhibiting this phenomenon "equivariant circuits", and will discuss it in a later article.
 
-      [Read more about the curve detector circuit]
+      <p>[Read more about the curve detector circuit]
 
       <h3 id="claim-2-dog">Circuit 2: Oriented Dog Head Detection</h3>
 
@@ -501,8 +482,8 @@ at each point along the curve.</figcaption>
 
       <p>Within this “dog recognition” system, one circuit strikes us as particularly interesting: a collection of neurons that handle dog heads facing to the left and dog heads facing to the right. Over three layers, the network maintains two mirrored pathways, detecting analogous units facing to the left and to the right. At each step, these pathways try to inhibit each other, sharpening the contrast. Finally, it creates invariant neurons which respond to both pathways.
 
-      <figure class="l-page-outset">
-        <img src="./images/dog-circuit.png"/>
+      <figure style="grid-column-start: page-start; grid-column-end: text-end;">
+        <img src="./images/dog-circuit-2.png"/>
         <!--<figcaption></figcaption>-->
       </figure>
 
@@ -810,89 +791,7 @@ at each point along the curve.</figcaption>
 
 
 
-
-      <style>
-          .comment-info {
-              background-color: hsl(54, 78%, 96%);
-              border-left: solid hsl(54, 33%, 67%) 1px;
-              padding: 1em;
-              color: hsla(0, 0%, 0%, 0.67);
-          }
-
-          #thread-nav {
-              margin-top: 0;
-              margin-bottom: 1.5rem;
-              display: grid;
-              grid-template-columns: 65px 1fr 1fr;
-              grid-template-areas:
-                  "icon explanation explanation "
-                  "icon overview overview "
-                  "icon prev next";
-              grid-column-gap: 1.5em;
-          }
-
-          #thread-nav .icon-multiple-pages {
-              grid-area: icon;
-              padding: 0.5em;
-              content: url(images/multiple-pages.svg);
-          }
-
-          #thread-nav .explanation {
-              grid-area: explanation;
-              font-size: 85%;
-              color: hsl(0, 0%, 0.33);
-          }
-
-          #thread-nav .prev {
-              grid-area: prev;
-          }
-
-          #thread-nav .prev::before {
-              content: "← Previous Article";
-          }
-
-          #thread-nav .overview {
-              scroll-behavior: smooth;
-          }
-
-          #thread-nav .overview::before {
-              content: "↑";
-              margin-right: 0.5em;
-          }
-
-          #thread-nav .next {
-              grid-area: next;
-              scroll-behavior: smooth;
-          }
-
-          #thread-nav .next::before {
-              content: "Next Article →";
-          }
-
-          #thread-nav .next::before, #thread-nav .prev::before {
-            display: block;
-            font-size: 80%;
-            font-weight: bold;
-            margin-top: 10px;
-            margin-right: 0.5em;
-            text-transform: uppercase;
-          }
-
-
-
-          #thread-nav a.prev,
-          #thread-nav a.next,
-          #thread-nav a.overview {
-              font-size: 80%;
-              font-weight: 600;
-              border-bottom: none;
-              color: #2e6db7;
-              margin-top: 0.25em;
-              letter-spacing: 0.25px;
-          }
-      </style>
-
-      <section id="thread-nav" class="comment-info">
+      <section id="thread-nav" class="thread-info">
           <div class="icon-multiple-pages"></div>
           <p class="explanation">
               This article is part of the Circuits thread, a collection of short articles and commentary delving into the inner workings of neural networks.
@@ -911,6 +810,18 @@ at each point along the curve.</figcaption>
     </d-article>
 
     <d-appendix>
+      <h3 id="glossary">Glossary</h3>
+
+      <p><b>Circuit</b> - A subgraph of a neural network. Nodes correspond to neurons or linear combinations of neurons.
+        Two nodes have an edge between them if they are in adjacent layers. The edges have weights which are the weights between those neurons (or <i>n<sub>1</sub>Wn<sub>2</sub><sup style="margin-left:-4px;">T</sup></i> if the nodes are linear combinations). For convolutional layers, the weights are 2D matrices representing the weights for  different relative positions of the layers.</p>
+      <p><b>Client Neuron</b> - A neuron in a later layer which relies on a particular earlier neuron. For example, a circle detector is a client of curve detectors.</p>
+      <p><b>Direction</b> - A linear combination of neurons in a layer. Equivalently, a vector in the representation of a layer. A direction can be an individual neuron (which is a basis direction of the vector space). For intuition about directions as an object, see <a href="https://distill.pub/2018/building-blocks/">Building Blocks</a><d-cite bibtex-key="olah2018building"></d-cite> (in particular, the section titled "What Does the Network See?") and <a href="https://distill.pub/2019/activation-atlas/">Activation Atlases</a><d-cite bibtex-key="carter2019activation"></d-cite>.</p>
+      <p><b>Downstream / Upstream</b> - In a later layer / In an earlier layer.</p>
+      <p><b>Feature</b> - A scalar function of the input. In this essay, neural network features are <b>directions</b>, and often simply individual neurons. We claim such features in neural networks are typically <b>meaningful features</b> which can be rigorously studied (<a href="claim-1">Claim 1</a>).</p>
+      <p><b>Meaningful Feature</b> - A feature that genuinely responds to an articulable property of the input, such as the presence of a curve or a floppy ear. Meaningful features may still be noisy or imperfect.</p>
+      <p><b>Representation</b> - The vector space formed by the activations of all neurons in a layer, with vectors of the form <i>(activation of neuron 1, activation of neuron 2, ...)</i>. A representation can be thought of as the collection of all features that exist in a layer. For intuition about representations in vision models, see <a href="https://distill.pub/2019/activation-atlas/">Activation Atlases</a><d-cite bibtex-key="carter2019activation"></d-cite>.</p>
+
+
       <h3>Historical Note</h3>
       <p>
         The content of this essay was previously presented as a keynote talk by Chris Olah at <a href="https://visxai.io/">VISxAI</a> 2019.
@@ -920,14 +831,14 @@ at each point along the curve.</figcaption>
       <h3>Acknowledgments</h3>
       <p>
         All our work understanding InceptionV1 is indebted to Alex Mordvintsev, who's early explorations of vision models paved pathways we still follow.
-        The careful comments the criticism of Brice Menard were also invaluable in sharpening this essay.
-        We're also deeply grateful to Nick Barry, and Sophia Sanborn for their deep engagement on potential connections between our work and neuroscience,
+        We're deeply grateful to Nick Barry, and Sophia Sanborn for their deep engagement on potential connections between our work and neuroscience,
         and to Tom McGrath who pointed out the similarities between Kuhn's "pre-paradigmatic science" and the state interpretability as a field to us.
+        The careful comments and criticism of Brice Menard were also invaluable in sharpening this essay.
       </p>
       <p>
         In addition to Nick and Sophia's deep engagement, we're more generally appreciative of the neuroscience community's engagement with us,
         especially in sharing hard-won lessons about methodological weaknesses in our work.
-        In particular, we appreciate Brian Wandell pushing us in 2018 on not usng tuning curves and the importance of families of neurons, which we think has made our  work much stronger.
+        In particular, we appreciate Brian Wandell pushing us in 2018 on not using tuning curves and the importance of families of neurons, which we think has made our  work much stronger.
         We're also very grateful for the comments of Mareike Grotheer, Natalia Bilenko, Bruno Olshausen, and Jascha Sohl-Dickstein.
         [MORE]
         We think we have a lot to learn from the neuroscience community and are excited to continue doing so.
@@ -939,7 +850,7 @@ at each point along the curve.</figcaption>
         (Stefan has additionally run with many of these ideas, and we're excited to see his work in future articles in this thread!)
       </p>
       <p>
-        Finally, we're grateful for the institutional support of OpenAI, and for the support and comments of all our colleagues and friends across institutions, including Dario Amodei, Daniela Amodei, Taco Cohen, Katarina Slama, Alethea Power, Jacob Hilton, Jacob Steinhardt, Tom Brown, Preetum Nakkiran, Ilya Sutskever, Ryan Lowe, and Arvind Satyanarayan.
+        Finally, we're grateful for the institutional support of OpenAI, and for the support and comments of all our colleagues and friends across institutions, including Dario Amodei, Daniela Amodei, Taco Cohen, Katarina Slama, Alethea Power, Jacob Hilton, Jacob Steinhardt, Tom Brown, Preetum Nakkiran, Ilya Sutskever, Ryan Lowe, Erin McCloskey, and Arvind Satyanarayan.
         [MORE]
       </p>
 
