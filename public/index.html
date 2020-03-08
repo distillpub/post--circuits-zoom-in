@@ -679,7 +679,7 @@ at each point along the curve.</figcaption>
             <li>
               <div class="info">
                 <h4>InceptionV1</h4>
-                <span class="figcaption">Szegedy et&#8239;al.<d-cite key="szegedy2015googlenet"></d-cite></span>
+                <span class="figcaption">Szegedy et&#8239;al.<d-cite key="szegedy2015going"></d-cite></span>
               </div>
               <div class="images">
                 <!-- [379, 406, 385, 343, 342, 388, 340, 330, 349, 324] -->
@@ -737,7 +737,7 @@ at each point along the curve.</figcaption>
             <li>
               <div class="info">
                 <h4>InceptionV1t</h4>
-                <span class="figcaption">Szegedy et&#8239;al.<d-cite key="szegedy2015googlenet"></d-cite></span>
+                <span class="figcaption">Szegedy et&#8239;al.<d-cite key="szegedy2015going"></d-cite></span>
               </div>
               <div class="images">
                 <img src="images/universality/hilo/GoogLeNet/unit-0.png"/>
@@ -778,7 +778,7 @@ at each point along the curve.</figcaption>
       <p>
         These results have led us to believe that a weak version of the universality hypothesis is likely true, but further work will be needed to understand if the apparent universality of some low-level vision features is the exception or the rule.
         If it turns out that the universality hypothesis is broadly true in neural networks,
-        it will be really tempting to speculate: might biological neural networks also learn similar features?
+        it will be tempting to speculate: might biological neural networks also learn similar features?
 
       <hr>
 
@@ -827,16 +827,18 @@ at each point along the curve.</figcaption>
 
       <h2 id="closing">Closing Thoughts</h2>
 
-      <p>We take it for granted that the microscope is an important scientific instrument. It’s practically a symbol of science. But this wasn’t always the case, and microscopes didn’t initially take off as a scientific tool. In fact, they seem to have languished for around fifty years. The turning point was when Robert Hooke published Micrographia, a collection of drawings of things he’d seen using a microscope, including the first picture of a cell.
+      <p>We take it for granted that the microscope is an important scientific instrument. It’s practically a symbol of science. But this wasn’t always the case, and microscopes didn’t initially take off as a scientific tool. In fact, they seem to have languished for around fifty years. The turning point was when Robert Hooke published Micrographia<d-cite bibtex-key="hooke1666micrographia"></d-cite>, a collection of drawings of things he’d seen using a microscope, including the first picture of a cell.
 
       <p>
-        My impression is that there is some anxiety in the interpretability community that we aren’t taken very seriously.
+        Our impression is that there is some anxiety in the interpretability community that we aren’t taken very seriously.
         That this research is too qualitative.
-        That it isn't very scientific.
+        That it isn't scientific.
         But the lesson of the microscope and cellular biology is that perhaps this is expected.
       </p>
 
-      <p>The discovery of cells was, after all, a qualitative research result. And it changed the world.</p>
+      <p>
+
+        The discovery of cells was a qualitative research result, and it changed the world.</p>
 
       <br><br><br><br>
 
@@ -845,7 +847,7 @@ at each point along the curve.</figcaption>
       <section id="thread-nav" class="thread-info">
           <div class="icon-multiple-pages"></div>
           <p class="explanation">
-              This article is part of the Circuits thread, a collection of short articles and commentary by an open scientific collaboration delving into the inner workings of neural networks.<br>
+              This article is part of the <a style="border-bottom: none; color: #2e6db7;">Circuits thread</a>, a collection of short articles and commentary by an open scientific collaboration delving into the inner workings of neural networks.<br>
               <a style="border-bottom: none; color: #2e6db7; margin-left: 0px;">🔬Learn how to get involved.</a>
               <!--<a class="overview" href="#">Thread Overview</a>-->
           </p>
@@ -948,20 +950,20 @@ at each point along the curve.</figcaption>
       <p>
         In addition to Nick and Sophia's deep engagement, we're more generally appreciative of the neuroscience community's engagement with us,
         especially in sharing hard-won lessons about methodological weaknesses in our work.
-        In particular, we appreciate Brian Wandell pushing us in 2018 on not using tuning curves and the importance of families of neurons, which we think has made our  work much stronger.
-        We're also very grateful for the comments of Mareike Grotheer, Natalia Bilenko, Bruno Olshausen, Philip Sabes, Paul Merolla, James Redd, Thong-Wei Koh, and Jascha Sohl-Dickstein.
-        [MORE]
+        In particular, we appreciate Brian Wandell pushing us in 2019 on not using tuning curves and the importance of families of neurons, which we think has made our work much stronger.
+        We're also very grateful for the comments and support of Mareike Grotheer, Natalia Bilenko, Bruno Olshausen, Philip Sabes, Paul Merolla, James Redd, Thong-Wei Koh, and Ivan Alvarez.
         We think we have a lot to learn from the neuroscience community and are excited to continue doing so.
       </p>
       <p>
-        One of the  biggest privileges of working on circuits has been the open collaboration and feedback in the <a href="https://slack.distill.pub">Distill slack</a>'s #circuits channel.
+        One of the privileges of working on circuits has been the open collaboration and feedback in the <a href="https://slack.distill.pub">Distill slack</a>'s #circuits channel.
         We've especially appreciated the detailed feedback we received from Stefan Sietzen, Shahab Bakhtiari, and Flora Liu.
-        [MORE]
         (Stefan has additionally run with many of these ideas, and we're excited to see his work in future articles in this thread!)
       </p>
       <p>
-        Finally, we're grateful for the institutional support of OpenAI, and for the support and comments of all our colleagues and friends across institutions, including Dario Amodei, Daniela Amodei, Taco Cohen, Katarina Slama, Alethea Power, Jacob Hilton, Jacob Steinhardt, Tom Brown, Preetum Nakkiran, Ilya Sutskever, Ryan Lowe, Erin McCloskey, and Arvind Satyanarayan.
-        [MORE]
+        We benefitted greatly from the comments of many people on meta-science and framing questions around this essay, but especially appreciated the comments of Arvind Satyanarayan, Miles Brundage, Amanda Askell, Aaron Courville, and Martin Wattenberg.
+        We're grateful to Taco Cohen, Tess Smidt, and Sara Sabour for their extremely helpful comments on equivariance.
+        We're grateful to Chelsea Voss for helpful conversation and references about systems biology and circuit motifs.
+        Finally, we're grateful for the institutional support of OpenAI, and for the support and comments of all our colleagues and friends across institutions, including Dario Amodei, Daniela Amodei, Jonathan Uesato, Laura Ball, Katarina Slama, Alethea Power, Jacob Hilton, Jacob Steinhardt, Tom Brown, Preetum Nakkiran, Ilya Sutskever, Ryan Lowe, Erin McCloskey,  Eli Chen, Fred Hohman, Jason Yosinski, Pallavi Koppol, Reiichrio Nakano, Sam McCandlish, Daniel Dewey, Anna Goldie, Jochen Görtler, Hendrik Strobelt, Ravi Chunduru, Tom White, Roger Grosse, David Duvenaud, Daniel Burkhardt, Jeff Clune, Christian Szegedy, Alec Radford, Alex Ray, Evan Hubinger, Scott Gray, Augustus Odena, Mikhial Pavlov,Jascha  Sohl-Dickstein and Kris Sankaran.
       </p>
 
 
