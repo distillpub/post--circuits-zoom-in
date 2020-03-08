@@ -39,6 +39,7 @@
             <li><a href="#claim-2-curves">Circuit 1: Curve Detectors</a></li>
             <li><a href="#claim-2-dog">Circuit 2: Oriented Dog Head Detection</a></li>
             <li><a href="#claim-2-superposition">Circuit 3: Cars in Superposition</a></li>
+            <li><a href="#claim-2-motifs">Circuit Motifs</a></li>
           </ul>
           <div><a href="#claim-3">Claim 3: Universality</a></div>
           <div><a href="#natural-science">Interpretability as a Natural Science</a></div>
@@ -222,6 +223,7 @@
 
       <p>
         This introductory essay will only give an overview of a couple examples we think are illustrative, but it will be followed both by deep dives carefully characterizing individual features, and broad overviews sketching out all the features we understand to exist.
+        We will take our examples from InceptionV1<d-cite bibtex-key="szegedy2015going"></d-cite> for now, but believe these claims hold generally and will discuss other models in the final section on universality.
 
       <p>
         Regardless of whether we're correct or mistaken about meaningful features,
@@ -512,7 +514,7 @@ at each point along the curve.</figcaption>
         <!--<figcaption></figcaption>-->
       </figure>
 
-      <p>We call this pattern “unioning over cases”. The network separately detects two cases (left and right) and then unions over them to create invariant units.
+      <p>We call this pattern “unioning over cases”. The network separately detects two cases (left and right) and then unions over them to create invariant "multifaceted"<d-cite bibtex-key="nguyen2016multifaceted"></d-cite> units.
 
       <p>This circuit is striking because the network could have easily done something much less sophisticated.
         It could easily create invariant neurons by not caring very much about where the eyes, fur and snout went, and just looking for a jumble of them together.
@@ -536,16 +538,32 @@ at each point along the curve.</figcaption>
 
       <p>But then the model does something surprising. Rather than create another pure car detector at the next layer, it spreads its car feature over a number of neurons that seem to primarily be doing something else &mdash; in particular, dog detectors.
 
-        <figure>
+        <figure class="l-body-outset">
           <img src="./images/superposition.png"/>
           <!--<figcaption></figcaption>-->
         </figure>
 
-      <p>This circuit suggests that polysemantic neurons are, in some sense, deliberate. That is, you could imagine a world where the process of detecting cars and dogs were deeply intertwined in the model for some reason, and as a result polysemantic neurons were difficult to avoid. But what we’re seeing here is that the model had a “pure neuron” and then mixed it up with other features.
+      <p>This circuit suggests that polysemantic neurons are, in some sense, deliberate. That is, you could imagine a world where the process of detecting cars and dogs was deeply intertwined in the model for some reason, and as a result polysemantic neurons were difficult to avoid. But what we’re seeing here is that the model had a “pure neuron” and then mixed it up with other features.
 
       <p>We call this phenomenon “superposition.”
 
       <p>Why would it do such a thing? We believe superposition allows the model to use fewer neurons, conserving them for more important tasks. As long as cars and dogs don’t co-occur, the model can accurately retrieve the dog feature in a later layer, allowing it to store the feature without dedicating a neuron.<d-footnote>Fundamentally, this is a property of the geometry of high-dimensional spaces, which only allow for n orthogonal vectors, but exponentially many almost orthogonal vectors. </d-footnote>
+
+      <h3 id="claim-2-motifs">Circuit Motifs</h3>
+
+      <p>As we've studied circuits throughout InceptionV1 and other models,
+        we've seen the same abstract patterns over and over.
+        Equivariance, as we saw with the curve detectors.
+        Unioning over cases, as we saw with the pose-invariant dog head detector.
+        Superposition, as we saw with the car detector.
+
+      <p>In biology, a circuit motif <d-cite bibtex-key="alon2019introduction"></d-cite> is a recurring pattern in complex graphs like transcription networks or biological neural networks.
+        Motifs are helpful because understanding one motif can give researchers leverage on all graphs where it occurs.
+
+      <p>
+        We think it's quite likely that studying motifs will be important in understanding the circuits of artificial neural networks. In the long run, it may be more important than the study of individual circuits.
+        At the same time, we expect investigations of motifs to be well served by us first building up a solid foundation well understood circuits first.
+
 
       <hr>
 
@@ -555,7 +573,7 @@ at each point along the curve.</figcaption>
 
       <p class="claim-quote">Analogous features and circuits form across models and tasks.
 
-      <p>In some ways, it may not be that surprising once you accept the earlier claims. It’s a widely accepted fact that the first layer of vision models trained on natural images will learn Gabor filters. There’s also significant research showing that, in some aggregate sense, neural networks learn representations at hidden layers that share a lot of information. Once you accept that there are meaningful features in later layers, is it surprising that the same features would also form in layers beyond the first one? And once you believe there are analogous features, isn’t it expected that they’d connect in the same ways?
+      <p>In some ways, it may not be that surprising once you accept the earlier claims. It’s a widely accepted fact that the first layer of vision models trained on natural images will learn Gabor filters. There’s also several papers showing that, in some aggregate sense, neural networks learn representations at hidden layers that share a lot of information <d-cite bibtex-key="raghu2017svcca,kornblith2019similarity"></d-cite> and even highly correlated neurons<d-cite bibtex-key="li2015convergent"></d-cite>. Once you accept that there are meaningful features in later layers, is it surprising that the same features would also form in layers beyond the first one? And once you believe there are analogous features, isn’t it expected that they’d connect in the same ways?
 
       <p>Unlike the first two claims, it wouldn’t be completely fatal to circuits research if this claim turned out to be false. But it does greatly inform what kind of research makes sense. We introduced circuits as a kind of “cellular biology of deep learning.” But imagine a world where every species had cells with a completely different set of organelles and proteins. Would it still make sense to study cells in general, or would we limit ourselves to the narrow study of a few kinds of particularly important species of cells? Similarly, imagine the study of anatomy in a world where every species of animal had a completely unrelated anatomy: would we seriously study anything other than humans and a couple domestic animals?
 
@@ -819,13 +837,17 @@ at each point along the curve.</figcaption>
       <section id="thread-nav" class="thread-info">
           <div class="icon-multiple-pages"></div>
           <p class="explanation">
-              This article is part of the Circuits thread, a collection of short articles and commentary delving into the inner workings of neural networks.
-              Circuits aims to update weekly on Tuesdays.
-              <a class="overview" href="#">Thread Overview</a>
+              This article is part of the Circuits thread, a collection of short articles and commentary by an open scientific collaboration delving into the inner workings of neural networks.<br>
+              <a style="border-bottom: none; color: #2e6db7; margin-left: 0px;">🔬Learn how to get involved.</a>
+              <!--<a class="overview" href="#">Thread Overview</a>-->
           </p>
 
-          <a class="prev" href="#">An Overview of early vision</a>
-          <a class="next" href="#">Circuit Detectors</a>
+          <a class="prev" href="#">Thread Overview</a>
+          <!--<a class="next" href="#">An Overview of early vision</a>-->
+          <div class="next" href="#" style="color:#666;">An Overview of Early Vision
+            <div style="color:#999; font-size: 90%; line-height: 140%; margin-top: 4px;">Under discussion in <a href="http://slack.distill.pub/">Distill slack</a> <code>#circuits</code></div>
+            <div style="color:#AAA; font-size: 90%; line-height: 140%;"> Anticipated publication next Tuesday, 3/17.</div>
+          </div>
       </section>
 
 
@@ -834,22 +856,48 @@ at each point along the curve.</figcaption>
 
     </d-article>
 
+
+    <style>
+      @media(min-width: 700px){
+        .glossary > p {
+          margin-left: 20px;
+        }
+        .glossary > p > b {
+          margin-left: -20px;
+        }
+        .glossary > p.sub > b {
+          --margin-left: 0px;
+        }
+      }
+    </style>
     <d-appendix>
       <h3 id="glossary">Glossary</h3>
 
-      <p><b>Circuit</b> - A subgraph of a neural network. Nodes correspond to neurons or linear combinations of neurons.
+      <p>
+        This essay introduces some new terminology, and also uses some terminology which isn't common.
+        To help, we provide the following glossary:
+      </p>
+
+      <div class="glossary">
+      <p><b>Circuit</b> - A subgraph of a neural network. Nodes correspond to neurons or directions (linear combinations of neurons).
         Two nodes have an edge between them if they are in adjacent layers. The edges have weights which are the weights between those neurons (or <i>n<sub>1</sub>Wn<sub>2</sub><sup style="margin-left:-4px;">T</sup></i> if the nodes are linear combinations). For convolutional layers, the weights are 2D matrices representing the weights for  different relative positions of the layers.</p>
+      <p><b>Circuit Motif</b> - A recurring, abstract pattern found in circuits, such as equivariance. Inspired by the use of circuit motifs in systems biology <d-cite bibtex-key="alon2019introduction"></d-cite>.</p>
+
       <p><b>Client Neuron</b> - A neuron in a later layer which relies on a particular earlier neuron. For example, a circle detector is a client of curve detectors.</p>
       <p><b>Direction</b> - A linear combination of neurons in a layer. Equivalently, a vector in the representation of a layer. A direction can be an individual neuron (which is a basis direction of the vector space). For intuition about directions as an object, see <a href="https://distill.pub/2018/building-blocks/">Building Blocks</a><d-cite bibtex-key="olah2018building"></d-cite> (in particular, the section titled "What Does the Network See?") and <a href="https://distill.pub/2019/activation-atlas/">Activation Atlases</a><d-cite bibtex-key="carter2019activation"></d-cite>.</p>
       <p><b>Downstream / Upstream</b> - In a later layer / In an earlier layer.</p>
-      <p><b>Feature</b> - A scalar function of the input. In this essay, neural network features are <b>directions</b>, and often simply individual neurons. We claim such features in neural networks are typically <b>meaningful features</b> which can be rigorously studied (<a href="claim-1">Claim 1</a>).</p>
-      <p><b>Meaningful Feature</b> - A feature that genuinely responds to an articulable property of the input, such as the presence of a curve or a floppy ear. Meaningful features may still be noisy or imperfect.</p>
+      <p><b>Feature</b> - A scalar function of the input. In this essay, neural network features are directions, and often simply individual neurons. We claim such features in neural networks are typically meaningful features which can be rigorously studied (<a href="claim-1">Claim 1</a>).</p>
+      <p class="sub"><b>Meaningful Feature</b> - A feature that genuinely responds to an articulable property of the input, such as the presence of a curve or a floppy ear. Meaningful features may still be noisy or imperfect.</p>
+      <p class="sub"><b>Polysemantic Feature</b> - A feature that responds to multiple unrelated latent variables, such as the cat/car neuron <d-cite bibtex-key="olah2017feature"></d-cite>. This can be seen a special case of a "multifaceted features"<d-cite bibtex-key="nguyen2016multifaceted"></d-cite> which responds to multiple different cases, but include both "real" multi-faceted features such as the pose-invariant dog head or polysemantic neurons. Contrast with pure.</p>
+      <p class="sub"><b>Pure Feature</b> - A feature which responds to only a single latent variable. Contrast with polysemantic.</p>
+      <p class="sub"><b>Universal Feature</b> - A feature which reliably forms across different models and tasks.</p>
       <p><b>Representation</b> - The vector space formed by the activations of all neurons in a layer, with vectors of the form <i>(activation of neuron 1, activation of neuron 2, ...)</i>. A representation can be thought of as the collection of all features that exist in a layer. For intuition about representations in vision models, see <a href="https://distill.pub/2019/activation-atlas/">Activation Atlases</a><d-cite bibtex-key="carter2019activation"></d-cite>.</p>
+      </div>
 
 
       <h3>Historical Note</h3>
       <p>
-        The content of this essay was previously presented as a keynote talk by Chris Olah at <a href="https://visxai.io/">VISxAI</a> 2019.
+        The ideas in this introductory essay were previously presented as a keynote talk by Chris Olah at <a href="https://visxai.io/">VISxAI</a> 2019.
         It was also informally presented at MILA, the Vector Institute, the Redwood Center for Neuroscience, and a private workshop.
       </p>
 
@@ -864,7 +912,7 @@ at each point along the curve.</figcaption>
         In addition to Nick and Sophia's deep engagement, we're more generally appreciative of the neuroscience community's engagement with us,
         especially in sharing hard-won lessons about methodological weaknesses in our work.
         In particular, we appreciate Brian Wandell pushing us in 2018 on not using tuning curves and the importance of families of neurons, which we think has made our  work much stronger.
-        We're also very grateful for the comments of Mareike Grotheer, Natalia Bilenko, Bruno Olshausen, and Jascha Sohl-Dickstein.
+        We're also very grateful for the comments of Mareike Grotheer, Natalia Bilenko, Bruno Olshausen, Philip Sabes, Paul Merolla, James Redd, Thong-Wei Koh, and Jascha Sohl-Dickstein.
         [MORE]
         We think we have a lot to learn from the neuroscience community and are excited to continue doing so.
       </p>
