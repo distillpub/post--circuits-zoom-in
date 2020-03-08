@@ -44,6 +44,7 @@
           <div><a href="#claim-3">Claim 3: Universality</a></div>
           <div><a href="#natural-science">Interpretability as a Natural Science</a></div>
           <div><a href="#closing">Closing Thoughts</a></div>
+          <div><a href="#glossary">Glossary</a></div>
         </nav>
       </d-contents>
 
@@ -51,32 +52,33 @@
       <h2 id="introduction">Introduction</h2>
       <p>
       Many important transition points in the history of science have been moments when science “zoomed in.”
-      At these points, we develop some visualization or tool that allows us to see the world in a new level of detail, and a new field of science develops to study the world through this lens.
+      At these points, we develop a visualization or tool that allows us to see the world in a new level of detail, and a new field of science develops to study the world through this lens.
       </p>
       <p>
       For example, microscopes let us see cells, leading to cellular biology. Science zoomed in. Several techniques including x-ray crystallography let us see DNA, leading to the molecular revolution. Science zoomed in. Atomic theory. Subatomic particles. Neuroscience. Science zoomed in.
       </p>
       <p>
       These transitions weren’t just a change in precision: they were qualitative changes in what the objects of scientific inquiry are.
-      For example, cellular biology isn’t just more careful zoology. It's a new kind of inquiry that dramatically shifts what we can understand.
+      For example, cellular biology isn’t just more careful zoology.
+      It's a new kind of inquiry that dramatically shifts what we can understand.
       </p></div>
 
       <figure class="l-body-outset">
         <img src="./images/micrographia2.png" />
         <figcaption>
-          Hooke’s Micrographia revealed a rich microscopic world as seen
+          Hooke’s Micrographia<d-cite bibtex-key="hooke1666micrographia"></d-cite> revealed a rich microscopic world as seen
           through a microscope, including the initial discovery of cells.
           <br />Images from the National Library of Wales.
         </figcaption>
       </figure>
 
-      <p>Just as the microscope revealed a tantalizing microscopic world, visualizations of artificial neural networks have revealed tantalizing hints and glimpses of a rich inner world within our models. This has led us to wonder: Is it possible that deep learning is at a similar transition point? Could there be a kind of cellular biology or neuroscience analogue of deep learning? And if so, what might such a field look like? What are its objects of study, and what would rigorous inquiry into them look like?</p>
+      <p>Just as the early microscope hinted at a new world of cells and microorganisms, visualizations of artificial neural networks have revealed tantalizing hints and glimpses of a rich inner world within our models. This has led us to wonder: Is it possible that deep learning is at a similar transition point? Could there be a kind of cellular biology or neuroscience analogue of deep learning? And if so, what might such a field look like? What are its objects of study, and what would rigorous inquiry into them involve?</p>
 
       <p>Our tentative answer is that you get the study of features and the neural circuits that implement them.</p>
 
-      <p>Exploring these objects over the last year and a half has led to the circuits project, an open scientific collaboration hosted on the Distill slack. In future articles, the collaboration will publish detailed explorations of this inner world. But before we do that, we wanted to offer a high-level overview of our thinking and some of the working principles that we’ve found useful in this line of research.</p>
+      <p>Exploring these objects over the last year and a half has led to the circuits project, an open scientific collaboration hosted on the <a href="http://slack.distill.pub/">Distill slack</a>. In future articles, the collaboration will publish detailed explorations of this inner world. But before we do that, we wanted to offer a high-level overview of our thinking and some of the working principles that we’ve found useful in this line of research.</p>
 
-      <figure class="l-body-outset" style="margin-bottom: 0px;">
+      <figure class="l-body-outset" style="margin-bottom: 20px;">
         <img src="./images/deepdream.png" />
         <figcaption>
           Over the last few years, we've seen many incredible visualizations<d-cite bibtex-key='karpathy2015visualizing,erhan2009visualizing,olah2017feature,simonyan2013deep,nguyen2015deep,mordvintsev2015inceptionism,nguyen2016plug,zeiler2014visualizing,fong2017interpretable,kindermans2017patternnet,reif2019visualizing,carter2019activation'></d-cite> and analyses<d-cite bibtex-key='mikolov2013distributed,radford2017learning,zhou2014object,netdissect2017'></d-cite> hinting at a rich world of internal features in modern
@@ -88,7 +90,7 @@
 
       <h2 id="three-speculative-claims">Three Speculative Claims</h2>
 
-      <p>One of the earliest articulations of something approaching modern cell theory were three claims by Theodor Schwann — who you may know for Schwann cells — in 1839:</p>
+      <p>One of the earliest articulations of something approaching modern cell theory was three claims by Theodor Schwann — who you may know for Schwann cells — in 1839:</p>
 
 
       <figure class="l-body-outset claim-figure">
@@ -122,7 +124,7 @@
 
       <p>The first two of these claims are likely familiar, persisting in modern cellular theory. The third is likely not familiar, since it turned out to be horribly wrong.</p>
 
-      <p>We believe there’s a lot of value in articulating a strong version of something you believe may be true, even it might be false like Schwann’s third claim. In this spirit, we offer three claims about neural networks. They are intended both as empirical claims about the nature of neural networks, and also as normative claims about how it’s useful to understand neural networks.</p>
+      <p>We believe there’s a lot of value in articulating a strong version of something you believe may be true, even it might be false like Schwann’s third claim. In this spirit, we offer three claims about neural networks. They are intended both as empirical claims about the nature of neural networks, and also as normative claims about how it’s useful to understand them.</p>
 
 
       <figure class="l-body-outset claim-figure">
@@ -134,7 +136,7 @@
             <div class="claim">
               <div class="claim-header">Claim 1: Features</div>
               Features are the fundamental unit of neural networks.<br>
-              These features correspond to directions.<d-footnote>
+              They correspond to directions.<d-footnote>
                 By "direction" we mean a linear combination of neurons in a layer.
                 You can think of this as a direction vector in the vector space of activations of neurons in a given layer.
                 Often, we find it most helpful to talk about individual neurons,
@@ -142,7 +144,7 @@
                 -- especially when neurons are "polysemantic."
                 (See the <a href="glossary">glossary</a> for a detailed definition.)
               </d-footnote>
-              They can be rigorously studied and understood.
+              These features can be rigorously studied and understood.
             </div>
 
             <div class="claim">
@@ -172,9 +174,7 @@
 
 
 
-      <p>These claims are deliberately speculative. But we believe that, if true, they could be a basis for a “zoomed in” field. And we think that there’s enough evidence pointing in the direction of all three of these claims for them to be worth serious consideration and investigation.</p>
-
-      <p>In the following sections, we’ll discuss each of these claims individually and present some of the evidence that has led us to believe they might be true.</p>
+      <p>These claims are deliberately speculative. But we believe that, if true, they would be a basis for a “zoomed in” field. In the following sections, we’ll discuss each one individually and present some of the evidence that has led us to believe they might be true.</p>
 
 
 
@@ -198,9 +198,10 @@
       </p>
 
       <p>
-        We believe that neural networks consist of meaningful, understandable features. Early layers consist of features like edge or curve detectors, while later layers have features like floppy ear detectors or wheel detectors.
+        We believe that neural networks consist of meaningful, understandable features. Early layers contain features like edge or curve detectors, while later layers have features like floppy ear detectors or wheel detectors.
         The community is divided on whether this is true.
-        While many researchers treat the existence of meaningful neurons as an almost trivial fact and there's a small literature studying them, many others are deeply skeptical and believe that past cases of neurons that seemed to track meaningful latent variables are mistaken.
+        While many researchers treat the existence of meaningful neurons as an almost trivial fact
+        -- there's even a small literature studying them -- many others are deeply skeptical and believe that past cases of neurons that seemed to track meaningful latent variables were mistaken.
       <d-footnote>The community disagreement on meaningful features is hard to pin down, and only partially expressed in the literature. Foundational descriptions of deep learning often describe neural networks as detecting a hierarchy of meaningful features <d-cite bibtex-key='lecun2015deep'></d-cite>, and a number of papers have been written demonstrating seemingly meaningful features in different domains domains<d-cite bibtex-key='mikolov2013distributed,karpathy2015visualizing,radford2017learning,zhou2014object,olah2017feature,netdissect2017'></d-cite>. At the same time, a more skeptical parallel literature has developed suggesting that neural networks primarily or only focus on texture, local structure, or imperceptible patterns <d-cite bibtex-key='jo2017measuring,geirhos2018imagenet,brendel2019approximating,ilyas2019adversarial'></d-cite>, that meaningful features, when they exist, are less important than uniterptetable ones <d-cite bibtex-key='morcos2018importance'> and that seemingly interpretable neurons may be misunderstood <d-cite bibtex-key='donnelly2019interpretability'></d-cite>. Although many of these papers express a highly nuanced view, that isn’t always how they’ve been understood. A number of media articles have been written embracing strong versions of these views, and we anecdotally find that the belief that neural networks don’t understand anything more than texture is quite common. Finally, people often have trouble articulating their exact views, because they don’t have clear language for articulating nuances between “a texture detector highly correlated with an object” and “an object detector.”</d-footnote>
       Nevertheless, thousands of hours of studying individual neurons have led us to believe the typical case is that neurons (or in some cases, other directions in the vector space of neuron activations) are understandable.
 
@@ -242,10 +243,12 @@
 
       <p>
         Curve detecting neurons can be found in every non-trivial vision model we've carefully examined.
-        These units are interesting because they straddle the boundary between features the community broadly agrees exist (eg. edge detectors) and features for which there's significant skepticism (more complex shapes).
+        These units are interesting because they straddle the boundary between features the community broadly agrees exist (eg. edge detectors) and features for which there's significant skepticism (eg. more complex shapes).
       </p>
 
-      <p>We'll focus on curve detectors in layer <code>mixed3b</code>, an early layer of InceptionV1. These units responded to curved lines and boundaries with a size on the order of 40 pixels. They are also slightly additionally excited by perpendicular lines along the boundary of the curve, and prefer the two sides of the curve to be different colors. Each unit in the family responds to curves in a different orientation, jointly spanning the full range of orientations.
+      <p>We'll focus on curve detectors in layer <code>mixed3b</code>, an early layer of InceptionV1. These units responded to curved lines and boundaries with a radius of around 60 pixels. They are also slightly additionally excited by perpendicular lines along the boundary of the curve, and prefer the two sides of the curve to be different colors.
+
+      <p>Curve detectors are found in families of units, with each member of the family detecting the same curve feature in a different orientation. Together, they jointly span the full range of orientations.
 
       <p>
         It's important to distinguish curve detectors from other units which may seem superficially similar.
@@ -263,14 +266,14 @@
         It's worth noting that many neurons-->
 
       <p>
-        Are the curve detectors really curve detectors?
-        We’ve dedicated an entire article to exploring this in depth,
+        But are these "curve detectors" really detecting curves?
+        We will be dedicating an entire future article to exploring this in depth,
         but the summary is that we think the evidence is quite strong.
-        We offer seven arguments.
-        (The last three arguments are based on circuits, which we’ll discuss in the next section.)
       </p>
       <p>
+        We offer seven arguments, outlined below.
         It's worth noting that none of these arguments is curve specific -- they're a useful, general toolkit for testing our understanding of other neurons as well.
+        (The last three arguments are based on circuits, which we’ll discuss in the next section.)
       </p>
 
 
@@ -279,7 +282,9 @@
             <img src="images/arg-fv.png"></img>
             <div>
               <h4>Argument 1: Feature Visualization</h4>
-              <p>Optimizing the input to cause curve detectors to fire reliably produces curves. This establishes a causal link, since everything in the resulting image was added to cause the neuron to fire more. (You can learn more about feature visualization <a href="https://distill.pub/2017/feature-visualization/">here</a>.)</p>
+              <p>Optimizing the input to cause curve detectors to fire reliably produces curves. This establishes a causal link, since everything in the resulting image was added to cause the neuron to fire more.
+              <br>
+              <span class="figcaption">You can learn more about feature visualization <a href="https://distill.pub/2017/feature-visualization/">here</a>.</span></p>
             </div>
           </div>
           <div>
@@ -308,7 +313,7 @@
             <div>
               <h4>Argument 5: Feature implementation
                 <span style='color: #888; margin-left: 14px;'>(circuit-based argument)</span></h4>
-              <p>By looking at the circuit constructing the curve detectors, we can literally read a curve detection algorithm off of the weights. We also don’t see anything suggestive of a second alternative cause of firing, although there are many smaller weights we don’t understand the role of.</p>
+              <p>By looking at the circuit constructing the curve detectors, we can read a curve detection algorithm off of the weights. We also don’t see anything suggestive of a second alternative cause of firing, although there are many smaller weights we don’t understand the role of.</p>
             </div>
           </div>
           <div>
@@ -316,7 +321,7 @@
             <div>
               <h4>Argument 6: Feature use
                 <span style='color: #888; margin-left: 14px;'>(circuit-based argument)</span></h4>
-              <p>The downstream clients of curve detectors are features that naturally involve curves (eg. circles, 3d curvature, spirals…). The curve detectors are used by these clients in the way our theory of the two features would predict.</p>
+              <p>The downstream clients of curve detectors are features that naturally involve curves (eg. circles, 3d curvature, spirals…). The curve detectors are used by these clients in the expected manner.</p>
             </div>
           </div>
           <div>
@@ -332,10 +337,10 @@
           </div>
         </figure>
 
-      <p>These experiments don’t rule out the possibility of some rare secondary case where curve detectors fire for a  different kind of stimulus. But they do seem to establish
-        that curves cause these neurons to fire,
-        that each unit responds to curves at different angular orientations,
-        and that if there are other stimuli that cause them to fire those are rare or cause much weaker activations.
+      <p>The above arguments don’t fully exclude the possibility of some rare secondary case where curve detectors fire for a  different kind of stimulus. But they do seem to establish
+        that (1) curves cause these neurons to fire,
+        (2) each unit responds to curves at different angular orientations,
+        and (3) if there are other stimuli that cause them to fire those stimuli are rare or cause weaker activations.
 
       <p>
         All of these arguments will be explored in detail in the forthcoming articles on curve detectors and curve detection circuits.
@@ -363,7 +368,7 @@
         <p>
           (One hope some researchers have for interpretability is that understanding models will be able to teach us better abstractions for thinking about the world <d-cite bibtex-key="carter2017using"></d-cite>. High-low frequency detectors are, perhaps, an example of a small success in this: a natural, useful visual feature that we didn't anticipate in advance.)
 
-      <p>All six of the techniques we used to interrogate curve neurons can also be used to study high-low frequency neurons with some tweaking -- for instance, rendering synthetic high-low frequency examples. Again we believe these arguments collectively provide strong support for the idea that these really are a family of high-low frequency contrast detectors.
+      <p>All seven of the techniques we used to interrogate curve neurons can also be used to study high-low frequency neurons with some tweaking -- for instance, rendering synthetic high-low frequency examples. Again we believe these arguments collectively provide strong support for the idea that these really are a family of high-low frequency contrast detectors.
 
 
 
@@ -378,7 +383,10 @@
         <!--<figcaption></figcaption>-->
       </figure>
 
-      <p>It's worth noting that the combination of feature visualization and dataset examples alone are already quite a strong argument. Feature visualization gets at the underlying cause of a neuron firing, while dataset examples get at whether there’s other cases. But we can all our other approaches to analyzing a neuron to bare again.
+      <p>
+        It's worth noting that the combination of feature visualization and dataset examples alone are already quite a strong argument.
+        Feature visualization establishes a causal link, while dataset examples test the neuron's use in practice and whether there are a second type of stimuli that it reacts to.
+        But we can bring all our other approaches to analyzing a neuron to bare again.
       For example, we can use a 3D model to generate synthetic dog head images from different angles.
 
       <p>
@@ -670,7 +678,7 @@ at each point along the curve.</figcaption>
             </li>
             <li>
               <div class="info">
-                <h4>GoogLeNet</h4>
+                <h4>InceptionV1</h4>
                 <span class="figcaption">Szegedy et&#8239;al.<d-cite key="szegedy2015googlenet"></d-cite></span>
               </div>
               <div class="images">
@@ -720,15 +728,15 @@ at each point along the curve.</figcaption>
                 <span class="figcaption">Krizhevsky et&#8239;al.<d-cite key="krizhevsky2012alexnet"></d-cite></span>
               </div>
               <div class="images">
-                <img src="images/universality/hilo/AlexNet/unit-0.png"/>
-                <img src="images/universality/hilo/AlexNet/unit-1.png"/>
                 <img src="images/universality/hilo/AlexNet/unit-2.png"/>
+                <img src="images/universality/hilo/AlexNet/unit-1.png"/>
                 <img src="images/universality/hilo/AlexNet/unit-3.png"/>
+                <img src="images/universality/hilo/AlexNet/unit-0.png"/>
               </div>
             </li>
             <li>
               <div class="info">
-                <h4>GoogLeNet</h4>
+                <h4>InceptionV1t</h4>
                 <span class="figcaption">Szegedy et&#8239;al.<d-cite key="szegedy2015googlenet"></d-cite></span>
               </div>
               <div class="images">
@@ -757,10 +765,10 @@ at each point along the curve.</figcaption>
                 <span class="figcaption">Kaiming et&#8239;al.<d-cite key="kaiming2015resnet"></d-cite></span>
               </div>
               <div class="images">
-                <img src="images/universality/hilo/ResNetV2/unit-0.png"/>
-                <img src="images/universality/hilo/ResNetV2/unit-1.png"/>
-                <img src="images/universality/hilo/ResNetV2/unit-2.png"/>
                 <img src="images/universality/hilo/ResNetV2/unit-3.png"/>
+                <img src="images/universality/hilo/ResNetV2/unit-2.png"/>
+                <img src="images/universality/hilo/ResNetV2/unit-1.png"/>
+                <img src="images/universality/hilo/ResNetV2/unit-0.png"/>
               </div>
             </li>
           </ul>
@@ -879,19 +887,48 @@ at each point along the curve.</figcaption>
       </p>
 
       <div class="glossary">
-      <p><b>Circuit</b> - A subgraph of a neural network. Nodes correspond to neurons or directions (linear combinations of neurons).
-        Two nodes have an edge between them if they are in adjacent layers. The edges have weights which are the weights between those neurons (or <i>n<sub>1</sub>Wn<sub>2</sub><sup style="margin-left:-4px;">T</sup></i> if the nodes are linear combinations). For convolutional layers, the weights are 2D matrices representing the weights for  different relative positions of the layers.</p>
-      <p><b>Circuit Motif</b> - A recurring, abstract pattern found in circuits, such as equivariance. Inspired by the use of circuit motifs in systems biology <d-cite bibtex-key="alon2019introduction"></d-cite>.</p>
 
-      <p><b>Client Neuron</b> - A neuron in a later layer which relies on a particular earlier neuron. For example, a circle detector is a client of curve detectors.</p>
-      <p><b>Direction</b> - A linear combination of neurons in a layer. Equivalently, a vector in the representation of a layer. A direction can be an individual neuron (which is a basis direction of the vector space). For intuition about directions as an object, see <a href="https://distill.pub/2018/building-blocks/">Building Blocks</a><d-cite bibtex-key="olah2018building"></d-cite> (in particular, the section titled "What Does the Network See?") and <a href="https://distill.pub/2019/activation-atlas/">Activation Atlases</a><d-cite bibtex-key="carter2019activation"></d-cite>.</p>
-      <p><b>Downstream / Upstream</b> - In a later layer / In an earlier layer.</p>
-      <p><b>Feature</b> - A scalar function of the input. In this essay, neural network features are directions, and often simply individual neurons. We claim such features in neural networks are typically meaningful features which can be rigorously studied (<a href="claim-1">Claim 1</a>).</p>
-      <p class="sub"><b>Meaningful Feature</b> - A feature that genuinely responds to an articulable property of the input, such as the presence of a curve or a floppy ear. Meaningful features may still be noisy or imperfect.</p>
-      <p class="sub"><b>Polysemantic Feature</b> - A feature that responds to multiple unrelated latent variables, such as the cat/car neuron <d-cite bibtex-key="olah2017feature"></d-cite>. This can be seen a special case of a "multifaceted features"<d-cite bibtex-key="nguyen2016multifaceted"></d-cite> which responds to multiple different cases, but include both "real" multi-faceted features such as the pose-invariant dog head or polysemantic neurons. Contrast with pure.</p>
-      <p class="sub"><b>Pure Feature</b> - A feature which responds to only a single latent variable. Contrast with polysemantic.</p>
-      <p class="sub"><b>Universal Feature</b> - A feature which reliably forms across different models and tasks.</p>
-      <p><b>Representation</b> - The vector space formed by the activations of all neurons in a layer, with vectors of the form <i>(activation of neuron 1, activation of neuron 2, ...)</i>. A representation can be thought of as the collection of all features that exist in a layer. For intuition about representations in vision models, see <a href="https://distill.pub/2019/activation-atlas/">Activation Atlases</a><d-cite bibtex-key="carter2019activation"></d-cite>.</p>
+      <p><b>Circuit</b> -
+        A subgraph of a neural network. Nodes correspond to neurons or directions (linear combinations of neurons).
+        Two nodes have an edge between them if they are in adjacent layers. The edges have weights which are the weights between those neurons (or <i>n<sub>1</sub>Wn<sub>2</sub><sup style="margin-left:-4px;">T</sup></i> if the nodes are linear combinations). For convolutional layers, the weights are 2D matrices representing the weights for  different relative positions of the layers.</p>
+
+      <p><b>Circuit Motif</b> -
+        A recurring, abstract pattern found in circuits, such as equivariance or unioning over cases. Inspired by the use of circuit motifs in systems biology <d-cite bibtex-key="alon2019introduction"></d-cite>.</p>
+
+      <p><b>Client Neuron</b> -
+        A neuron in a later layer which relies on a particular earlier neuron. For example, a circle detector is a client of curve detectors.</p>
+
+      <p><b>Direction</b> -
+        A linear combination of neurons in a layer. Equivalently, a vector in the representation of a layer. A direction can be an individual neuron (which is a basis direction of the vector space). For intuition about directions as an object, see <a href="https://distill.pub/2018/building-blocks/">Building Blocks</a><d-cite bibtex-key="olah2018building"></d-cite> (in particular, the section titled "What Does the Network See?") and <a href="https://distill.pub/2019/activation-atlas/">Activation Atlases</a><d-cite bibtex-key="carter2019activation"></d-cite>.</p>
+
+      <p><b>Downstream / Upstream</b> -
+        In a later layer / In an earlier layer.</p>
+
+      <p><b>Equivariance</b> -
+        See wikipedia <a href="https://en.wikipedia.org/wiki/Equivariant_map">equivariant map</a>. </p>
+
+      <p><b>Family</b> -
+        A set of features found in one layer which detect small variations of the same thing.
+        For example, curve detectors exist in a family detecting curves in different orientations. </p>
+
+      <p><b>Feature</b> -
+        A scalar function of the input. In this essay, neural network features are directions, and often simply individual neurons. We claim such features in neural networks are typically meaningful features which can be rigorously studied (<a href="claim-1">Claim 1</a>).</p>
+
+      <p class="sub"><b>Meaningful Feature</b> -
+        A feature that genuinely responds to an articulable property of the input, such as the presence of a curve or a floppy ear. Meaningful features may still be noisy or imperfect.</p>
+
+      <p class="sub"><b>Polysemantic Feature</b> -
+        A feature that responds to multiple unrelated latent variables, such as the cat/car neuron <d-cite bibtex-key="olah2017feature"></d-cite>. This can be seen a special case of a "multifaceted features"<d-cite bibtex-key="nguyen2016multifaceted"></d-cite> which responds to multiple different cases, but include both "real" multi-faceted features such as the pose-invariant dog head or polysemantic neurons. Contrast with pure.</p>
+
+      <p class="sub"><b>Pure Feature</b> -
+        A feature which responds to only a single latent variable. Contrast with polysemantic.</p>
+
+      <p class="sub"><b>Universal Feature</b> -
+        A feature which reliably forms across different models and tasks.</p>
+
+      <p><b>Representation</b> -
+        The vector space formed by the activations of all neurons in a layer, with vectors of the form <i>(activation of neuron 1, activation of neuron 2, ...)</i>. A representation can be thought of as the collection of all features that exist in a layer. For intuition about representations in vision models, see <a href="https://distill.pub/2019/activation-atlas/">Activation Atlases</a><d-cite bibtex-key="carter2019activation"></d-cite>.</p>
+
       </div>
 
 
