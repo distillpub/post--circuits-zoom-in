@@ -4,6 +4,14 @@ figure {
 }
 
 
+
+.positive-text {
+  color: #191;
+}
+.negative-text {
+  color: #911;
+}
+
 /* ****************************************
  * Arguments figure
  ******************************************/
@@ -53,6 +61,12 @@ figure {
 }
 .curve-figure div:first-child  {
   margin-right: 60px;
+}
+
+.curve-figure div {
+  flex-basis: 50%;
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 
 .curve-oreientaions-figure {

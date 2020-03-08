@@ -243,7 +243,7 @@
         These units are interesting because they straddle the boundary between features the community broadly agrees exist (eg. edge detectors) and features for which there's significant skepticism (more complex shapes).
       </p>
 
-      <p>We'll focus on curve detectors in InceptionV1 layer mixed3b (an early layer). These units responded to curved lines and boundaries with a size on the order of 40 pixels. They are also slightly additionally excited by perpendicular lines along the boundary of the curve, and prefer the two sides of the curve to be different colors. Each unit in the family responds to curves in a different orientation, jointly spanning the full range of orientations.
+      <p>We'll focus on curve detectors in layer <code>mixed3b</code>, an early layer of InceptionV1. These units responded to curved lines and boundaries with a size on the order of 40 pixels. They are also slightly additionally excited by perpendicular lines along the boundary of the curve, and prefer the two sides of the curve to be different colors. Each unit in the family responds to curves in a different orientation, jointly spanning the full range of orientations.
 
       <p>
         It's important to distinguish curve detectors from other units which may seem superficially similar.
@@ -341,13 +341,14 @@
       <h3 id="claim-1-hilo">Example 2: High-Low Frequency Detectors</h3>
 
       <p>
-        Curve detectors are the kind of feature one might guess a priori exist in neural networks.
+        Curve detectors are an intuitive type of feature -- the kind of feature one might guess exist in neural networks a priori.
         Give that they're present, it's not surprising we can understand them.
         But what about features that aren't intuitive? Can we also understand those?
+        We believe so.
 
 
       <p>
-        High-low frequency detectors are an example of a less type of features that are, in retrospect, elegant and simple. We find them in early vision. They look for low-frequency patterns on one side of their receptive field, and high-frequency patterns on the other side. Like curve detectors, high-low frequency detectors are found in families of features that look for the  same thing in different orientations.
+        High-low frequency detectors are an example of a less intuitive type of feature. We find them in early vision, and once you understand what they're doing, they're quite simple. They look for low-frequency patterns on one side of their receptive field, and high-frequency patterns on the other side. Like curve detectors, high-low frequency detectors are found in families of features that look for the  same thing in different orientations.
 
       <figure style="grid-column-start: text-start; grid-column-end: page-end;">
         <img src="./images/high-low.png" />
@@ -362,24 +363,25 @@
 
       <p>All six of the techniques we used to interrogate curve neurons can also be used to study high-low frequency neurons with some tweaking -- for instance, rendering synthetic high-low frequency examples. Again we believe these arguments collectively provide strong support for the idea that these really are a family of high-low frequency contrast detectors.
 
+
+
       <h3 id="claim-1-dog">Example 3: Pose-Invariant Dog Head Detector</h3>
 
-      <p>So far, we’ve looked at low-level visual features. What about high-level features?
+      <p>Both curve detectors and high-low frequency detectors are low-level visual features, found in the early layers of InceptionV1. What about more complex, high-level features?
 
-      <p>Let’s consider this unit which we believe to be a pose-invariant dog detector. As with any neuron, we can create a feature visualization and collect dataset examples. If you look at the feature visualization, the geometry is… not possible, but very informative about what it’s looking for! The dataset examples back this up!
+      <p>Let’s consider this unit which we believe to be a pose-invariant dog detector. As with any neuron, we can create a feature visualization and collect dataset examples. If you look at the feature visualization, the geometry is… not possible, but very informative about what it’s looking for and the dataset examples validate it.
 
       <figure style="grid-column-start: text-start; grid-column-end: text-end;">
         <img src="./images/dog-pose.png" style="max-width: 650px;"/>
         <!--<figcaption></figcaption>-->
       </figure>
 
-      <p>The combination of feature visualization and dataset examples are quite a strong argument. Feature visualization gets at the underlying cause of a neuron firing, while dataset examples get at whether there’s other cases.
+      <p>It's worth noting that the combination of feature visualization and dataset examples alone are already quite a strong argument. Feature visualization gets at the underlying cause of a neuron firing, while dataset examples get at whether there’s other cases. But we can all our other approaches to analyzing a neuron to bare again.
+      For example, we can use a 3D model to generate synthetic dog head images from different angles.
 
       <p>
-        Again, we can bring all our other approaches to analyzing a neuron to bare.
-        For example, we can use a 3D model to generate synthetic dog head images from different angles.
-        But that can be come a lot of effort for these higher-level, more abstract features.
-        Thankfully, our circuits-based arguments -- which we'll discuss more soon -- will continue to be easy to apply, and give us really powerful tools for understanding high-level features that don't require a lot of effort.
+        At the same time, some of the approaches we've emphasized so far become a lot of effort for these higher-level, more abstract features.
+        Thankfully, our circuits-based arguments -- which we'll discuss more soon -- will continue to be easy to apply, and give us really powerful tools for understanding  and testing high-level features that don't require a lot of effort.
 
 
       <h3 id="claim-1-polysemantic">Polysemantic Neurons</h3>
@@ -398,10 +400,17 @@
 
       <p>To be clear, this neuron isn’t responding to some commonality of cars and cat faces. Feature visualization shows us that it’s looking for the eyes and whiskers of a cat, for furry legs, and for shiny fronts of cars &mdash; not some subtle shared feature.
 
-      <p>We can still study such features, characterizing each different case they fire. But it’s still a major source of difficulty in understanding neural networks. (Our hope is that there might someday be alternative basis for describing neural networks that avoids this.) Despite these challenges, we’ll see in the next section that it’s still possible to reason about circuits with polysemantic neurons, and in fact that circuits will hint at why polysemantic neurons form.
+      <p>
+        We can still study such features, characterizing each different case they fire, and reason about their circuits to some extent.
+        Despite this, polysemantic neurons are a major challenge for the circuits agenda, significantly limiting our ability to reason about neural networks.<d-footnote>
+          Why are polysemantic neurons so challenging? If one neuron with five different meanings connects to another neuron with five different meanings, that's effectively 25 connections that can't be considered individually.</d-footnote>
+        Our hope is that it may be possible to resolve polysemantic neurons,
+        perhaps "unfolding" a network to turn polysemantic neurons into pure features or training networks to not exhibit polysemanticity in the first place.
+        This is essentially the problem studied by the literature on the disentangling representations, although at present that literature tends to focus on known features in the latent spaces of generative models.
 
-
-
+      <p>
+        One natural question to ask is why do polysemantic neurons form?
+        In the next section, we'll see that they seem to result from a phenomenon we call "superposition" where a circuit spreads a feature across many neurons, presumably to pack more features into the limited number of neurons it has available.
 
 
       <hr>
@@ -420,9 +429,10 @@
 
       <h3 id="claim-2-curves">Circuit 1: Curve Detectors</h3>
 
-      <p>In the previous section, we discussed curve detectors, a family of units detecting curves in different angular orientations. In this section, we’ll explore how curve detectors connect to the rest of the model.
+      <p>In the previous section, we discussed curve detectors, a family of units detecting curves in different angular orientations. In this section, we’ll explore how curve detectors are implemented from earlier features and connect to the rest of the model.
 
-      <p>Of course, there’s a long tail of small connections to different parts of early vision. But the primary story seems to be this: At the previous layer, the model has edge detectors and a less sophisticated set of curve detectors. These are combined to create our curve detectors. Then curve detectors are used in the next layer to create 3D geometry and complex shape detectors.
+      <p>
+        Curve detectors are primarily implemented from earlier, less sophisticated curve detectors and line detectors. These curve detectors are used in the next layer to create 3D geometry and complex shape detectors. Of course, there’s a long tail of smaller connections to other features, but this seems to be the primary story.
 
       <p>For this introduction, we’ll focus on the interaction of the early curve detectors and our full curve detectors.
 
@@ -441,7 +451,7 @@
       <figure class="curve-figure l-body-outset">
         <div>
           <img src="./images/curve-weights-a.png"/>
-          <figcaption>The raw weights between the early curve detector and late curve detector in the same orientation are curve of positive weights</figcaption>
+          <figcaption>The raw weights between the early curve detector and late curve detector in the same orientation are a curve of <span class="positive-text">positive weights</span> surrounded by small negative or zero weights.
         </div>
         <div>
           <img src="./images/curve-weights-b.png"/>
@@ -455,13 +465,13 @@ at each point along the curve.</figcaption>
 
       <figure class="curve-oreientaions-figure ">
         <div style="flex-basis: 45%;">
-          <div class="figcaption" style="height: 30px; margin-bottom: 20px;">Curve detectors are <span style="color: #191;">excited</span> by earlier detectors <br> in <b>similar orientations</b>...</div>
+          <div class="figcaption" style="height: 30px; margin-bottom: 20px;">Curve detectors are <span class="positive-text">excited</span> by earlier detectors <br> in <b>similar orientations</b>...</div>
           <img src="./images/curve-orientations-a.png" />
         </div>
         <div style="flex-basis: 5%; margin-right: 60px;">
         </div>
         <div style="flex-basis: 44.8%;">
-          <div class="figcaption" style="height: 30px; margin-bottom: 20px;">... and <span style="color: #911;">inhibited</span> by earlier detectors in <br> <b>opposing orientations</b>.</div>
+          <div class="figcaption" style="height: 30px; margin-bottom: 20px;">... and <span class="negative-text">inhibited</span> by earlier detectors in <br> <b>opposing orientations</b>.</div>
           <img src="./images/curve-orientations-b.png" />
         </div>
       </figure>
@@ -482,7 +492,22 @@ at each point along the curve.</figcaption>
 
       <p>Within this “dog recognition” system, one circuit strikes us as particularly interesting: a collection of neurons that handle dog heads facing to the left and dog heads facing to the right. Over three layers, the network maintains two mirrored pathways, detecting analogous units facing to the left and to the right. At each step, these pathways try to inhibit each other, sharpening the contrast. Finally, it creates invariant neurons which respond to both pathways.
 
-      <figure style="grid-column-start: page-start; grid-column-end: text-end;">
+      <style>
+        @media (min-width: 1000px){
+          .dog-circuit-figure {
+            grid-column-start: page-start; grid-column-end: page-end; margin-left: -30px; padding-right: 50px;
+          }
+        }
+        @media (max-width: 1000px){
+          .dog-circuit-figure {
+            grid-column-start: screen-start; grid-column-end: screen-end;
+            padding-left: 20px;
+            padding-right: 20px;
+          }
+        }
+      </style>
+
+      <figure class="dog-circuit-figure">
         <img src="./images/dog-circuit-2.png"/>
         <!--<figcaption></figcaption>-->
       </figure>
@@ -507,7 +532,7 @@ at each point along the curve.</figcaption>
 
       <h3 id="claim-2-superposition">Circuit 3: Cars in Superposition</h3>
 
-      <p>In mixed4c, a mid-late layer of InceptionV1, there is a car detecting neuron. Using features from the previous layers, it looks for wheels at the bottom of its convolutional window, and windows at the top.
+      <p>In <code>mixed4c</code>, a mid-late layer of InceptionV1, there is a car detecting neuron. Using features from the previous layers, it looks for wheels at the bottom of its convolutional window, and windows at the top.
 
       <p>But then the model does something surprising. Rather than create another pure car detector at the next layer, it spreads its car feature over a number of neurons that seem to primarily be doing something else &mdash; in particular, dog detectors.
 
@@ -830,7 +855,7 @@ at each point along the curve.</figcaption>
 
       <h3>Acknowledgments</h3>
       <p>
-        All our work understanding InceptionV1 is indebted to Alex Mordvintsev, who's early explorations of vision models paved pathways we still follow.
+        All our work understanding InceptionV1 is indebted to Alex Mordvintsev, whose early explorations of vision models paved pathways we still follow.
         We're deeply grateful to Nick Barry, and Sophia Sanborn for their deep engagement on potential connections between our work and neuroscience,
         and to Tom McGrath who pointed out the similarities between Kuhn's "pre-paradigmatic science" and the state interpretability as a field to us.
         The careful comments and criticism of Brice Menard were also invaluable in sharpening this essay.
