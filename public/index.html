@@ -72,7 +72,11 @@
         </figcaption>
       </figure>
 
-      <p>Just as the early microscope hinted at a new world of cells and microorganisms, visualizations of artificial neural networks have revealed tantalizing hints and glimpses of a rich inner world within our models. This has led us to wonder: Is it possible that deep learning is at a similar transition point? Could there be a kind of cellular biology or neuroscience analogue of deep learning? And if so, what might such a field look like? What are its objects of study, and what would rigorous inquiry into them involve?</p>
+      <p>Just as the early microscope hinted at a new world of cells and microorganisms, visualizations of artificial neural networks have revealed tantalizing hints and glimpses of a rich inner world within our models (e.g. <d-cite bibtex-key='karpathy2015visualizing,erhan2009visualizing,olah2017feature,simonyan2013deep,nguyen2015deep,mordvintsev2015inceptionism,nguyen2016plug,zeiler2014visualizing,fong2017interpretable,kindermans2017patternnet,reif2019visualizing,carter2019activation'></d-cite>).
+      </p>
+      <p>This has led us to wonder: Is it possible that deep learning is at a similar transition point? Could there be a kind of cellular biology or neuroscience analogue of deep learning?
+        And if so, what would such an approach to deep learning interpretability look like?
+        What are its objects of study, and what would rigorous inquiry into them involve?</p>
 
       <p>Our tentative answer is that this is the study of features and the neural circuits that implement them.</p>
 
@@ -412,7 +416,7 @@
         <figcaption>4e:55 is a polysemantic neuron which responds to cat faces, fronts of cars, and cat legs. It was dicussed in more depth in <a href="https://distill.pub/2017/feature-visualization/">Feature Visualization</a> <d-cite key="olah2017feature"></d-cite>.</figcaption>
       </figure>
 
-      <p>To be clear, this neuron isn’t responding to some commonality of cars and cat faces. Feature visualization shows us that it’s looking for the eyes and whiskers of a cat, for furry legs, and for shiny fronts of cars —; not some subtle shared feature.
+      <p>To be clear, this neuron isn’t responding to some commonality of cars and cat faces. Feature visualization shows us that it’s looking for the eyes and whiskers of a cat, for furry legs, and for shiny fronts of cars — not some subtle shared feature.
 
       <p>
         We can still study such features, characterizing each different case they fire, and reason about their circuits to some extent.
@@ -435,7 +439,7 @@
         Features are connected by weights, forming circuits. These circuits can also be rigorously studied and understood.
       </div>
 
-      <p>Part of this claim is trivially true. Of course features are connected by weights —; that’s the definition of a neural network! —; and of course you can consider a subgraph of how those features interact. In fact, these circuits are a really natural thing to turn your attention to once you accept Claim 1: if you can understand features, why wouldn’t you start looking at how they’re wired together?
+      <p>Part of this claim is trivially true. Of course features are connected by weights — that’s the definition of a neural network! — and of course you can consider a subgraph of how those features interact. In fact, these circuits are a really natural thing to turn your attention to once you accept Claim 1: if you can understand features, why wouldn’t you start looking at how they’re wired together?
 
       <p>The remarkable thing is how tractable and meaningful these circuits seem to be as objects of study. When we began looking, we expected to find something quite messy. Instead, we’ve found beautiful rich structures, often with symmetry to them. Once you understand what features they’re connecting together, the individual floating point number weights in your neural network become meaningful! <i>You can literally read meaningful algorithms off of the weights.</i>
 
@@ -553,7 +557,7 @@ at each point along the curve.</figcaption>
         <!--<figcaption></figcaption>-->
       </figure>
 
-      <p>But then the model does something surprising. Rather than create another pure car detector at the next layer, it spreads its car feature over a number of neurons that seem to primarily be doing something else —; in particular, dog detectors.
+      <p>But then the model does something surprising. Rather than create another pure car detector at the next layer, it spreads its car feature over a number of neurons that seem to primarily be doing something else — in particular, dog detectors.
 
         <figure class="l-body-outset">
           <img src="./images/superposition.png"/>
