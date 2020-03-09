@@ -74,7 +74,7 @@
 
       <p>Just as the early microscope hinted at a new world of cells and microorganisms, visualizations of artificial neural networks have revealed tantalizing hints and glimpses of a rich inner world within our models. This has led us to wonder: Is it possible that deep learning is at a similar transition point? Could there be a kind of cellular biology or neuroscience analogue of deep learning? And if so, what might such a field look like? What are its objects of study, and what would rigorous inquiry into them involve?</p>
 
-      <p>Our tentative answer is that you get the study of features and the neural circuits that implement them.</p>
+      <p>Our tentative answer is that this is the study of features and the neural circuits that implement them.</p>
 
       <p>Exploring these objects over the last year and a half has led to the circuits project, an open scientific collaboration hosted on the <a href="http://slack.distill.pub/">Distill slack</a>. In future articles, the collaboration will publish detailed explorations of this inner world. But before we do that, we wanted to offer a high-level overview of our thinking and some of the working principles that we’ve found useful in this line of research.</p>
 
@@ -141,7 +141,7 @@
                 You can think of this as a direction vector in the vector space of activations of neurons in a given layer.
                 Often, we find it most helpful to talk about individual neurons,
                 but we'll see that there are some cases where other combinations are a more useful way to analyze networks
-                -- especially when neurons are "polysemantic."
+                &mdash especially when neurons are "polysemantic."
                 (See the <a href="#glossary-direction">glossary</a> for a detailed definition.)
               </d-footnote>
               These features can be rigorously studied and understood.
@@ -153,7 +153,7 @@
                 A "circuit" is a computational subgraph of a neural network.
                 It consists of a set of features, and the weighted edges that go between them in the original
                 network.
-                Often, we study quite small circuits -- say with less than a dozen features -- but they can also be much larger.
+                Often, we study quite small circuits &mdash say with less than a dozen features &mdash but they can also be much larger.
                 (See the <a href="#glossary-circuit">glossary</a> for a detailed definition.)
               </d-footnote><br>
               These circuits can also be rigorously studied and understood.
@@ -201,7 +201,7 @@
         We believe that neural networks consist of meaningful, understandable features. Early layers contain features like edge or curve detectors, while later layers have features like floppy ear detectors or wheel detectors.
         The community is divided on whether this is true.
         While many researchers treat the existence of meaningful neurons as an almost trivial fact
-        -- there's even a small literature studying them -- many others are deeply skeptical and believe that past cases of neurons that seemed to track meaningful latent variables were mistaken.
+        &mdash there's even a small literature studying them <d-cite bibtex-key='mikolov2013distributed,karpathy2015visualizing,radford2017learning,zhou2014object,olah2017feature,netdissect2017'></d-cite> &mdash many others are deeply skeptical and believe that past cases of neurons that seemed to track meaningful latent variables were mistaken <d-cite bibtex-key='jo2017measuring,geirhos2018imagenet,brendel2019approximating,ilyas2019adversarial'></d-cite>.
       <d-footnote>The community disagreement on meaningful features is hard to pin down, and only partially expressed in the literature. Foundational descriptions of deep learning often describe neural networks as detecting a hierarchy of meaningful features <d-cite bibtex-key='lecun2015deep'></d-cite>, and a number of papers have been written demonstrating seemingly meaningful features in different domains domains<d-cite bibtex-key='mikolov2013distributed,karpathy2015visualizing,radford2017learning,zhou2014object,olah2017feature,netdissect2017'></d-cite>. At the same time, a more skeptical parallel literature has developed suggesting that neural networks primarily or only focus on texture, local structure, or imperceptible patterns <d-cite bibtex-key='jo2017measuring,geirhos2018imagenet,brendel2019approximating,ilyas2019adversarial'></d-cite>, that meaningful features, when they exist, are less important than uniterptetable ones <d-cite bibtex-key='morcos2018importance'> and that seemingly interpretable neurons may be misunderstood <d-cite bibtex-key='donnelly2019interpretability'></d-cite>. Although many of these papers express a highly nuanced view, that isn’t always how they’ve been understood. A number of media articles have been written embracing strong versions of these views, and we anecdotally find that the belief that neural networks don’t understand anything more than texture is quite common. Finally, people often have trouble articulating their exact views, because they don’t have clear language for articulating nuances between “a texture detector highly correlated with an object” and “an object detector.”</d-footnote>
       Nevertheless, thousands of hours of studying individual neurons have led us to believe the typical case is that neurons (or in some cases, other directions in the vector space of neuron activations) are understandable.
 
@@ -243,7 +243,7 @@
 
       <p>
         Curve detecting neurons can be found in every non-trivial vision model we've carefully examined.
-        These units are interesting because they straddle the boundary between features the community broadly agrees exist (eg. edge detectors) and features for which there's significant skepticism (eg. more complex shapes).
+        These units are interesting because they straddle the boundary between features the community broadly agrees exist (e.g. edge detectors) and features for which there's significant skepticism (e.g. more complex shapes).
       </p>
 
       <p>We'll focus on curve detectors in layer <code>mixed3b</code>, an early layer of InceptionV1. These units responded to curved lines and boundaries with a radius of around 60 pixels. They are also slightly additionally excited by perpendicular lines along the boundary of the curve, and prefer the two sides of the curve to be different colors.
@@ -252,7 +252,7 @@
 
       <p>
         It's important to distinguish curve detectors from other units which may seem superficially similar.
-        In particular, there are many units which use curves to detect a curved sub-component (eg. circles, spirals, S-curves, hourglass shape, 3d curvature, ...).
+        In particular, there are many units which use curves to detect a curved sub-component (e.g. circles, spirals, S-curves, hourglass shape, 3d curvature, ...).
         There are also units which respond to curve related shapes like lines or sharp corners.
         We do not consider these units to be curve detectors.
 
@@ -272,7 +272,7 @@
       </p>
       <p>
         We offer seven arguments, outlined below.
-        It's worth noting that none of these arguments is curve specific -- they're a useful, general toolkit for testing our understanding of other neurons as well.
+        It's worth noting that none of these arguments are curve specific &mdash they're a useful, general toolkit for testing our understanding of other neurons as well.
         (The last three arguments are based on circuits, which we’ll discuss in the next section.)
       </p>
 
@@ -321,7 +321,7 @@
             <div>
               <h4>Argument 6: Feature use
                 <span style='color: #888; margin-left: 14px;'>(circuit-based argument)</span></h4>
-              <p>The downstream clients of curve detectors are features that naturally involve curves (eg. circles, 3d curvature, spirals…). The curve detectors are used by these clients in the expected manner.</p>
+              <p>The downstream clients of curve detectors are features that naturally involve curves (e.g. circles, 3d curvature, spirals…). The curve detectors are used by these clients in the expected manner.</p>
             </div>
           </div>
           <div>
@@ -329,9 +329,9 @@
             <div>
               <h4>Argument 7: Handwritten Circuits
                 <span style='color: #888; margin-left: 14px;'>(circuit-based argument)</span></h4>
-              <p>Base on our understanding of how curve detectors are implemented,
-                we can do a clean room reimplementation,
-                taking a network with all zero weights and hand setting weights to reimplement curve detection.
+              <p>Based on our understanding of how curve detectors are implemented,
+                we can do a cleanroom reimplementation,
+                hand setting all weights to reimplement curve detection.
                 These weights are an understandable curve detection algorithm, and significantly mimic the original curve detectors.</p>
             </div>
           </div>
@@ -348,8 +348,8 @@
       <h3 id="claim-1-hilo">Example 2: High-Low Frequency Detectors</h3>
 
       <p>
-        Curve detectors are an intuitive type of feature -- the kind of feature one might guess exist in neural networks a priori.
-        Give that they're present, it's not surprising we can understand them.
+        Curve detectors are an intuitive type of feature &mdash the kind of feature one might guess exists in neural networks a priori.
+        Given that they're present, it's not surprising we can understand them.
         But what about features that aren't intuitive? Can we also understand those?
         We believe so.
 
@@ -368,7 +368,7 @@
         <p>
           (One hope some researchers have for interpretability is that understanding models will be able to teach us better abstractions for thinking about the world <d-cite bibtex-key="carter2017using"></d-cite>. High-low frequency detectors are, perhaps, an example of a small success in this: a natural, useful visual feature that we didn't anticipate in advance.)
 
-      <p>All seven of the techniques we used to interrogate curve neurons can also be used to study high-low frequency neurons with some tweaking -- for instance, rendering synthetic high-low frequency examples. Again we believe these arguments collectively provide strong support for the idea that these really are a family of high-low frequency contrast detectors.
+      <p>All seven of the techniques we used to interrogate curve neurons can also be used to study high-low frequency neurons with some tweaking &mdash for instance, rendering synthetic high-low frequency examples. Again we believe these arguments collectively provide strong support for the idea that these really are a family of high-low frequency contrast detectors.
 
 
 
@@ -386,12 +386,12 @@
       <p>
         It's worth noting that the combination of feature visualization and dataset examples alone are already quite a strong argument.
         Feature visualization establishes a causal link, while dataset examples test the neuron's use in practice and whether there are a second type of stimuli that it reacts to.
-        But we can bring all our other approaches to analyzing a neuron to bare again.
+        But we can bring all our other approaches to analyzing a neuron to bear again.
       For example, we can use a 3D model to generate synthetic dog head images from different angles.
 
       <p>
         At the same time, some of the approaches we've emphasized so far become a lot of effort for these higher-level, more abstract features.
-        Thankfully, our circuits-based arguments -- which we'll discuss more soon -- will continue to be easy to apply, and give us really powerful tools for understanding  and testing high-level features that don't require a lot of effort.
+        Thankfully, our circuit-based arguments &mdash which we'll discuss more soon &mdash will continue to be easy to apply, and give us really powerful tools for understanding  and testing high-level features that don't require a lot of effort.
 
 
       <h3 id="claim-1-polysemantic">Polysemantic Neurons</h3>
@@ -400,7 +400,7 @@
 
       <p>
         Alas, this is not the case.
-        Neural networks often contain “polysemantic neurons” which respond to multiple unrelated inputs.
+        Neural networks often contain “polysemantic neurons” that respond to multiple unrelated inputs.
         For example, InceptionV1 contains one neuron that responds to cat faces, fronts of cars, and cat legs.
 
       <figure style="max-width: 600px; ">
@@ -415,8 +415,8 @@
         Despite this, polysemantic neurons are a major challenge for the circuits agenda, significantly limiting our ability to reason about neural networks.<d-footnote>
           Why are polysemantic neurons so challenging? If one neuron with five different meanings connects to another neuron with five different meanings, that's effectively 25 connections that can't be considered individually.</d-footnote>
         Our hope is that it may be possible to resolve polysemantic neurons,
-        perhaps "unfolding" a network to turn polysemantic neurons into pure features or training networks to not exhibit polysemanticity in the first place.
-        This is essentially the problem studied by the literature on the disentangling representations, although at present that literature tends to focus on known features in the latent spaces of generative models.
+        perhaps by "unfolding" a network to turn polysemantic neurons into pure features, or training networks to not exhibit polysemanticity in the first place.
+        This is essentially the problem studied in the literature of disentangling representations, although at present that literature tends to focus on known features in the latent spaces of generative models.
 
       <p>
         One natural question to ask is why do polysemantic neurons form?
@@ -522,7 +522,7 @@ at each point along the curve.</figcaption>
         <!--<figcaption></figcaption>-->
       </figure>
 
-      <p>We call this pattern “unioning over cases”. The network separately detects two cases (left and right) and then unions over them to create invariant "multifaceted"<d-cite bibtex-key="nguyen2016multifaceted"></d-cite> units.
+      <p>We call this pattern “unioning over cases”. The network separately detects two cases (left and right) and then takes a union over them to create invariant "multifaceted"<d-cite bibtex-key="nguyen2016multifaceted"></d-cite> units.
 
       <p>This circuit is striking because the network could have easily done something much less sophisticated.
         It could easily create invariant neurons by not caring very much about where the eyes, fur and snout went, and just looking for a jumble of them together.
@@ -575,7 +575,7 @@ at each point along the curve.</figcaption>
 
       <p>
         We think it's quite likely that studying motifs will be important in understanding the circuits of artificial neural networks. In the long run, it may be more important than the study of individual circuits.
-        At the same time, we expect investigations of motifs to be well served by us first building up a solid foundation well understood circuits first.
+        At the same time, we expect investigations of motifs to be well served by us first building up a solid foundation of well understood circuits first.
 
 
       <hr>
@@ -973,8 +973,8 @@ at each point along the curve.</figcaption>
       </p>
       <p>
         One of the privileges of working on circuits has been the open collaboration and feedback in the <a href="https://slack.distill.pub">Distill slack</a>'s #circuits channel.
-        We've especially appreciated the detailed feedback we received from Stefan Sietzen, Shahab Bakhtiari, and Flora Liu.
-        (Stefan has additionally run with many of these ideas, and we're excited to see his work in future articles in this thread!)
+        We've especially appreciated the detailed feedback we received from Stefan Sietzen, Shahab Bakhtiari, and Flora Liu
+        (Stefan has additionally run with many of these ideas, and we're excited to see his work in future articles in this thread!).
       </p>
       <p>
         We benefitted greatly from the comments of many people on meta-science and framing questions around this essay, but especially appreciated the comments of Arvind Satyanarayan, Miles Brundage, Amanda Askell, Aaron Courville, and Martin Wattenberg.
@@ -992,6 +992,13 @@ at each point along the curve.</figcaption>
 
     <script src="https://distill.pub/template.v2.js"></script>
     <link rel="stylesheet" type="text/css" href="index.css">
+
+    <style>
+    .claim-figure h4 {
+      text-transform: none;
+      font-variant: small-caps;
+    }
+    </style>
 
     <script src="./index.js"></script>
   </body>
