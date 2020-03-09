@@ -44,7 +44,7 @@
           <div><a href="#claim-3">Claim 3: Universality</a></div>
           <div><a href="#natural-science">Interpretability as a Natural Science</a></div>
           <div><a href="#closing">Closing Thoughts</a></div>
-          <div><a href="#glossary">Glossary</a></div>
+          <!--<div><a href="#glossary">Glossary</a></div>-->
         </nav>
       </d-contents>
 
@@ -61,7 +61,13 @@
       These transitions weren’t just a change in precision: they were qualitative changes in what the objects of scientific inquiry are.
       For example, cellular biology isn’t just more careful zoology.
       It's a new kind of inquiry that dramatically shifts what we can understand.
-      </p></div>
+      </p>
+
+      <p>
+      The famous examples of this phenomenon happen at a very large scale,
+      but zooming in can also be the more modest shift of a sub-field studying a new smaller scale object.
+      </p>
+    </div>
 
       <figure class="l-body-outset">
         <img src="./images/micrographia2.png" />
@@ -280,8 +286,9 @@
       </p>
       <p>
         We offer seven arguments, outlined below.
-        It's worth noting that none of these arguments are curve specific — they're a useful, general toolkit for testing our understanding of other neurons as well.
-        (The last three arguments are based on circuits, which we’ll discuss in the next section.)
+        It's worth noting that none of these arguments are curve specific: they're a useful, general toolkit for testing our understanding of other neurons as well.
+        Several of these arguments — dataset examples, synthetic examples, and tuning curves — are classic methods from visual neuroscience (e.g. <d-cite bibtex-key="hubel1962receptive"></d-cite>).
+        The last three arguments are based on circuits, which we’ll discuss in the next section.
       </p>
 
 
@@ -349,6 +356,7 @@
         that (1) curves cause these neurons to fire,
         (2) each unit responds to curves at different angular orientations,
         and (3) if there are other stimuli that cause them to fire those stimuli are rare or cause weaker activations.
+      More generally, these arguments seem to meet the evidentiary standards we understand to be used in neuroscience, which has established traditions and institutional knowledge of how to evaluate such claims.
 
       <p>
         All of these arguments will be explored in detail in the forthcoming articles on curve detectors and curve detection circuits.
@@ -594,15 +602,27 @@ at each point along the curve.</figcaption>
 
       <p class="claim-quote">Analogous features and circuits form across models and tasks.
 
-      <p>In some ways, it may not be that surprising once you accept the earlier claims. It’s a widely accepted fact that the first layer of vision models trained on natural images will learn Gabor filters. There are also several papers showing that, in some aggregate sense, neural networks learn representations at hidden layers that share a lot of information <d-cite bibtex-key="raghu2017svcca,kornblith2019similarity"></d-cite> and even highly correlated neurons<d-cite bibtex-key="li2015convergent"></d-cite>. Once you accept that there are meaningful features in later layers, is it surprising that the same features would also form in layers beyond the first one? And once you believe there are analogous features, isn’t it expected that they’d connect in the same ways?
+      <p>
+        It’s a widely accepted fact that the first layer of vision models trained on natural images will learn Gabor filters.
+        Once you accept that there are meaningful features in later layers, would it really be surprising for the same features to also form in layers beyond the first one?
+        And once you believe there are analogous features in multiple layers, wouldn't it be natural for them to connect in the same ways?
 
-      <p>Unlike the first two claims, it wouldn’t be completely fatal to circuits research if this claim turned out to be false. But it does greatly inform what kind of research makes sense. We introduced circuits as a kind of “cellular biology of deep learning.” But imagine a world where every species had cells with a completely different set of organelles and proteins. Would it still make sense to study cells in general, or would we limit ourselves to the narrow study of a few kinds of particularly important species of cells? Similarly, imagine the study of anatomy in a world where every species of animal had a completely unrelated anatomy: would we seriously study anything other than humans and a couple domestic animals?
+      <p>
+        Universality (or "convergent learning") of features has been suggested before.
+        Prior work has shown that different neural networks can develop highly correlated neurons <d-cite bibtex-key="li2015convergent"></d-cite>
+        and that they learn similar representations at hidden layers <d-cite bibtex-key="raghu2017svcca,kornblith2019similarity"></d-cite>.
+        This work seems highly suggestive, but there are alternative explanations to analogous features forming.
+        For example, one could imagine two features — such as a fur texture detector and a sophisticated dog body detector — being highly correlated despite being importantly different features.
+        Adopting the meaningful feature-skeptic perspective, it doesn't seem definitive.
 
-      <p>In this same way, the universality hypothesis determines what form of circuits research makes sense. If it was true in the strongest sense, one could imagine a kind of “periodic table of visual features” which we observe and catalogue across models. On the other hand, if it was mostly false, we would need to focus on a handful of models of particular societal importance and hope they stop changing every year. There might also be in between worlds, where some lessons transfer between models but others need to be learned from scratch.
+      <p>
+        Ideally, one would like to characterize several features and then rigorously demonstrate that those features — and not just correlated ones — are forming across many models.
+        Then, to further establish that analogous circuits form, one would want to find analogous features over several layers of multiple models and show that the same weight structure forms between them in each model.
 
-      <p>So, is the universality hypothesis true? Unfortunately, it’s the claim we have the least evidence for. To date, we simply haven’t invested enough in the comparative study of features and circuits to give strong answers.
-
-      <p>The main piece of evidence is that we quite reliably observe the same low level features across a large variety of vision model architectures (including AlexNet, InceptionV1, InceptionV3, and residual networks) and in models trained on Places365 instead of ImageNet. We’ve also observed them repeatedly form in vanilla conv nets trained from scratch on ImageNet. For high-level features, we only have very anecdotal evidence that sometimes similar features, such as various kinds of head detectors, form repeatedly.
+      <p>
+        Unfortunately, the only evidence we can offer today is anecdotal --
+        we simply have not yet invested enough in the comparative study of features and circuits to give confident answers.
+        With that said, we have observed that a couple low-level features seem to form across a variety of vision model architectures (including AlexNet, InceptionV1, InceptionV3, and residual networks) and in models trained on Places365 instead of ImageNet. We’ve also observed them repeatedly form in vanilla conv nets trained from scratch on ImageNet.
       </p>
 
       <style>
@@ -789,9 +809,25 @@ at each point along the curve.</figcaption>
       </figure>
 
       <p>
-        These results have led us to believe that a weak version of the universality hypothesis is likely true, but further work will be needed to understand if the apparent universality of some low-level vision features is the exception or the rule.
+        These results have led us to suspect that the universality hypothesis is likely true, but further work will be needed to understand if the apparent universality of some low-level vision features is the exception or the rule.
+
+      <p>
         If it turns out that the universality hypothesis is broadly true in neural networks,
         it will be tempting to speculate: might biological neural networks also learn similar features?
+        Researchers working at the intersection of neuroscience and deep learning have already shown that the units in artificial vision models can useful for modeling biological neurons <d-cite bibtex-key=""></d-cite>.
+        And some of the features we've discovered in artificial neural networks, such as curve detectors, are also known to exist in biological neural networks <d-cite bibtex-key=""></d-cite>.
+        This seems like significant cause for optimism.
+        <!--If universality of features holds across artificial and biological neural networks, it seems like it could be a very fruitful correspondence for both fields.-->
+        One particularly exciting possibility might be if artificial neural networks could predict features which were previously unknown but could then be found in biology.
+        (Some neuroscientists we have spoken to have suggested that high-low frequency detectors might be a candidate for this.)
+        If such a prediction could be made, it would be extremely strong evidence for the universality hypothesis.
+        <!--In some cases, the findings of this essay seem similar to fin-->
+
+        <p>
+          Focusing on the study of circuits, is universality really necessary?
+          Unlike the first two claims, it wouldn’t be completely fatal to circuits research if this claim turned out to be false. But it does greatly inform what kind of research makes sense. We introduced circuits as a kind of “cellular biology of deep learning.” But imagine a world where every species had cells with a completely different set of organelles and proteins. Would it still make sense to study cells in general, or would we limit ourselves to the narrow study of a few kinds of particularly important species of cells? Similarly, imagine the study of anatomy in a world where every species of animal had a completely unrelated anatomy: would we seriously study anything other than humans and a couple domestic animals?
+
+        <p>In the same way, the universality hypothesis determines what form of circuits research makes sense. If it was true in the strongest sense, one could imagine a kind of “periodic table of visual features” which we observe and catalogue across models. On the other hand, if it was mostly false, we would need to focus on a handful of models of particular societal importance and hope they stop changing every year. There might also be in between worlds, where some lessons transfer between models but others need to be learned from scratch.
 
       <hr>
 
@@ -832,7 +868,7 @@ at each point along the curve.</figcaption>
         In fact, for small enough circuits, statements about their behavior become questions of mathematical reasoning.
         Of course, the cost of this rigor is that statements about circuits are much smaller in scope than overall model behavior.
         But it seems like, with sufficient effort, statements about model behavior could be broken down into statements about circuits.
-        If so, perhaps circuits could act as a kind of epsitemtic foundation for interpretability.
+        If so, perhaps circuits could act as a kind of epistemic foundation for interpretability.
       </p>
 
 
@@ -841,6 +877,7 @@ at each point along the curve.</figcaption>
       <h2 id="closing">Closing Thoughts</h2>
 
       <p>We take it for granted that the microscope is an important scientific instrument. It’s practically a symbol of science. But this wasn’t always the case, and microscopes didn’t initially take off as a scientific tool. In fact, they seem to have languished for around fifty years. The turning point was when Robert Hooke published Micrographia<d-cite bibtex-key="hooke1666micrographia"></d-cite>, a collection of drawings of things he’d seen using a microscope, including the first picture of a cell.
+      </p>
 
       <p>
         Our impression is that there is some anxiety in the interpretability community that we aren’t taken very seriously.
@@ -848,12 +885,12 @@ at each point along the curve.</figcaption>
         That it isn't scientific.
         But the lesson of the microscope and cellular biology is that perhaps this is expected.
       </p>
-
       <p>
+        The discovery of cells was a qualitative research result.
+        That didn't stop it from changing the world.
+      </p>
 
-        The discovery of cells was a qualitative research result, and it changed the world.</p>
-
-      <br><br><br><br>
+      <br><br><br><br><br>
 
 
 
@@ -976,7 +1013,7 @@ at each point along the curve.</figcaption>
         In addition to Nick and Sophia's deep engagement, we're more generally appreciative of the neuroscience community's engagement with us,
         especially in sharing hard-won lessons about methodological weaknesses in our work.
         In particular, we appreciate Brian Wandell pushing us in 2019 on not using tuning curves and the importance of families of neurons, which we think has made our work much stronger.
-        We're also very grateful for the comments and support of Mareike Grotheer, Natalia Bilenko, Bruno Olshausen, Philip Sabes, Paul Merolla, James Redd, Thong-Wei Koh, and Ivan Alvarez.
+        We're also very grateful for the comments and support of Mareike Grotheer, Natalia Bilenko, Bruno Olshausen, Michael Eickenberg, Charles Frye, Philip Sabes, Paul Merolla, James Redd, Thong-Wei Koh, and Ivan Alvarez.
         We think we have a lot to learn from the neuroscience community and are excited to continue doing so.
       </p>
       <p>
