@@ -171,8 +171,9 @@ h2 {
 /* ****************************************
  * TOC
  ******************************************/
-    @media(max-width: 999px){
+    @media(max-width: 1199px){
       d-contents {
+        display: none;
         justify-self: start;
         align-self: start;
         padding-bottom: 0.5em;
@@ -188,13 +189,13 @@ h2 {
       border-bottom: none;
     }
 
-    @media (min-width: 1000px){
+    @media (min-width: 1200px){
       d-contents {
         align-self: start;
         grid-column-start: 1 !important;
         grid-column-end: 4 !important;
         justify-self: end;
-        margin-top:  2em;
+        margin-top:  0em;
         padding-right: 3em;
         padding-left: 2em;
         border-right: 1px solid rgba(0, 0, 0, 0.1);

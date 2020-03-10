@@ -37,7 +37,7 @@
       <d-contents>
         <nav class="l-text toc figcaption">
           <h3>Contents</h3>
-          <div><a href="#introduction">Introduction</a></div>
+          <!--<div><a href="#introduction">Introduction</a></div>-->
           <div><a href="#three-speculative-claims">Three Speculative Claims</a></div>
           <div><a href="#claim-1">Claim 1: Features</a></div>
           <ul>
@@ -61,7 +61,7 @@
       </d-contents>
 
       <div>
-      <h2 id="introduction">Introduction</h2>
+      <!--<h2 id="introduction">Introduction</h2>-->
       <p>
       Many important transition points in the history of science have been moments when science “zoomed in.”
       At these points, we develop a visualization or tool that allows us to see the world in a new level of detail, and a new field of science develops to study the world through this lens.
@@ -218,7 +218,7 @@
             </div>
 
             <div class="figcaption big-only" style="margin-top: 20px;">
-              Left: An <a href="https://distill.pub/2019/activation-atlas/">activation atlas</a><d-cite bibtex-key="carter2019activation"></d-cite> visualizing the space neural network features can represent.
+              Left: An <a href="https://distill.pub/2019/activation-atlas/">activation atlas</a><d-cite bibtex-key="carter2019activation"></d-cite> visualizing part of the space neural network features can represent.
             </div>
 
           </div>
@@ -518,7 +518,7 @@
       <p>Let’s focus even more and look at how a single early curve detector connects to sophisticated curve detector in the same orientation.
 
       <p>In this case, our model is implementing a 5x5 convolution, so the weights linking these two neurons are a 5x5 set of weights, which can be positive or negative.<d-footnote>
-        Many of the neurons discussed in this article, including curve detectors, live in branches of InceptionV1 that are structured as a 1x1 convolution down to a small bottleneck and then a larger convolution. The weights we present in this essay are the multiplied out version of the 1x1 and larger conv weights. We think it's often useful to this as a single low-rank weight matrix, but this technically does ignore one ReLU non-linearity.
+        Many of the neurons discussed in this article, including curve detectors, live in branches of InceptionV1 that are structured as a 1x1 convolution that reduce the number of channels to a small bottleneck followeed by a 3x3 or 5x5 convolution. The weights we present in this essay are the multiplied out version of the 1x1 and larger conv weights. We think it's often useful to  view this as a single low-rank weight matrix, but this technically does ignore one ReLU non-linearity.
         </d-footnote>
 
         A positive weight means that if the earlier neuron fires in that position, it excites the late neuron. Conversely a negative weight would mean that it inhibits it.
@@ -594,7 +594,7 @@ at each point along the curve.</figcaption>
 
       <p>This circuit is striking because the network could have easily done something much less sophisticated.
         It could easily create invariant neurons by not caring very much about where the eyes, fur and snout went, and just looking for a jumble of them together.
-        But instead, the network has learned to carve apart the left and right cases and handle the separately. We’re somewhat surprised that gradient descent could learn to do this!<d-footnote>To be clear, there are also more direct pathways by which various constituents of heads influence these later head detectors, without going through the left and right pathways</d-footnote>
+        But instead, the network has learned to carve apart the left and right cases and handle them separately. We’re somewhat surprised that gradient descent could learn to do this!<d-footnote>To be clear, there are also more direct pathways by which various constituents of heads influence these later head detectors, without going through the left and right pathways</d-footnote>
       </p>
 
       <p>But this summary of the circuit is only scratching the surface of what is going on. Every connection between neurons is a convolution, so we can also look at where an input neuron excites the the next one. And the models tends to be doing what you might have optimistically hoped. For example, consider these “head with neck” units. The head is only detected on the correct side:
