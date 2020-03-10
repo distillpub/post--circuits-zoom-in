@@ -3,8 +3,6 @@ figure {
   margin-bottom: 50px;
 }
 
-
-
 .positive-text {
   color: #191;
 }
@@ -49,8 +47,6 @@ figure {
   margin-bottom: 8px;
 }
 
-
-
 /* ****************************************
  * curve-figure; curve-orientations-figure
  ******************************************/
@@ -59,7 +55,7 @@ figure {
   display: flex;
   flex-direction: row;
 }
-.curve-figure div:first-child  {
+.curve-figure div:first-child {
   margin-right: 60px;
 }
 
@@ -73,7 +69,7 @@ figure {
   display: flex;
   flex-direction: row;
 }
-.curve-oreientaions-figure > div:first-child  {
+.curve-oreientaions-figure > div:first-child {
   flex-basis: 45%;
   flex-grow: 1;
 }
@@ -83,29 +79,26 @@ figure {
   flex-grow: 1;
 }
 
-
-
-
 /* ****************************************
  * Claims Figures
  ******************************************/
 
-@media (min-width: 600px){
+@media (min-width: 600px) {
   .claim-figure h4 {
-    --border-bottom: 1px solid #CCC;
+    --border-bottom: 1px solid #ccc;
   }
   .claim-figure > div > div {
     margin-left: 40px;
   }
 }
-@media (max-width: 600px){
+@media (max-width: 600px) {
   .claim-figure img {
     display: none;
   }
   .claim-figure > div {
     margin-top: 20px;
     margin-bottom: 20px;
-    border-left: 1px solid #CCC;
+    border-left: 1px solid #ccc;
   }
   .claim-figure > div > div {
     margin-left: 20px;
@@ -118,6 +111,7 @@ figure {
 
 .claim-figure img {
   max-width: 220px;
+  max-height: 360px;
   border-radius: 2px;
 }
 .claim-figure {
@@ -152,180 +146,170 @@ h2 {
   border-bottom: none !important;
 }
 
-
-
-
-
 /* ****************************************
  * TOC
  ******************************************/
-    @media(max-width: 1000px){
-      d-contents {
-        justify-self: start;
-        align-self: start;
-        grid-column-start: 2;
-        grid-column-end: 6;
-        padding-bottom: 0.5em;
-        margin-bottom: 1em;
-        padding-left: 0.25em;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        border-bottom-width: 1px;
-        border-bottom-style: solid;
-        border-bottom-color: rgba(0, 0, 0, 0.1);
-      }
-    }
-    d-contents a:hover {
-      border-bottom: none;
-    }
+@media (max-width: 1000px) {
+  d-contents {
+    justify-self: start;
+    align-self: start;
+    grid-column-start: 2;
+    grid-column-end: 6;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+  }
+}
+d-contents a:hover {
+  border-bottom: none;
+}
 
-    @media (min-width: 1000px){
-      d-contents {
-        align-self: start;
-        grid-column-start: 1 !important;
-        grid-column-end: 4 !important;
-        justify-self: end;
-        margin-top:  2em;
-        padding-right: 3em;
-        padding-left: 2em;
-        border-right: 1px solid rgba(0, 0, 0, 0.1);
-        border-right-width: 1px;
-        border-right-style: solid;
-        border-right-color: rgba(0, 0, 0, 0.1);
-      }
-    }
+@media (min-width: 1000px) {
+  d-contents {
+    align-self: start;
+    grid-column-start: 1 !important;
+    grid-column-end: 4 !important;
+    justify-self: end;
+    margin-top: 2em;
+    padding-right: 3em;
+    padding-left: 2em;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: rgba(0, 0, 0, 0.1);
+  }
+}
 
-    d-contents nav h3 {
-      margin-top: 0;
-      margin-bottom: 1em;
-    }
+d-contents nav h3 {
+  margin-top: 0;
+  margin-bottom: 1em;
+}
 
-    d-contents nav div {
-      color: rgba(0, 0, 0, 0.8);
-      font-weight: bold;
-    }
+d-contents nav div {
+  color: rgba(0, 0, 0, 0.8);
+  font-weight: bold;
+}
 
-    d-contents nav a {
-      color: rgba(0, 0, 0, 0.8);
-      border-bottom: none;
-      text-decoration: none;
-    }
+d-contents nav a {
+  color: rgba(0, 0, 0, 0.8);
+  border-bottom: none;
+  text-decoration: none;
+}
 
-    d-contents li {
-      list-style-type: none;
-    }
+d-contents li {
+  list-style-type: none;
+}
 
-    d-contents ul {
-      padding-left: 1em;
-    }
+d-contents ul {
+  padding-left: 1em;
+}
 
-    d-contents nav ul li {
-      margin-bottom: .25em;
-    }
+d-contents nav ul li {
+  margin-bottom: 0.25em;
+}
 
-    d-contents nav a:hover {
-      text-decoration: underline solid rgba(0, 0, 0, 0.6);
-    }
+d-contents nav a:hover {
+  text-decoration: underline solid rgba(0, 0, 0, 0.6);
+}
 
-    d-contents nav ul {
-      margin-top: 0;
-      margin-bottom: 6px;
-    }
+d-contents nav ul {
+  margin-top: 0;
+  margin-bottom: 6px;
+}
 
+d-contents nav > div {
+  display: block;
+  outline: none;
+  margin-bottom: 0.5em;
+}
 
-    d-contents nav>div {
-      display: block;
-      outline: none;
-      margin-bottom: 0.5em;
-    }
+d-contents nav > div > a {
+  font-size: 13px;
+  font-weight: 600;
+}
 
-    d-contents nav>div>a {
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-
-
-
-
-  /* ****************************************
+/* ****************************************
    * Thread Info
    ******************************************/
 
-    .thread-info {
-        background-color: hsl(54, 78%, 96%);
-        border-left: solid hsl(54, 33%, 67%) 1px;
-        padding: 1em;
-        color: hsla(0, 0%, 0%, 0.67);
-    }
+.thread-info {
+  background-color: hsl(54, 78%, 96%);
+  border-left: solid hsl(54, 33%, 67%) 1px;
+  padding: 1em;
+  color: hsla(0, 0%, 0%, 0.67);
+}
 
-    #thread-nav {
-        margin-top: 0;
-        margin-bottom: 1.5rem;
-        display: grid;
-        grid-template-columns: 65px 1fr 1fr;
-        grid-template-areas:
-            "icon explanation explanation "
-            "icon prev next";
-        grid-column-gap: 1.5em;
-    }
+#thread-nav {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  display: grid;
+  grid-template-columns: 65px 1fr 1fr;
+  grid-template-areas:
+    'icon explanation explanation '
+    'icon prev next';
+  grid-column-gap: 1.5em;
+}
 
-    #thread-nav .icon-multiple-pages {
-        grid-area: icon;
-        padding: 0.5em;
-        content: url(images/multiple-pages.svg);
-    }
+#thread-nav .icon-multiple-pages {
+  grid-area: icon;
+  padding: 0.5em;
+  content: url(images/multiple-pages.svg);
+}
 
-    #thread-nav .explanation {
-        grid-area: explanation;
-        font-size: 85%;
-        color: hsl(0, 0%, 0.33);
-    }
+#thread-nav .explanation {
+  grid-area: explanation;
+  font-size: 85%;
+  color: hsl(0, 0%, 0.33);
+}
 
-    #thread-nav .prev {
-        grid-area: prev;
-    }
+#thread-nav .prev {
+  grid-area: prev;
+}
 
-    #thread-nav .prev::before {
-        content: "← Previous Article";
-    }
+#thread-nav .prev::before {
+  content: '← Previous Article';
+}
 
-    #thread-nav .overview {
-        scroll-behavior: smooth;
-    }
+#thread-nav .overview {
+  scroll-behavior: smooth;
+}
 
-    #thread-nav .overview::before {
-        content: "↑";
-        margin-right: 0.5em;
-    }
+#thread-nav .overview::before {
+  content: '↑';
+  margin-right: 0.5em;
+}
 
-    #thread-nav .next {
-        grid-area: next;
-        scroll-behavior: smooth;
-    }
+#thread-nav .next {
+  grid-area: next;
+  scroll-behavior: smooth;
+}
 
-    #thread-nav .next::before {
-        content: "Next Article →";
-    }
+#thread-nav .next::before {
+  content: 'Next Article →';
+}
 
-    #thread-nav .next::before, #thread-nav .prev::before {
-      display: block;
-      font-size: 80%;
-      font-weight: bold;
-      margin-top: 0px;
-      margin-right: 0.5em;
-      text-transform: uppercase;
-      margin-bottom: -8px;
-    }
+#thread-nav .next::before,
+#thread-nav .prev::before {
+  display: block;
+  font-size: 80%;
+  font-weight: bold;
+  margin-top: 0px;
+  margin-right: 0.5em;
+  text-transform: uppercase;
+  margin-bottom: -8px;
+}
 
-
-
-    #thread-nav .prev,
-    #thread-nav .next,
-    #thread-nav .overview {
-        font-size: 80%;
-        font-weight: 600;
-        border-bottom: none;
-        color: #2e6db7;
-        margin-top: 0.25em;
-        letter-spacing: 0.25px;
-    }
+#thread-nav .prev,
+#thread-nav .next,
+#thread-nav .overview {
+  font-size: 80%;
+  font-weight: 600;
+  border-bottom: none;
+  color: #2e6db7;
+  margin-top: 0.25em;
+  letter-spacing: 0.25px;
+}
