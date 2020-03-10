@@ -179,6 +179,7 @@ h2 {
  ******************************************/
     @media(max-width: 1199px){
       d-contents {
+        display: none;
         justify-self: start;
         align-self: start;
         padding-bottom: 0.5em;
