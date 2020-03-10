@@ -102,7 +102,7 @@ figure {
  * Claims Figures
  ******************************************/
 
-@media (min-width: 600px){
+@media (min-width: 1201px){
   .claim-figure h4 {
     --border-bottom: 1px solid #CCC;
   }
@@ -110,7 +110,7 @@ figure {
     margin-left: 40px;
   }
 }
-@media (max-width: 600px){
+@media (max-width: 1200px){
   .claim-figure img {
     display: none;
   }

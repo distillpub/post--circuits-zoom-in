@@ -8,13 +8,13 @@
     />
     <meta name="theme-color" content="#000000" />
 
-    <title>Zoom In: Features and Circuits</title>
+    <title>Zoom In: An Introduction to Circuits</title>
   </head>
 
   <body>
     <d-front-matter>
       <code style="display: none;" type="text/json"
-        >{ "title": "Zoom In: Features and Circuits", "description": "", "published": false,
+        >{ "title": "Zoom In: An Introduction to Circuits", "description": "", "published": false,
         "authors": [
           { "author": "Chris Olah", "authorURL": "https://colah.github.io", "affiliation": "OpenAI", "affiliationURL": "https://openai.com"  },
           { "author": "Nick Cammarata", "authorURL": "http://nickcammarata.com", "affiliation": "OpenAI", "affiliationURL": "https://openai.com"  },
@@ -25,7 +25,14 @@
         ] }</code
       >
     </d-front-matter>
-    <d-title></d-title>
+    <d-title>
+      <h1>Zoom In: An Introduction to Circuits</h1>
+      <!--
+        <img
+          src="./images/car-circuit.png"
+          style='grid-column: text; width: 100%; padding-top: 40px; padding-bottom:20px;' />
+        -->
+    </d-title>
     <d-byline></d-byline>
     <d-article>
       <d-contents>
@@ -69,11 +76,12 @@
       It's a new kind of inquiry that dramatically shifts what we can understand.
       </p>
 
+
       <p>
-      The famous examples of this phenomenon happen at a very large scale,
-      but zooming in can also be the more modest shift of a sub-field studying a new smaller scale object.
+        The famous examples of this phenomenon happened at a very large scale,
+        but it can also be the more modest shift of a small research community realizing they can now study their topic in a finer grained level of detail.
       </p>
-    </div>
+      </div>
 
       <figure class="l-body-outset">
         <img src="./images/micrographia2.png" />
@@ -85,22 +93,52 @@
       </figure>
 
       <p>Just as the early microscope hinted at a new world of cells and microorganisms, visualizations of artificial neural networks have revealed tantalizing hints and glimpses of a rich inner world within our models (e.g. <d-cite bibtex-key='karpathy2015visualizing,erhan2009visualizing,olah2017feature,simonyan2013deep,nguyen2015deep,mordvintsev2015inceptionism,nguyen2016plug,zeiler2014visualizing,fong2017interpretable,kindermans2017patternnet,reif2019visualizing,carter2019activation'></d-cite>).
+      This has led us to wonder: Is it possible that deep learning is at a similar, albeit more modest, transition point?
+      </p>
+
+      <p>
+        Most work on interpretability aims to give simple explanations of an entire neural network's behavior.
+        But what if we instead take an approach inspired by neuroscience or cellular biology — an approach of zooming  in?
+        What if we treated individual neurons, even individual weights, as being worthy of serious investigation?
+        What if we were willing spend thousands of hours tracing through every neuron and its connections?
+        What kind of picture of neural networks would emerge?
+      </p>
+
+      <p>
+        In contrast to the typical picture of neural networks as a black box, we've been surprised how approachable the network is on this scale.
+        Not only do neurons seem understandable (even ones that initially seemed inscrutable), but the "circuits" of connections between them seem to be meaningful algorithms corresponding to facts about the world.
+        You can watch a circle detector be assembled from curves.
+        You can see a dog head be assembled from eyes, snout, fur and tongue.
+        You can observe how a car is composed from wheels and windows.
+        You can even find circuits implementing simple logic: cases where the network implements AND, OR or XOR over high-level visual features.
+      </p>
+
+<!--
+      <p>Just as the early microscope hinted at a new world of cells and microorganisms, visualizations of artificial neural networks have revealed tantalizing hints and glimpses of a rich inner world within our models (e.g. <d-cite bibtex-key='karpathy2015visualizing,erhan2009visualizing,olah2017feature,simonyan2013deep,nguyen2015deep,mordvintsev2015inceptionism,nguyen2016plug,zeiler2014visualizing,fong2017interpretable,kindermans2017patternnet,reif2019visualizing,carter2019activation'></d-cite>).
       </p>
       <p>This has led us to wonder: Is it possible that deep learning is at a similar transition point? Could there be a kind of cellular biology or neuroscience analogue of deep learning?
         And if so, what would such an approach to deep learning interpretability look like?
         What are its objects of study, and what would rigorous inquiry into them involve?</p>
+        -->
 
-      <p>Our tentative answer is that this is the study of features and the neural circuits that implement them.</p>
-
-      <p>Exploring these objects over the last year and a half has led to the circuits project, an open scientific collaboration hosted on the <a href="http://slack.distill.pub/">Distill slack</a>. In future articles, the collaboration will publish detailed explorations of this inner world. But before we do that, we wanted to offer a high-level overview of our thinking and some of the working principles that we’ve found useful in this line of research.</p>
-
-      <figure class="l-body-outset" style="margin-bottom: 20px;">
+      <figure class="l-body-outset">
         <img src="./images/deepdream.png" />
         <figcaption>
-          Over the last few years, we've seen many incredible visualizations<d-cite bibtex-key='karpathy2015visualizing,erhan2009visualizing,olah2017feature,simonyan2013deep,nguyen2015deep,mordvintsev2015inceptionism,nguyen2016plug,zeiler2014visualizing,fong2017interpretable,kindermans2017patternnet,reif2019visualizing,carter2019activation'></d-cite> and analyses<d-cite bibtex-key='mikolov2013distributed,radford2017learning,zhou2014object,netdissect2017'></d-cite> hinting at a rich world of internal features in modern
+          Over the last few years, we've seen many incredible visualizations<d-cite bibtex-key='karpathy2015visualizing,erhan2009visualizing,olah2017feature,simonyan2013deep,nguyen2015deep,mordvintsev2015inceptionism,nguyen2016plug,zeiler2014visualizing,fong2017interpretable,kindermans2017patternnet,hohman2019summit,reif2019visualizing,carter2019activation'></d-cite> and analyses<d-cite bibtex-key='mikolov2013distributed,radford2017learning,zhou2014object,netdissect2017'></d-cite> hinting at a rich world of internal features in modern
           neural networks. Above, we see a <a href="https://ai.googleblog.com/2015/06/inceptionism-going-deeper-into-neural.html">DeepDream</a><d-cite bibtex-key="mordvintsev2015inceptionism"></d-cite> image, which sparked a great deal of excitement in this space.
         </figcaption>
       </figure>
+
+      <p>
+        This introductory essay offers a high-level overview of our thinking and some of the working principles that we’ve found useful in this line of research.
+        In future articles, we and our collaborators will publish detailed explorations of this inner world.
+
+
+      <p>
+        But the truth is that we've only scratched the surface of understanding a single vision model.
+        If these questions resonate with you, you are welcome to join us and our collaborators in the Circuits project, an open scientific collaboration hosted on the <a href="http://slack.distill.pub/">Distill slack</a>.
+
+
 
       <hr>
 
@@ -131,7 +169,7 @@
             </div>
 
             <div class="figcaption" style="margin-top: 20px;">
-              This translation/summarization of Schwann's claims can be found in many biology texts; we were unable to determine what the original source of the translation is. The image of Schwann's book <i>Mikroskopische Untersuchungen über die Uebereinstimmung in der Struktur und dem Wachsthum der Thiere und Pflanzen</i> from the <a href="http://www.deutschestextarchiv.de/book/show/schwann_mikroskopische_1839">Deutsches Textarchiv</a>.
+              This translation/summarization of Schwann's claims can be found in many biology texts; we were unable to determine what the original source of the translation is. <span style="big-only">The image of Schwann's book is from the <a href="http://www.deutschestextarchiv.de/book/show/schwann_mikroskopische_1839">Deutsches Textarchiv</a>.</span>
             </div>
 
           </div>
@@ -140,7 +178,7 @@
 
       <p>The first two of these claims are likely familiar, persisting in modern cellular theory. The third is likely not familiar, since it turned out to be horribly wrong.</p>
 
-      <p>We believe there’s a lot of value in articulating a strong version of something you believe may be true, even it might be false like Schwann’s third claim. In this spirit, we offer three claims about neural networks. They are intended both as empirical claims about the nature of neural networks, and also as normative claims about how it’s useful to understand them.</p>
+      <p>We believe there’s a lot of value in articulating a strong version of something one may believe to be true, even if it might be false like Schwann’s third claim. In this spirit, we offer three claims about neural networks. They are intended both as empirical claims about the nature of neural networks, and also as normative claims about how it’s useful to understand them.</p>
 
 
       <figure class="l-body-outset claim-figure">
@@ -194,7 +232,8 @@
         They also aren't totally novel: claims along the lines of (1) and (3) have been suggested before, as we'll discuss in more depth below.
       </p>
       <p>
-        But we believe they're important discussed because, if true, they would be a basis for a “zoomed in” field. In the following sections, we’ll discuss each one individually and present some of the evidence that has led us to believe they might be true.</p>
+        But we believe these claims are important to consider because, if true, they could form the basis of a new “zoomed in” field of
+        interpretability. In the following sections, we’ll discuss each one individually and present some of the evidence that has led us to believe they might be true.</p>
 
 
 
@@ -227,7 +266,7 @@
 
       <p>
         Of course, being understandable doesn't mean being simple or easily understandable.
-        Many neurons are initially mysterious and don't follow our a priori guesses of what features will exist!
+        Many neurons are initially mysterious and don't follow our a priori guesses of what features might exist!
         However, our experience is that there's usually a simple explanation behind these neurons, and that they're actually doing something quite natural.
         For example, we were initially confused by high-low frequency detectors (discussed below) but in retrospect, they are simple and elegant.
 
@@ -263,7 +302,7 @@
 
       <p>
         Curve detecting neurons can be found in every non-trivial vision model we've carefully examined.
-        These units are interesting because they straddle the boundary between features the community broadly agrees exist (e.g. edge detectors) and features for which there's significant skepticism (e.g. more complex shapes).
+        These units are interesting because they straddle the boundary between features the community broadly agrees exist (e.g. edge detectors) and features for which there's significant skepticism (e.g. high-level features such as ears, automotives, and faces).
       </p>
 
       <p>We'll focus on curve detectors in layer <code>mixed3b</code>, an early layer of InceptionV1. These units responded to curved lines and boundaries with a radius of around 60 pixels. They are also slightly additionally excited by perpendicular lines along the boundary of the curve, and prefer the two sides of the curve to be different colors.
@@ -292,7 +331,7 @@
       </p>
       <p>
         We offer seven arguments, outlined below.
-        It's worth noting that none of these arguments are curve specific: they're a useful, general toolkit for testing our understanding of other neurons as well.
+        It's worth noting that none of these arguments are curve specific: they're a useful, general toolkit for testing our understanding of other features as well.
         Several of these arguments — dataset examples, synthetic examples, and tuning curves — are classic methods from visual neuroscience (e.g. <d-cite bibtex-key="hubel1962receptive"></d-cite>).
         The last three arguments are based on circuits, which we’ll discuss in the next section.
       </p>
@@ -408,7 +447,7 @@
       <p>
         It's worth noting that the combination of feature visualization and dataset examples alone are already quite a strong argument.
         Feature visualization establishes a causal link, while dataset examples test the neuron's use in practice and whether there are a second type of stimuli that it reacts to.
-        But we can bring all our other approaches to analyzing a neuron to bare again.
+        But we can bring all our other approaches to analyzing a neuron to bear again.
       For example, we can use a 3D model to generate synthetic dog head images from different angles.
 
       <p>
@@ -450,10 +489,14 @@
       <h2 id="claim-2">Claim 2: Circuits</h2>
 
       <p class="claim-quote">
-        Features are connected by weights, forming circuits. These circuits can also be rigorously studied and understood.
-      </div>
+        Features are connected by weights, forming circuits.<br> These circuits can also be rigorously studied and understood.
+      </p>
 
-      <p>Part of this claim is trivially true. Of course features are connected by weights — that’s the definition of a neural network! — and of course you can consider a subgraph of how those features interact. In fact, these circuits are a really natural thing to turn your attention to once you accept Claim 1: if you can understand features, why wouldn’t you start looking at how they’re wired together?
+      <p>
+        All neurons in our network are formed from linear combinations of neurons in the previous layer, followed by ReLU.
+        If we can understand the features in both layers, shouldn't we also be able to understand the connections between them?
+        To explore this, we find it helpful to study circuits:
+        sub-graphs of the network, consisting a set of tightly linked features and the weights between them.
 
       <p>The remarkable thing is how tractable and meaningful these circuits seem to be as objects of study. When we began looking, we expected to find something quite messy. Instead, we’ve found beautiful rich structures, often with symmetry to them. Once you understand what features they’re connecting together, the individual floating point number weights in your neural network become meaningful! <i>You can literally read meaningful algorithms off of the weights.</i>
 
@@ -514,7 +557,7 @@ at each point along the curve.</figcaption>
 
       <p>It’s also worth noting how the weights rotate with the orientation of the curve detector. The symmetry of the problem is reflected as a symmetry in the weights. We call circuits with exhibiting this phenomenon "equivariant circuits", and will discuss it in a later article.
 
-      <p>[Read more about the curve detector circuit]
+      <!--<p>[Read more about the curve detector circuit]-->
 
       <h3 id="claim-2-dog">Circuit 2: Oriented Dog Head Detection</h3>
 
@@ -544,7 +587,7 @@ at each point along the curve.</figcaption>
         <!--<figcaption></figcaption>-->
       </figure>
 
-      <p>We call this pattern “unioning over cases”. The network separately detects two cases (left and right) and then takes a union over them to create invariant "multifaceted"<d-cite bibtex-key="nguyen2016multifaceted"></d-cite> units.
+      <p>We call this pattern “unioning over cases”. The network separately detects two cases (left and right) and then takes a union over them to create invariant "multifaceted"<d-cite bibtex-key="nguyen2016multifaceted"></d-cite> units. Note that, because the two pathways inhibit each other, this circuit actually has some XOR like properties.
 
       <p>This circuit is striking because the network could have easily done something much less sophisticated.
         It could easily create invariant neurons by not caring very much about where the eyes, fur and snout went, and just looking for a jumble of them together.
@@ -553,14 +596,24 @@ at each point along the curve.</figcaption>
 
       <p>But this summary of the circuit is only scratching the surface of what is going on. Every connection between neurons is a convolution, so we can also look at where an input neuron excites the the next one. And the models tends to be doing what you might have optimistically hoped. For example, consider these “head with neck” units. The head is only detected on the correct side:
 
-      <figure style="max-width: 550px; margin-left: auto; margin-right: auto;">
+      <figure style="max-width: 500px;">
         <img src="./images/oriented-dog-heads.png"/>
         <!--<figcaption></figcaption>-->
       </figure>
 
-      <p>There’s a lot more to say about this circuit, so we’ve dedicated an entire article to analyzing it in depth, including testing our theory of the circuit by editing the weights.
+      <p>
+        The union step is also interesting to look at the details of.
+        The network doesn't indiscriminately respond to the heads into the two orientations:
+        the regions of excitation extend from the center in different directions depending on orientaiton, allowing snouts to converge in to the same point.
 
-      [Read more about the oriented dog head circuit]
+        <figure style="max-width: 580px;">
+          <img src="./images/dog-merge.png"/>
+          <!--<figcaption></figcaption>-->
+        </figure>
+
+      <p>There’s a lot more to say about this circuit, so we plan to return to it in a future article and analyze it in depth, including testing our theory of the circuit by editing the weights.
+
+      <!--[Read more about the oriented dog head circuit]-->
 
       <h3 id="claim-2-superposition">Circuit 3: Cars in Superposition</h3>
 
@@ -823,11 +876,13 @@ at each point along the curve.</figcaption>
         Researchers working at the intersection of neuroscience and deep learning have already shown that the units in artificial vision models can useful for modeling biological neurons <d-cite bibtex-key="yamins2014performance,gucclu2015deep,eickenberg2017seeing"></d-cite>.
         And some of the features we've discovered in artificial neural networks, such as curve detectors, are also believed to exist in biological neural networks (e.g. <d-cite bibtex-key="jiang2019discrete,pasupathy2001shape"></d-cite>).
         This seems like significant cause for optimism.
+        <d-footnote>
         <!--If universality of features holds across artificial and biological neural networks, it seems like it could be a very fruitful correspondence for both fields.-->
         One particularly exciting possibility might be if artificial neural networks could predict features which were previously unknown but could then be found in biology.
         (Some neuroscientists we have spoken to have suggested that high-low frequency detectors might be a candidate for this.)
         If such a prediction could be made, it would be extremely strong evidence for the universality hypothesis.
         <!--In some cases, the findings of this essay seem similar to fin-->
+        </d-footnote>
 
         <p>
           Focusing on the study of circuits, is universality really necessary?
