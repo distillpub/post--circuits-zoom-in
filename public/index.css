@@ -6,10 +6,12 @@ figure {
 
 
 .positive-text {
-  color: #191;
+  color: #ca0020;
+  font-weight: bold;
 }
 .negative-text {
-  color: #911;
+  color: #0571b0;
+  font-weight: bold;
 }
 
 /* ****************************************
