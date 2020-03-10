@@ -269,7 +269,7 @@ h2 {
     }
 
     #thread-nav {
-        margin-top: 0;
+        margin-top: 20;
         margin-bottom: 1.5rem;
         display: grid;
         grid-template-columns: 65px 1fr 1fr;
