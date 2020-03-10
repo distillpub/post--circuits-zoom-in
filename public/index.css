@@ -130,6 +130,7 @@ figure {
 
 .claim-figure img {
   max-width: 220px;
+  max-height: 360px;
   border-radius: 2px;
 }
 .claim-figure {
