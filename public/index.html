@@ -820,8 +820,8 @@ at each point along the curve.</figcaption>
       <p>
         If it turns out that the universality hypothesis is broadly true in neural networks,
         it will be tempting to speculate: might biological neural networks also learn similar features?
-        Researchers working at the intersection of neuroscience and deep learning have already shown that the units in artificial vision models can useful for modeling biological neurons <d-cite bibtex-key=""></d-cite>.
-        And some of the features we've discovered in artificial neural networks, such as curve detectors, are also known to exist in biological neural networks <d-cite bibtex-key=""></d-cite>.
+        Researchers working at the intersection of neuroscience and deep learning have already shown that the units in artificial vision models can useful for modeling biological neurons <d-cite bibtex-key="yamins2014performance,gucclu2015deep,eickenberg2017seeing"></d-cite>.
+        And some of the features we've discovered in artificial neural networks, such as curve detectors, are also believed to exist in biological neural networks (e.g. <d-cite bibtex-key="jiang2019discrete,pasupathy2001shape"></d-cite>).
         This seems like significant cause for optimism.
         <!--If universality of features holds across artificial and biological neural networks, it seems like it could be a very fruitful correspondence for both fields.-->
         One particularly exciting possibility might be if artificial neural networks could predict features which were previously unknown but could then be found in biology.
@@ -903,16 +903,16 @@ at each point along the curve.</figcaption>
       <section id="thread-nav" class="thread-info">
           <div class="icon-multiple-pages"></div>
           <p class="explanation">
-              This article is part of the <a style="border-bottom: none; color: #2e6db7;">Circuits thread</a>, a collection of short articles and commentary by an open scientific collaboration delving into the inner workings of neural networks.<br>
-              <a style="border-bottom: none; color: #2e6db7; margin-left: 0px;">🔬Learn how to get involved.</a>
+              This article is part of the Circuits thread, a collection of short articles and commentary by an open scientific collaboration delving into the inner workings of neural networks.<br>
+              <!--<a style="border-bottom: none; color: #2e6db7; margin-left: 0px;">🔬Learn how to get involved.</a>-->
               <!--<a class="overview" href="#">Thread Overview</a>-->
           </p>
 
-          <a class="prev" href="#">Thread Overview</a>
+          <!--<a class="prev" href="#">Thread Overview</a>-->
           <!--<a class="next" href="#">An Overview of early vision</a>-->
           <div class="next" href="#" style="color:#666;">An Overview of Early Vision
             <div style="color:#999; font-size: 90%; line-height: 140%; margin-top: 4px;">Under discussion in <a href="http://slack.distill.pub/">Distill slack</a> <code>#circuits</code></div>
-            <div style="color:#AAA; font-size: 90%; line-height: 140%;"> Anticipated publication next Tuesday, 3/17.</div>
+            <div style="color:#AAA; font-size: 90%; line-height: 140%;"> Anticipated publication Tuesday, 3/24.</div>
           </div>
       </section>
 
@@ -1001,6 +1001,14 @@ at each point along the curve.</figcaption>
 
       </div>
 
+
+      <h3>Historical Note</h3>
+
+      <p><b>Writing:</b> The text of this essay was primarily written by Christopher Olah, drawing extensively on the research and thinking of the entire Clarity team. Nick Cammarata was deeply involved in developing the framing and revising the final text.</p>
+
+      <p><b>Research:</b> This essay articulates themes that developed as a result of several people’s research into how neural networks implement features. Chris began initial attempts to understand the mechanistic implementations of neurons in terms of their weights in 2018, and developed several tools that enabled this line of work. This work was extended by Gabriel Goh, who discovered the first of what we now call motifs (using negative weights for specialization), in addition to describing the mechanisms behind several neurons.  At this point, Nick Cammarata took up this line of research to characterize much larger and deeper circuits, greatly expand the number of neurons we understood mechanistically, and performed detailed, rigorous characterizations of curve detectors. Nick also introduced the connection to Systems biology. Ludwig Schubert performed detailed analysis of high-low frequency detectors. Chris gave research advice and mentorship throughout.</p>
+
+      <p><b>Infrastructure:</b> Michael Petrov, Shan Carter, Ludwig and Nick built a variety of infrastructural tools which made our research possible.</p>
 
       <h3>Historical Note</h3>
       <p>
