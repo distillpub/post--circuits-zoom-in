@@ -513,7 +513,7 @@
       <p>Let’s focus even more and look at how a single early curve detector connects to sophisticated curve detector in the same orientation.
 
       <p>In this case, our model is implementing a 5x5 convolution, so the weights linking these two neurons are a 5x5 set of weights, which can be positive or negative.<d-footnote>
-        Many of the neurons discussed in this article, including curve detectors, live in branches of InceptionV1 that are structured as a 1x1 convolution that reduce the number of channels to a small bottleneck followeed by a 3x3 or 5x5 convolution. The weights we present in this essay are the multiplied out version of the 1x1 and larger conv weights. We think it's often useful to  view this as a single low-rank weight matrix, but this technically does ignore one ReLU non-linearity.
+        Many of the neurons discussed in this article, including curve detectors, live in branches of InceptionV1 that are structured as a 1x1 convolution that reduce the number of channels to a small bottleneck followed by a 3x3 or 5x5 convolution. The weights we present in this essay are the multiplied out version of the 1x1 and larger conv weights. We think it's often useful to  view this as a single low-rank weight matrix, but this technically does ignore one ReLU non-linearity.
         </d-footnote>
 
         A positive weight means that if the earlier neuron fires in that position, it excites the late neuron. Conversely a negative weight would mean that it inhibits it.
