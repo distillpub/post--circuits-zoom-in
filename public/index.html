@@ -78,13 +78,13 @@
         </figcaption>
       </figure>
 
-      <p>Just as the early microscope hinted at a new world of cells and microorganisms, visualizations of artificial neural networks have revealed tantalizing hints and glimpses of a rich inner world within our models (e.g. <d-cite bibtex-key='karpathy2015visualizing,erhan2009visualizing,olah2017feature,simonyan2013deep,nguyen2015deep,mordvintsev2015inceptionism,nguyen2016plug,zeiler2014visualizing,fong2017interpretable,kindermans2017patternnet,reif2019visualizing,carter2019activation'></d-cite>).
+      <p>Just as the early microscope hinted at a new world of cells and microorganisms, visualizations of artificial neural networks have revealed tantalizing hints and glimpses of a rich inner world within our models <d-cite bibtex-key='karpathy2015visualizing,erhan2009visualizing,olah2017feature,simonyan2013deep,nguyen2015deep,mordvintsev2015inceptionism,nguyen2016plug,zeiler2014visualizing,fong2017interpretable,kindermans2017patternnet,reif2019visualizing,carter2019activation'></d-cite>.
       </p>
       <p>This has led us to wonder: Is it possible that deep learning is at a similar transition point? Could there be a kind of cellular biology or neuroscience analogue of deep learning?
         And if so, what would such an approach to deep learning interpretability look like?
         What are its objects of study, and what would rigorous inquiry into them involve?</p>
 
-      <p>Our tentative answer is that this is the study of features and the neural circuits that implement them.</p>
+      <p>Our tentative answer is that this is the study of <i>features</i> and the <i>circuits</i> that implement them.</p>
 
       <p>Exploring these objects over the last year and a half has led to the circuits project, an open scientific collaboration hosted on the <a href="http://slack.distill.pub/">Distill slack</a>. In future articles, the collaboration will publish detailed explorations of this inner world. But before we do that, we wanted to offer a high-level overview of our thinking and some of the working principles that we’ve found useful in this line of research.</p>
 
@@ -100,7 +100,7 @@
 
       <h2 id="three-speculative-claims">Three Speculative Claims</h2>
 
-      <p>One of the earliest articulations of something approaching modern cell theory was three claims by Theodor Schwann — who you may know for Schwann cells — in 1839:</p>
+      <p>One of the earliest articulations of something approaching modern cell theory was three claims by Theodor Schwann — who you may know for Schwann cells — in 1839: <d-footnote>This translation/summarization of Schwann's claims can be found in many biology texts; we were unable to determine what the original source of the translation is. </d-footnote></p>
 
 
       <figure class="l-body-outset claim-figure">
@@ -125,7 +125,7 @@
             </div>
 
             <div class="figcaption" style="margin-top: 20px;">
-              This translation/summarization of Schwann's claims can be found in many biology texts; we were unable to determine what the original source of the translation is. The image of Schwann's book <i>Mikroskopische Untersuchungen über die Uebereinstimmung in der Struktur und dem Wachsthum der Thiere und Pflanzen</i> from the <a href="http://www.deutschestextarchiv.de/book/show/schwann_mikroskopische_1839">Deutsches Textarchiv</a>.
+              The image of Schwann's book <i>Mikroskopische Untersuchungen über die Uebereinstimmung in der Struktur und dem Wachsthum der Thiere und Pflanzen</i> from the <a href="http://www.deutschestextarchiv.de/book/show/schwann_mikroskopische_1839">Deutsches Textarchiv</a>.
             </div>
 
           </div>
@@ -134,25 +134,21 @@
 
       <p>The first two of these claims are likely familiar, persisting in modern cellular theory. The third is likely not familiar, since it turned out to be horribly wrong.</p>
 
-      <p>We believe there’s a lot of value in articulating a strong version of something you believe may be true, even it might be false like Schwann’s third claim. In this spirit, we offer three claims about neural networks. They are intended both as empirical claims about the nature of neural networks, and also as normative claims about how it’s useful to understand them.</p>
+      <p>We believe there’s a lot of value in articulating a strong version of something one may believe to be true, even it mightt be false like Schwann’s third claim. In this spirit, we offer three claims about neural networks. They are intended both as empirical claims about the nature of neural networks, and also as normative claims about how it’s useful to understand them.</p>
 
 
       <figure class="l-body-outset claim-figure">
         <div>
           <img src="./images/atlas-book-crop.png" style="width: 220px;"/>
           <div>
-            <h4 style="margin-top: 0px;">Three Speculative Claims about Neural Networks</h4>
+            <h4 style="margin-top: 0px;">Three Claims about Neural Networks</h4>
 
             <div class="claim">
               <div class="claim-header">Claim 1: Features</div>
               Features are the fundamental unit of neural networks.<br>
               They correspond to directions.<d-footnote>
-                By "direction" we mean a linear combination of neurons in a layer.
-                You can think of this as a direction vector in the vector space of activations of neurons in a given layer.
-                Often, we find it most helpful to talk about individual neurons,
-                but we'll see that there are some cases where other combinations are a more useful way to analyze networks
-                — especially when neurons are "polysemantic."
-                (See the <a href="#glossary-direction">glossary</a> for a detailed definition.)
+                By <i><a href="#glossary-direction">direction</a></i>  we refer to a linear combination of neurons in a layer.
+                Often, the distinguished direction corresponding to a single neuron is the most helpful to talk about, but we believe it is better to consider directions in their full generality due to the problem of <i>polysemanticity</i>. We discuss the problem of polysemanticity in more detail below.
               </d-footnote>
               These features can be rigorously studied and understood.
             </div>
@@ -188,7 +184,7 @@
         They also aren't totally novel: claims along the lines of (1) and (3) have been suggested before, as we'll discuss in more depth below.
       </p>
       <p>
-        But we believe they're important discussed because, if true, they would be a basis for a “zoomed in” field. In the following sections, we’ll discuss each one individually and present some of the evidence that has led us to believe they might be true.</p>
+        But we believe they're important to discuss because, if true, they could form the basis of a new, “zoomed in” field. In the following sections, we’ll discuss each one individually and present some of the evidence that has led us to believe they might be true.</p>
 
 
 
@@ -221,7 +217,7 @@
 
       <p>
         Of course, being understandable doesn't mean being simple or easily understandable.
-        Many neurons are initially mysterious and don't follow our a priori guesses of what features will exist!
+        Many neurons are initially mysterious and don't follow our a priori guesses of what features might exist!
         However, our experience is that there's usually a simple explanation behind these neurons, and that they're actually doing something quite natural.
         For example, we were initially confused by high-low frequency detectors (discussed below) but in retrospect, they are simple and elegant.
 
@@ -257,7 +253,7 @@
 
       <p>
         Curve detecting neurons can be found in every non-trivial vision model we've carefully examined.
-        These units are interesting because they straddle the boundary between features the community broadly agrees exist (e.g. edge detectors) and features for which there's significant skepticism (e.g. more complex shapes).
+        These units are interesting because they straddle the boundary between features the community broadly agrees exist (e.g. edge detectors) and features for which there's significant skepticism (e.g. ears, automotives, faces, and other such complex shapes).
       </p>
 
       <p>We'll focus on curve detectors in layer <code>mixed3b</code>, an early layer of InceptionV1. These units responded to curved lines and boundaries with a radius of around 60 pixels. They are also slightly additionally excited by perpendicular lines along the boundary of the curve, and prefer the two sides of the curve to be different colors.
@@ -286,8 +282,8 @@
       </p>
       <p>
         We offer seven arguments, outlined below.
-        It's worth noting that none of these arguments are curve specific: they're a useful, general toolkit for testing our understanding of other neurons as well.
-        Several of these arguments — dataset examples, synthetic examples, and tuning curves — are classic methods from visual neuroscience (e.g. <d-cite bibtex-key="hubel1962receptive"></d-cite>).
+        It's worth noting that none of these arguments are curve specific: they're a useful, general toolkit for testing our understanding of other features as well.
+        Several of these arguments — dataset examples, synthetic examples, and tuning curves — are classic methods from visual neuroscience <d-cite bibtex-key="hubel1962receptive"></d-cite>.
         The last three arguments are based on circuits, which we’ll discuss in the next section.
       </p>
 
@@ -381,11 +377,9 @@
 
       <p>Why are high-low frequency detectors useful to the network? They seem to be one of several heuristics for detecting the boundaries of objects, especially when the background is out of focus. In future articles, we’ll explore how they’re used in the construction of sophisticated boundary detectors.
 
-        <p>
-          (One hope some researchers have for interpretability is that understanding models will be able to teach us better abstractions for thinking about the world <d-cite bibtex-key="carter2017using"></d-cite>. High-low frequency detectors are, perhaps, an example of a small success in this: a natural, useful visual feature that we didn't anticipate in advance.)
-
       <p>All seven of the techniques we used to interrogate curve neurons can also be used to study high-low frequency neurons with some tweaking — for instance, rendering synthetic high-low frequency examples. Again we believe these arguments collectively provide strong support for the idea that these really are a family of high-low frequency contrast detectors.
 
+      <p>One hope some researchers have for interpretability is that understanding models will be able to teach us better abstractions for thinking about the world <d-cite bibtex-key="carter2017using"></d-cite>. High-low frequency detectors are, perhaps, an example of a small success in this: a natural, useful visual feature that we didn't anticipate in advance.
 
 
       <h3 id="claim-1-dog">Example 3: Pose-Invariant Dog Head Detector</h3>
@@ -402,7 +396,7 @@
       <p>
         It's worth noting that the combination of feature visualization and dataset examples alone are already quite a strong argument.
         Feature visualization establishes a causal link, while dataset examples test the neuron's use in practice and whether there are a second type of stimuli that it reacts to.
-        But we can bring all our other approaches to analyzing a neuron to bare again.
+        But we can bring all our other approaches to analyzing a neuron to bear again.
       For example, we can use a 3D model to generate synthetic dog head images from different angles.
 
       <p>
@@ -431,12 +425,12 @@
         Despite this, polysemantic neurons are a major challenge for the circuits agenda, significantly limiting our ability to reason about neural networks.<d-footnote>
           Why are polysemantic neurons so challenging? If one neuron with five different meanings connects to another neuron with five different meanings, that's effectively 25 connections that can't be considered individually.</d-footnote>
         Our hope is that it may be possible to resolve polysemantic neurons,
-        perhaps by "unfolding" a network to turn polysemantic neurons into pure features, or training networks to not exhibit polysemanticity in the first place.
+        perhaps by "unfolding" a network to turn polysemantic neurons into <a href="#glossary-direction">pure features</a>, or training networks to not exhibit polysemanticity in the first place.
         This is essentially the problem studied in the literature of disentangling representations, although at present that literature tends to focus on known features in the latent spaces of generative models.
 
       <p>
         One natural question to ask is why do polysemantic neurons form?
-        In the next section, we'll see that they seem to result from a phenomenon we call "superposition" where a circuit spreads a feature across many neurons, presumably to pack more features into the limited number of neurons it has available.
+        In the next section, we'll see that they seem to result from a phenomenon we call <i>superposition</i> where a circuit spreads a feature across many neurons, presumably to pack more features into the limited number of neurons it has available.
 
 
       <hr>
@@ -508,7 +502,7 @@ at each point along the curve.</figcaption>
 
       <p>It’s also worth noting how the weights rotate with the orientation of the curve detector. The symmetry of the problem is reflected as a symmetry in the weights. We call circuits with exhibiting this phenomenon "equivariant circuits", and will discuss it in a later article.
 
-      <p>[Read more about the curve detector circuit]
+      <!-- <p>[Read more about the curve detector circuit] -->
 
       <h3 id="claim-2-dog">Circuit 2: Oriented Dog Head Detection</h3>
 
@@ -554,7 +548,7 @@ at each point along the curve.</figcaption>
 
       <p>There’s a lot more to say about this circuit, so we’ve dedicated an entire article to analyzing it in depth, including testing our theory of the circuit by editing the weights.
 
-      [Read more about the oriented dog head circuit]
+      <!-- [Read more about the oriented dog head circuit] -->
 
       <h3 id="claim-2-superposition">Circuit 3: Cars in Superposition</h3>
 
@@ -859,12 +853,12 @@ at each point along the curve.</figcaption>
         Especially given that there’s so much adjacent ML work which does adopt this frame!
         One reason might be that it’s very difficult to make robustly true statements about the behavior of a neural network as a whole.
         They’re incredibly complicated objects.
-        It’s also hard to formalize what the interesting empirical statements about them would, exactly, be.
+        It’s also hard to formalize what the interesting empirical statements about them would exactly be.
         And so we often get standards of evaluations more targeted at whether an interpretability method is useful rather than whether we’re learning true statements.
 
       <p>
         Circuits side steps these challenges by focusing on tiny subgraphs of a neural network for which rigorous empirical investigation is tractable.
-        They’re very much falsifiable: for example, if you understand a circuit, you should be able to predict what will change if you edit the weights.
+        The claims made by circuits are very much falsifiable: for example, if you understand a circuit, you should be able to predict what will change if you edit the weights.
         In fact, for small enough circuits, statements about their behavior become questions of mathematical reasoning.
         Of course, the cost of this rigor is that statements about circuits are much smaller in scope than overall model behavior.
         But it seems like, with sufficient effort, statements about model behavior could be broken down into statements about circuits.
@@ -1040,6 +1034,10 @@ at each point along the curve.</figcaption>
 
     <style>
     .claim-figure h4 {
+      text-transform: none;
+      font-variant: small-caps;
+    }
+    .arguments-figure h4 {
       text-transform: none;
       font-variant: small-caps;
     }
