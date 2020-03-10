@@ -102,6 +102,11 @@ figure {
  * Claims Figures
  ******************************************/
 
+.claim-figure h4 {
+  text-transform: none;
+  font-variant: small-caps;
+}
+
 @media (min-width: 1201px){
   .claim-figure h4 {
     --border-bottom: 1px solid #CCC;
@@ -130,6 +135,7 @@ figure {
 
 .claim-figure img {
   max-width: 220px;
+  max-height: 360px;
   border-radius: 2px;
 }
 .claim-figure {

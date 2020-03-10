@@ -2,19 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta name="theme-color" content="#000000" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="index.css">
     <title>Zoom In: An Introduction to Circuits</title>
   </head>
 
   <body>
     <d-front-matter>
       <code style="display: none;" type="text/json"
-        >{ "title": "Zoom In: An Introduction to Circuits", "description": "By studying the connections between neurons, we can find meaningful algorithms in the weights of neural networks.", "published": false,
+        >{ "title": "Zoom In: An Introduction to Circuits", "description": "By studying the connections between neurons, we can find meaningful algorithms in the weights of neural networks.", 
         "authors": [
           { "author": "Chris Olah", "authorURL": "https://colah.github.io", "affiliation": "OpenAI", "affiliationURL": "https://openai.com"  },
           { "author": "Nick Cammarata", "authorURL": "http://nickcammarata.com", "affiliation": "OpenAI", "affiliationURL": "https://openai.com"  },
@@ -22,8 +18,7 @@
           { "author": "Gabriel Goh", "authorURL": "http://gabgoh.github.io", "affiliation": "OpenAI", "affiliationURL": "https://openai.com"  },
           { "author": "Michael Petrov", "authorURL": "https://twitter.com/mpetrov", "affiliation": "OpenAI", "affiliationURL": "https://openai.com"  },
           { "author": "Shan Carter", "authorURL": "http://shancarter.com", "affiliation": "OpenAI", "affiliationURL": "https://openai.com"  }
-        ] }</code
-      >
+        ] }</code>
     </d-front-matter>
     <d-title>
       <h1>Zoom In: An Introduction to Circuits</h1>
@@ -93,7 +88,7 @@
       </div>
 
       <figure class="l-body-outset">
-        <img src="./images/micrographia2.png" />
+        <img src="./images/micrographia2.jpg" />
         <figcaption>
           Hooke’s Micrographia<d-cite bibtex-key="hooke1666micrographia"></d-cite> revealed a rich microscopic world as seen
           through a microscope, including the initial discovery of cells.
@@ -131,7 +126,7 @@
         -->
 
       <figure class="l-body-outset">
-        <img src="./images/deepdream.png" />
+        <img src="./images/deepdream.jpg" />
         <figcaption>
           Over the last few years, we've seen many incredible visualizations<d-cite bibtex-key='karpathy2015visualizing,erhan2009visualizing,olah2017feature,simonyan2013deep,nguyen2015deep,mordvintsev2015inceptionism,nguyen2016plug,zeiler2014visualizing,fong2017interpretable,kindermans2017patternnet,hohman2019summit,reif2019visualizing,carter2019activation'></d-cite> and analyses<d-cite bibtex-key='mikolov2013distributed,radford2017learning,zhou2014object,netdissect2017'></d-cite> hinting at a rich world of internal features in modern
           neural networks. Above, we see a <a href="https://ai.googleblog.com/2015/06/inceptionism-going-deeper-into-neural.html">DeepDream</a><d-cite bibtex-key="mordvintsev2015inceptionism"></d-cite> image, which sparked a great deal of excitement in this space.
@@ -158,7 +153,7 @@
 
       <figure class="l-body-outset claim-figure">
         <div>
-          <img src="./images/schwann-book.png" />
+          <img src="./images/schwann-book.jpg" />
           <div style="">
             <h4>Schwann’s Claims about Cells</h4>
 
@@ -475,7 +470,7 @@
 
       <figure style="max-width: 600px; ">
         <img src="./images/polysemantic.png"/>
-        <figcaption>4e:55 is a polysemantic neuron which responds to cat faces, fronts of cars, and cat legs. It was dicussed in more depth in <a href="https://distill.pub/2017/feature-visualization/">Feature Visualization</a> <d-cite key="olah2017feature"></d-cite>.</figcaption>
+        <figcaption>4e:55 is a polysemantic neuron which responds to cat faces, fronts of cars, and cat legs. It was discussed in more depth in <a href="https://distill.pub/2017/feature-visualization/">Feature Visualization</a> <d-cite key="olah2017feature"></d-cite>.</figcaption>
       </figure>
 
       <p>To be clear, this neuron isn’t responding to some commonality of cars and cat faces. Feature visualization shows us that it’s looking for the eyes and whiskers of a cat, for furry legs, and for shiny fronts of cars — not some subtle shared feature.
@@ -528,7 +523,7 @@
       <p>Let’s focus even more and look at how a single early curve detector connects to sophisticated curve detector in the same orientation.
 
       <p>In this case, our model is implementing a 5x5 convolution, so the weights linking these two neurons are a 5x5 set of weights, which can be positive or negative.<d-footnote>
-        Many of the neurons discussed in this article, including curve detectors, live in branches of InceptionV1 that are structured as a 1x1 convolution that reduce the number of channels to a small bottleneck followeed by a 3x3 or 5x5 convolution. The weights we present in this essay are the multiplied out version of the 1x1 and larger conv weights. We think it's often useful to  view this as a single low-rank weight matrix, but this technically does ignore one ReLU non-linearity.
+        Many of the neurons discussed in this article, including curve detectors, live in branches of InceptionV1 that are structured as a 1x1 convolution that reduce the number of channels to a small bottleneck followed by a 3x3 or 5x5 convolution. The weights we present in this essay are the multiplied out version of the 1x1 and larger conv weights. We think it's often useful to  view this as a single low-rank weight matrix, but this technically does ignore one ReLU non-linearity.
         </d-footnote>
 
         A positive weight means that if the earlier neuron fires in that position, it excites the late neuron. Conversely a negative weight would mean that it inhibits it.
@@ -617,7 +612,7 @@ at each point along the curve.</figcaption>
       <p>
         The union step is also interesting to look at the details of.
         The network doesn't indiscriminately respond to the heads into the two orientations:
-        the regions of excitation extend from the center in different directions depending on orientaiton, allowing snouts to converge in to the same point.
+        the regions of excitation extend from the center in different directions depending on orientation, allowing snouts to converge in to the same point.
 
         <figure style="max-width: 620px;">
           <img src="./images/dog-merge.png"/>
@@ -1068,7 +1063,7 @@ at each point along the curve.</figcaption>
       </div>
 
 
-      <h3>Historical Note</h3>
+      <h3>Author Contributions</h3>
 
       <p><b>Writing:</b> The text of this essay was primarily written by Christopher Olah, drawing extensively on the research and thinking of the entire Clarity team. Nick Cammarata was deeply involved in developing the framing and revising the final text.</p>
 
@@ -1116,15 +1111,6 @@ at each point along the curve.</figcaption>
     <d-bibliography src="bibliography.bib"></d-bibliography>
 
     <script src="https://distill.pub/template.v2.js"></script>
-    <link rel="stylesheet" type="text/css" href="index.css">
 
-    <style>
-    .claim-figure h4 {
-      text-transform: none;
-      font-variant: small-caps;
-    }
-    </style>
-
-    <script src="./index.js"></script>
   </body>
 </html>
