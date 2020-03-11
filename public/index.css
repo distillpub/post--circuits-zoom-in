@@ -260,6 +260,11 @@ h2 {
       font-weight: 600;
     }
 
+    d-contents nav>div>a:hover,
+    d-contents nav>ul>li>a:hover {
+        text-decoration: none;
+    }
+
 
 
 
