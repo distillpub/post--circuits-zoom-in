@@ -288,17 +288,23 @@ h2 {
         margin-top: 20;
         margin-bottom: 1.5rem;
         display: grid;
-        grid-template-columns: 65px 1fr 1fr;
+        grid-template-columns: 45px 2fr 3fr;
         grid-template-areas:
             "icon explanation explanation "
             "icon prev next";
         grid-column-gap: 1.5em;
     }
 
-    #thread-nav .icon-multiple-pages {
+    @media (min-width: 768px){
+      #thread-nav {
+        grid-template-columns: 65px 2fr 3fr;
+      }
+    }
+
+    #thread-nav .icon {
         grid-area: icon;
         padding: 0.5em;
-        content: url(images/multiple-pages.svg);
+        justify-self: center;
     }
 
     #thread-nav .explanation {
@@ -321,6 +327,7 @@ h2 {
 
     #thread-nav .overview::before {
         content: "↑";
+        white-space: nowrap;
         margin-right: 0.5em;
     }
 
@@ -335,12 +342,13 @@ h2 {
 
     #thread-nav .next::before, #thread-nav .prev::before {
       display: block;
+      white-space: nowrap;
+      padding: 0.5em 0;
       font-size: 80%;
       font-weight: bold;
       margin-top: 0px;
       margin-right: 0.5em;
       text-transform: uppercase;
-      margin-bottom: -8px;
     }
 
 
@@ -349,9 +357,10 @@ h2 {
     #thread-nav .next,
     #thread-nav .overview {
         font-size: 80%;
+        line-height: 1.5em;
         font-weight: 600;
         border-bottom: none;
         color: #2e6db7;
-        margin-top: 0.25em;
+        /* margin-top: 0.25em; */
         letter-spacing: 0.25px;
     }
