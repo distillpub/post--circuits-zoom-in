@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <title>Zoom In: An Introduction to Circuits</title>
+  </head>
+
+  <body>
+    <d-front-matter>
+      <code style="display: none;" type="text/json"
+        >{{ "title": "Zoom In: An Introduction to Circuits", "description": "By studying the connections between neurons, we can find meaningful algorithms in the weights of neural networks.",
+        "authors": [
+          {{ "author": "Chris Olah", "authorURL": "https://colah.github.io", "affiliation": "OpenAI", "affiliationURL": "https://openai.com"  }},
+          {{ "author": "Nick Cammarata", "authorURL": "http://nickcammarata.com", "affiliation": "OpenAI", "affiliationURL": "https://openai.com"  }},
+          {{ "author": "Ludwig Schubert", "authorURL": "https://schubert.io/", "affiliation": "OpenAI", "affiliationURL": "https://openai.com"  }},
+          {{ "author": "Gabriel Goh", "authorURL": "http://gabgoh.github.io", "affiliation": "OpenAI", "affiliationURL": "https://openai.com"  }},
+          {{ "author": "Michael Petrov", "authorURL": "https://twitter.com/mpetrov", "affiliation": "OpenAI", "affiliationURL": "https://openai.com"  }},
+          {{ "author": "Shan Carter", "authorURL": "http://shancarter.com", "affiliation": "OpenAI", "affiliationURL": "https://openai.com"  }}
+        ] }}</code>
+    </d-front-matter>
+    <d-title>
+      <h1>Zoom In: An Introduction to Circuits</h1>
+        <p style="font-size: 150%;">By studying the connections between neurons, we can find meaningful algorithms in the weights of neural networks.</p>
+       <!-- <img
+          src="./images/car-circuit.png"
+          style='grid-column: text; width: 100%; padding-top: 20px; padding-bottom:20px;' />-->
+          <figure style='grid-column: text; width: 100%; padding-top: 20px; padding-bottom:20px; margin: 0px; max-width: 800px;' class="l-body">{images/CarCircuit}</figure>
+    </d-title>
+    <d-byline></d-byline>
+    <d-article>
+      <section id="thread-nav" class="thread-info" style="margin-top: 10px; margin-bottom: 40px;">
+          <div class="icon-multiple-pages"></div>
+          <p class="explanation">
+              This article is part of the <a href="/2020/circuits/">Circuits thread</a>, an experimental format collecting invited short articles and critical commentary delving into the inner workings of neural networks.
+              <!--<a style="border-bottom: none; color: #2e6db7; margin-left: 0px;"></a>-->
+          </p>
+          <a class="prev" href="/2020/circuits/">Circuits Thread</a>
+          <a class="next" href="/2020/circuits/early-vision/">An Overview of Early Vision in IncpetionV1</a>
+      </section>
+
+
+      <d-contents>
+        <nav class="l-text toc figcaption">
+          <h3>Contents</h3>
+          <!--<div><a href="#introduction">Introduction</a></div>-->
+          <div><a href="#three-speculative-claims">Three Speculative Claims</a></div>
+          <div><a href="#claim-1">Claim 1: Features</a></div>
+          <ul>
+            <li><a href="#claim-1-curves">Example 1: Curve Detectors</a></li>
+            <li><a href="#claim-1-hilo">Example 2: High-Low Frequency Detectors</a></li>
+            <li><a href="#claim-1-dog">Example 3: Pose-Invariant Dog Head Detector</a></li>
+            <li><a href="#claim-1-polysemantic">Polysemantic Neurons</a></li>
+          </ul>
+          <div><a href="#claim-2">Claim 2: Circuits</a></div>
+          <ul>
+            <li><a href="#claim-2-curves">Circuit 1: Curve Detectors</a></li>
+            <li><a href="#claim-2-dog">Circuit 2: Oriented Dog Head Detection</a></li>
+            <li><a href="#claim-2-superposition">Circuit 3: Cars in Superposition</a></li>
+            <li><a href="#claim-2-motifs">Circuit Motifs</a></li>
+          </ul>
+          <div><a href="#claim-3">Claim 3: Universality</a></div>
+          <div><a href="#natural-science">Interpretability as a Natural Science</a></div>
+          <div><a href="#closing">Closing Thoughts</a></div>
+          <!--<div><a href="#glossary">Glossary</a></div>-->
+        </nav>
+      </d-contents>
+
+      <div>
+      <!--<h2 id="introduction">Introduction</h2>-->
+      <p>
+      Many important transition points in the history of science have been moments when science “zoomed in.”
+      At these points, we develop a visualization or tool that allows us to see the world in a new level of detail, and a new field of science develops to study the world through this lens.
+      </p>
+      <p>
+      For example, microscopes let us see cells, leading to cellular biology. Science zoomed in. Several techniques including x-ray crystallography let us see DNA, leading to the molecular revolution. Science zoomed in. Atomic theory. Subatomic particles. Neuroscience. Science zoomed in.
+      </p>
+      <p>
+      These transitions weren’t just a change in precision: they were qualitative changes in what the objects of scientific inquiry are.
+      For example, cellular biology isn’t just more careful zoology.
+      It's a new kind of inquiry that dramatically shifts what we can understand.
+      </p>
+
+
+      <p>
+        The famous examples of this phenomenon happened at a very large scale,
+        but it can also be the more modest shift of a small research community realizing they can now study their topic in a finer grained level of detail.
+      </p>
+      </div>
+
+      <figure class="l-body-outset">
+        <img src="./images/micrographia2.jpg" />
+        <figcaption>
+          Hooke’s Micrographia<d-cite bibtex-key="hooke1666micrographia"></d-cite> revealed a rich microscopic world as seen
+          through a microscope, including the initial discovery of cells.
+          <br />Images from the National Library of Wales.
+        </figcaption>
+      </figure>
+
+      <p>Just as the early microscope hinted at a new world of cells and microorganisms, visualizations of artificial neural networks have revealed tantalizing hints and glimpses of a rich inner world within our models (e.g. <d-cite bibtex-key='karpathy2015visualizing,erhan2009visualizing,olah2017feature,simonyan2013deep,nguyen2015deep,mordvintsev2015inceptionism,nguyen2016plug,zeiler2014visualizing,fong2017interpretable,kindermans2017patternnet,reif2019visualizing,carter2019activation'></d-cite>).
+      This has led us to wonder: Is it possible that deep learning is at a similar, albeit more modest, transition point?
+      </p>
+
+      <p>
+        Most work on interpretability aims to give simple explanations of an entire neural network's behavior.
+        But what if we instead take an approach inspired by neuroscience or cellular biology — an approach of zooming  in?
+        What if we treated individual neurons, even individual weights, as being worthy of serious investigation?
+        What if we were willing spend thousands of hours tracing through every neuron and its connections?
+        What kind of picture of neural networks would emerge?
+      </p>
+
+      <p>
+        In contrast to the typical picture of neural networks as a black box, we've been surprised how approachable the network is on this scale.
+        Not only do neurons seem understandable (even ones that initially seemed inscrutable), but the "circuits" of connections between them seem to be meaningful algorithms corresponding to facts about the world.
+        You can watch a circle detector be assembled from curves.
+        You can see a dog head be assembled from eyes, snout, fur and tongue.
+        You can observe how a car is composed from wheels and windows.
+        You can even find circuits implementing simple logic: cases where the network implements AND, OR or XOR over high-level visual features.
+      </p>
+
+<!--
+      <p>Just as the early microscope hinted at a new world of cells and microorganisms, visualizations of artificial neural networks have revealed tantalizing hints and glimpses of a rich inner world within our models (e.g. <d-cite bibtex-key='karpathy2015visualizing,erhan2009visualizing,olah2017feature,simonyan2013deep,nguyen2015deep,mordvintsev2015inceptionism,nguyen2016plug,zeiler2014visualizing,fong2017interpretable,kindermans2017patternnet,reif2019visualizing,carter2019activation'></d-cite>).
+      </p>
+      <p>This has led us to wonder: Is it possible that deep learning is at a similar transition point? Could there be a kind of cellular biology or neuroscience analogue of deep learning?
+        And if so, what would such an approach to deep learning interpretability look like?
+        What are its objects of study, and what would rigorous inquiry into them involve?</p>
+        -->
+
+      <figure class="l-body-outset">
+        <img src="./images/deepdream.jpg" />
+        <figcaption>
+          Over the last few years, we've seen many incredible visualizations<d-cite bibtex-key='karpathy2015visualizing,erhan2009visualizing,olah2017feature,simonyan2013deep,nguyen2015deep,mordvintsev2015inceptionism,nguyen2016plug,zeiler2014visualizing,fong2017interpretable,kindermans2017patternnet,hohman2019summit,reif2019visualizing,carter2019activation'></d-cite> and analyses<d-cite bibtex-key='mikolov2013distributed,radford2017learning,zhou2014object,netdissect2017'></d-cite> hinting at a rich world of internal features in modern
+          neural networks. Above, we see a <a href="https://ai.googleblog.com/2015/06/inceptionism-going-deeper-into-neural.html">DeepDream</a><d-cite bibtex-key="mordvintsev2015inceptionism"></d-cite> image, which sparked a great deal of excitement in this space.
+        </figcaption>
+      </figure>
+
+      <p>
+        This introductory essay offers a high-level overview of our thinking and some of the working principles that we’ve found useful in this line of research.
+        In future articles, we and our collaborators will publish detailed explorations of this inner world.
+
+
+      <p>
+        But the truth is that we've only scratched the surface of understanding a single vision model.
+        If these questions resonate with you, you are welcome to join us and our collaborators in the Circuits project, an open scientific collaboration hosted on the <a href="http://slack.distill.pub/">Distill slack</a>.
+
+
+
+      <hr>
+
+      <h2 id="three-speculative-claims">Three Speculative Claims</h2>
+
+      <p>One of the earliest articulations of something approaching modern cell theory was three claims by Theodor Schwann — who you may know for Schwann cells — in 1839:</p>
+
+
+      <figure class="l-body-outset claim-figure">
+        <div>
+          <img src="./images/schwann-book.jpg" />
+          <div style="">
+            <h4>Schwann’s Claims about Cells</h4>
+
+            <div class="claim">
+              <div class="claim-header">Claim 1</div>
+              The cell is the unit of structure, physiology, and organization in living things.
+            </div>
+
+            <div class="claim">
+              <div class="claim-header">Claim 2</div>
+              The cell retains a dual existence as a distinct entity and a building block in the construction of organisms.
+            </div>
+
+            <div class="claim">
+              <div class="claim-header">Claim 3</div>
+              Cells form by free-cell formation, similar to the formation of crystals.
+            </div>
+
+            <div class="figcaption" style="margin-top: 20px;">
+              This translation/summarization of Schwann's claims can be found in many biology texts; we were unable to determine what the original source of the translation is. <span style="big-only">The image of Schwann's book is from the <a href="http://www.deutschestextarchiv.de/book/show/schwann_mikroskopische_1839">Deutsches Textarchiv</a>.</span>
+            </div>
+
+          </div>
+        </div>
+      </figure>
+
+      <p>The first two of these claims are likely familiar, persisting in modern cellular theory. The third is likely not familiar, since it turned out to be horribly wrong.</p>
+
+      <p>We believe there’s a lot of value in articulating a strong version of something one may believe to be true, even if it might be false like Schwann’s third claim. In this spirit, we offer three claims about neural networks. They are intended both as empirical claims about the nature of neural networks, and also as normative claims about how it’s useful to understand them.</p>
+
+
+      <figure class="l-body-outset claim-figure">
+        <div>
+          <img src="./images/atlas-book-crop.png" style="width: 220px;"/>
+          <div>
+            <h4 style="margin-top: 0px;">Three Speculative Claims about Neural Networks</h4>
+
+            <div class="claim">
+              <div class="claim-header">Claim 1: Features</div>
+              Features are the fundamental unit of neural networks.<br>
+              They correspond to directions.<d-footnote>
+                By "direction" we mean a linear combination of neurons in a layer.
+                You can think of this as a direction vector in the vector space of activations of neurons in a given layer.
+                Often, we find it most helpful to talk about individual neurons,
+                but we'll see that there are some cases where other combinations are a more useful way to analyze networks
+                — especially when neurons are "polysemantic."
+                (See the <a href="#glossary-direction">glossary</a> for a detailed definition.)
+              </d-footnote>
+              These features can be rigorously studied and understood.
+            </div>
+
+            <div class="claim">
+              <div class="claim-header">Claim 2: Circuits</div>
+              Features are connected by weights, forming circuits.<d-footnote>
+                A "circuit" is a computational subgraph of a neural network.
+                It consists of a set of features, and the weighted edges that go between them in the original
+                network.
+                Often, we study quite small circuits — say with less than a dozen features — but they can also be much larger.
+                (See the <a href="#glossary-circuit">glossary</a> for a detailed definition.)
+              </d-footnote><br>
+              These circuits can also be rigorously studied and understood.
+            </div>
+
+            <div class="claim">
+              <div class="claim-header">Claim 3: Universality</div>
+              Analogous features and circuits form across models and tasks.
+            </div>
+
+            <div class="figcaption big-only" style="margin-top: 20px;">
+              Left: An <a href="https://distill.pub/2019/activation-atlas/">activation atlas</a><d-cite bibtex-key="carter2019activation"></d-cite> visualizing part of the space neural network features can represent.
+            </div>
+
+          </div>
+        </div>
+      </figure>
+
+
+
+      <p>These claims are deliberately speculative.
+        They also aren't totally novel: claims along the lines of (1) and (3) have been suggested before, as we'll discuss in more depth below.
+      </p>
+      <p>
+        But we believe these claims are important to consider because, if true, they could form the basis of a new “zoomed in” field of
+        interpretability. In the following sections, we’ll discuss each one individually and present some of the evidence that has led us to believe they might be true.</p>
+
+
+
+
+      <hr>
+
+      <h2 id="claim-1">Claim 1: Features</h2>
+
+      <style>
+      .claim-quote {{
+        border-left: 1px solid #CCC;
+        padding-left:  20px;
+        color: #555;
+        margin-bottom: 30px;
+      }}
+      </style>
+
+      <p class="claim-quote">
+        Features are the fundamental unit of neural networks.
+        They correspond to directions. They can be rigorously studied and understood.
+      </p>
+
+      <p>
+        We believe that neural networks consist of meaningful, understandable features. Early layers contain features like edge or curve detectors, while later layers have features like floppy ear detectors or wheel detectors.
+        The community is divided on whether this is true.
+        While many researchers treat the existence of meaningful neurons as an almost trivial fact
+        — there's even a small literature studying them <d-cite bibtex-key='mikolov2013distributed,karpathy2015visualizing,radford2017learning,zhou2014object,olah2017feature,netdissect2017,donnelly2019interpretability'></d-cite> — many others are deeply skeptical and believe that past cases of neurons that seemed to track meaningful latent variables were mistaken <d-cite bibtex-key='jo2017measuring,geirhos2018imagenet,brendel2019approximating,ilyas2019adversarial,morcos2018importance'></d-cite>.
+      <d-footnote>The community disagreement on meaningful features is hard to pin down, and only partially expressed in the literature. Foundational descriptions of deep learning often describe neural networks as detecting a hierarchy of meaningful features <d-cite bibtex-key='lecun2015deep'></d-cite>, and a number of papers have been written demonstrating seemingly meaningful features in different domains domains<d-cite bibtex-key='mikolov2013distributed,karpathy2015visualizing,radford2017learning,zhou2014object,olah2017feature,netdissect2017'></d-cite>. At the same time, a more skeptical parallel literature has developed suggesting that neural networks primarily or only focus on texture, local structure, or imperceptible patterns <d-cite bibtex-key='jo2017measuring,geirhos2018imagenet,brendel2019approximating,ilyas2019adversarial'></d-cite>, that meaningful features, when they exist, are less important than uninterpretable ones <d-cite bibtex-key='morcos2018importance'></d-cite> and that seemingly interpretable neurons may be misunderstood <d-cite bibtex-key='donnelly2019interpretability'></d-cite>. Although many of these papers express a highly nuanced view, that isn’t always how they’ve been understood. A number of media articles have been written embracing strong versions of these views, and we anecdotally find that the belief that neural networks don’t understand anything more than texture is quite common. Finally, people often have trouble articulating their exact views, because they don’t have clear language for articulating nuances between “a texture detector highly correlated with an object” and “an object detector.”</d-footnote>
+      Nevertheless, thousands of hours of studying individual neurons have led us to believe the typical case is that neurons (or in some cases, other directions in the vector space of neuron activations) are understandable.
+
+      <p>
+        Of course, being understandable doesn't mean being simple or easily understandable.
+        Many neurons are initially mysterious and don't follow our a priori guesses of what features might exist!
+        However, our experience is that there's usually a simple explanation behind these neurons, and that they're actually doing something quite natural.
+        For example, we were initially confused by high-low frequency detectors (discussed below) but in retrospect, they are simple and elegant.
+
+<!--
+      <p>
+        Whether or not features are understandable isn't just a curiosity.
+        Every approach to interpretability needs some way out of the curse of dimensionality.
+        For example, saliency methods rely on locality -- on the network having roughly linear behavior in some neighborhood.
+        For us, the way out of the curse of dimensionality is features being individually understandable.<d-footnote>
+
+        </d-footnote>
+        Going through a network neuron by neuron is still a massive undertaking, but it isn't an exponentially growing impossible one.
+-->
+
+      <p>
+        This introductory essay will only give an overview of a couple examples we think are illustrative, but it will be followed both by deep dives carefully characterizing individual features, and broad overviews sketching out all the features we understand to exist.
+        We will take our examples from InceptionV1<d-cite bibtex-key="szegedy2015going"></d-cite> for now, but believe these claims hold generally and will discuss other models in the final section on universality.
+
+      <p>
+        Regardless of whether we're correct or mistaken about meaningful features,
+        we believe this is an important question for the community to resolve.
+        We hope that introducing several specific carefully explored examples of seemingly understandable features will help advance the dialogue.
+
+<!--
+
+      <p>Part of this claim is trivially true. Directions in activation space (the vector space spanned by neurons) include neurons. Neural networks can obviously be thought of as being composed of neurons, and so there’s an uninteresting sense in which they are at least a unit of neural networks. The interesting part of the claim is that they can, with sufficient effort, be rigorously studied and understood. And as a result, they are in some sense the “right” unit to think about neural networks in terms of.</p>
+
+      <p>In light of the existing disagreement, we will try to hold ourselves to a high evidentiary standard in making such claims. This introductory essay will only give an overview of some of the examples we’ve found most compelling, but it will be followed by several deep dives characterizing individual features.
+
+-->
+
+      <h3 id="claim-1-curves">Example 1: Curve Detectors</h3>
+
+      <p>
+        Curve detecting neurons can be found in every non-trivial vision model we've carefully examined.
+        These units are interesting because they straddle the boundary between features the community broadly agrees exist (e.g. edge detectors) and features for which there's significant skepticism (e.g. high-level features such as ears, automotives, and faces).
+      </p>
+
+      <p>We'll focus on curve detectors in layer <code>mixed3b</code>, an early layer of InceptionV1. These units responded to curved lines and boundaries with a radius of around 60 pixels. They are also slightly additionally excited by perpendicular lines along the boundary of the curve, and prefer the two sides of the curve to be different colors.
+
+      <p>Curve detectors are found in families of units, with each member of the family detecting the same curve feature in a different orientation. Together, they jointly span the full range of orientations.
+
+      <p>
+        It's important to distinguish curve detectors from other units which may seem superficially similar.
+        In particular, there are many units which use curves to detect a curved sub-component (e.g. circles, spirals, S-curves, hourglass shape, 3d curvature, ...).
+        There are also units which respond to curve related shapes like lines or sharp corners.
+        We do not consider these units to be curve detectors.
+
+      <figure style="grid-column-start: text-start; grid-column-end: text-end;">
+        <img src="./images/curves.png"/>
+        <!--<figcaption></figcaption>-->
+      </figure>
+
+      <!--
+      <p>
+        It's worth noting that many neurons-->
+
+      <p>
+        But are these "curve detectors" really detecting curves?
+        We will be dedicating an entire future article to exploring this in depth,
+        but the summary is that we think the evidence is quite strong.
+      </p>
+      <p>
+        We offer seven arguments, outlined below.
+        It's worth noting that none of these arguments are curve specific: they're a useful, general toolkit for testing our understanding of other features as well.
+        Several of these arguments — dataset examples, synthetic examples, and tuning curves — are classic methods from visual neuroscience (e.g. <d-cite bibtex-key="hubel1962receptive"></d-cite>).
+        The last three arguments are based on circuits, which we’ll discuss in the next section.
+      </p>
+
+
+        <figure class="arguments-figure">
+          <div>
+            <img src="images/arg-fv.png"></img>
+            <div>
+              <h4>Argument 1: Feature Visualization</h4>
+              <p>Optimizing the input to cause curve detectors to fire reliably produces curves. This establishes a causal link, since everything in the resulting image was added to cause the neuron to fire more.
+              <br>
+              <span class="figcaption">You can learn more about feature visualization <a href="https://distill.pub/2017/feature-visualization/">here</a>.</span></p>
+            </div>
+          </div>
+          <div>
+            <img src="images/arg-data.png"></img>
+            <div>
+              <h4>Argument 2: Dataset Examples</h4>
+              <p>The ImageNet images that cause these neurons to strongly fire are reliably curves in the expected orientation. The images that cause them to fire moderately are generally less perfect curves or curves off orientation.</p>
+            </div>
+          </div>
+          <div>
+            <img src="images/arg-synthetic.png" style="filter: brightness(97%);"></img>
+            <div>
+              <h4>Argument 3: Synthetic Examples</h4>
+              <p>Curve detectors respond as expected to a range of synthetic curves images created with varying orientations, curvatures, and backgrounds. They fire only near the expected orientation, and do not fire strongly for straight lines or sharp corners.</p>
+            </div>
+          </div>
+          <div>
+            <img src="images/arg-tune.png" style="filter: brightness(97%);"></img>
+            <div>
+              <h4>Argument 4: Joint Tuning</h4>
+              <p>If we take dataset examples that cause a neuron to fire and rotate them, they gradually stop firing and the curve detectors in the next orientation begins firing. This shows that they detect rotated versions of the same thing. Together, they tile the full 360 degrees of potential orientations.</p>
+            </div>
+          </div>
+          <div>
+            <img src="images/arg-weights.png"></img>
+            <div>
+              <h4>Argument 5: Feature implementation
+                <span style='color: #888; margin-left: 14px;'>(circuit-based argument)</span></h4>
+              <p>By looking at the circuit constructing the curve detectors, we can read a curve detection algorithm off of the weights. We also don’t see anything suggestive of a second alternative cause of firing, although there are many smaller weights we don’t understand the role of.</p>
+            </div>
+          </div>
+          <div>
+            <img src="images/arg-use.png"></img>
+            <div>
+              <h4>Argument 6: Feature use
+                <span style='color: #888; margin-left: 14px;'>(circuit-based argument)</span></h4>
+              <p>The downstream clients of curve detectors are features that naturally involve curves (e.g. circles, 3d curvature, spirals…). The curve detectors are used by these clients in the expected manner.</p>
+            </div>
+          </div>
+          <div>
+            <img src="images/arg-hand.png"></img>
+            <div>
+              <h4>Argument 7: Handwritten Circuits
+                <span style='color: #888; margin-left: 14px;'>(circuit-based argument)</span></h4>
+              <p>Based on our understanding of how curve detectors are implemented,
+                we can do a cleanroom reimplementation,
+                hand setting all weights to reimplement curve detection.
+                These weights are an understandable curve detection algorithm, and significantly mimic the original curve detectors.</p>
+            </div>
+          </div>
+        </figure>
+
+      <p>The above arguments don’t fully exclude the possibility of some rare secondary case where curve detectors fire for a  different kind of stimulus. But they do seem to establish
+        that (1) curves cause these neurons to fire,
+        (2) each unit responds to curves at different angular orientations,
+        and (3) if there are other stimuli that cause them to fire those stimuli are rare or cause weaker activations.
+      More generally, these arguments seem to meet the evidentiary standards we understand to be used in neuroscience, which has established traditions and institutional knowledge of how to evaluate such claims.
+
+      <p>
+        All of these arguments will be explored in detail in the forthcoming articles on curve detectors and curve detection circuits.
+
+      <h3 id="claim-1-hilo">Example 2: High-Low Frequency Detectors</h3>
+
+      <p>
+        Curve detectors are an intuitive type of feature — the kind of feature one might guess exists in neural networks a priori.
+        Given that they're present, it's not surprising we can understand them.
+        But what about features that aren't intuitive? Can we also understand those?
+        We believe so.
+
+
+      <p>
+        High-low frequency detectors are an example of a less intuitive type of feature. We find them in early vision, and once you understand what they're doing, they're quite simple. They look for low-frequency patterns on one side of their receptive field, and high-frequency patterns on the other side. Like curve detectors, high-low frequency detectors are found in families of features that look for the  same thing in different orientations.
+
+      <figure style="grid-column-start: text-start; grid-column-end: page-end;">
+        <img src="./images/high-low.png" />
+        <!--<figcaption></figcaption>-->
+      </figure>
+
+
+      <p>Why are high-low frequency detectors useful to the network? They seem to be one of several heuristics for detecting the boundaries of objects, especially when the background is out of focus. In future articles, we’ll explore how they’re used in the construction of sophisticated boundary detectors.
+
+        <p>
+          (One hope some researchers have for interpretability is that understanding models will be able to teach us better abstractions for thinking about the world <d-cite bibtex-key="carter2017using"></d-cite>. High-low frequency detectors are, perhaps, an example of a small success in this: a natural, useful visual feature that we didn't anticipate in advance.)
+
+      <p>All seven of the techniques we used to interrogate curve neurons can also be used to study high-low frequency neurons with some tweaking — for instance, rendering synthetic high-low frequency examples. Again we believe these arguments collectively provide strong support for the idea that these really are a family of high-low frequency contrast detectors.
+
+
+
+      <h3 id="claim-1-dog">Example 3: Pose-Invariant Dog Head Detector</h3>
+
+      <p>Both curve detectors and high-low frequency detectors are low-level visual features, found in the early layers of InceptionV1. What about more complex, high-level features?
+
+      <p>Let’s consider this unit which we believe to be a pose-invariant dog detector. As with any neuron, we can create a feature visualization and collect dataset examples. If you look at the feature visualization, the geometry is… not possible, but very informative about what it’s looking for and the dataset examples validate it.
+
+      <figure style="grid-column-start: text-start; grid-column-end: text-end;">
+        <img src="./images/dog-pose.png" style="max-width: 650px;"/>
+        <!--<figcaption></figcaption>-->
+      </figure>
+
+      <p>
+        It's worth noting that the combination of feature visualization and dataset examples alone are already quite a strong argument.
+        Feature visualization establishes a causal link, while dataset examples test the neuron's use in practice and whether there are a second type of stimuli that it reacts to.
+        But we can bring all our other approaches to analyzing a neuron to bear again.
+      For example, we can use a 3D model to generate synthetic dog head images from different angles.
+
+      <p>
+        At the same time, some of the approaches we've emphasized so far become a lot of effort for these higher-level, more abstract features.
+        Thankfully, our circuit-based arguments — which we'll discuss more soon — will continue to be easy to apply, and give us really powerful tools for understanding  and testing high-level features that don't require a lot of effort.
+
+
+      <h3 id="claim-1-polysemantic">Polysemantic Neurons</h3>
+
+      <p>This essay may be giving you an overly rosy picture: perhaps every neuron yields a nice, human-understandable concept if one seriously investigates it?
+
+      <p>
+        Alas, this is not the case.
+        Neural networks often contain “polysemantic neurons” that respond to multiple unrelated inputs.
+        For example, InceptionV1 contains one neuron that responds to cat faces, fronts of cars, and cat legs.
+
+      <figure style="max-width: 600px; ">
+        <img src="./images/polysemantic.png"/>
+        <figcaption>4e:55 is a polysemantic neuron which responds to cat faces, fronts of cars, and cat legs. It was discussed in more depth in <a href="https://distill.pub/2017/feature-visualization/">Feature Visualization</a> <d-cite key="olah2017feature"></d-cite>.</figcaption>
+      </figure>
+
+      <p>To be clear, this neuron isn’t responding to some commonality of cars and cat faces. Feature visualization shows us that it’s looking for the eyes and whiskers of a cat, for furry legs, and for shiny fronts of cars — not some subtle shared feature.
+
+      <p>
+        We can still study such features, characterizing each different case they fire, and reason about their circuits to some extent.
+        Despite this, polysemantic neurons are a major challenge for the circuits agenda, significantly limiting our ability to reason about neural networks.<d-footnote>
+          Why are polysemantic neurons so challenging? If one neuron with five different meanings connects to another neuron with five different meanings, that's effectively 25 connections that can't be considered individually.</d-footnote>
+        Our hope is that it may be possible to resolve polysemantic neurons,
+        perhaps by "unfolding" a network to turn polysemantic neurons into pure features, or training networks to not exhibit polysemanticity in the first place.
+        This is essentially the problem studied in the literature of disentangling representations, although at present that literature tends to focus on known features in the latent spaces of generative models.
+
+      <p>
+        One natural question to ask is why do polysemantic neurons form?
+        In the next section, we'll see that they seem to result from a phenomenon we call "superposition" where a circuit spreads a feature across many neurons, presumably to pack more features into the limited number of neurons it has available.
+
+
+      <hr>
+
+      <h2 id="claim-2">Claim 2: Circuits</h2>
+
+      <p class="claim-quote">
+        Features are connected by weights, forming circuits.<br> These circuits can also be rigorously studied and understood.
+      </p>
+
+      <p>
+        All neurons in our network are formed from linear combinations of neurons in the previous layer, followed by ReLU.
+        If we can understand the features in both layers, shouldn't we also be able to understand the connections between them?
+        To explore this, we find it helpful to study circuits:
+        sub-graphs of the network, consisting a set of tightly linked features and the weights between them.
+
+      <p>The remarkable thing is how tractable and meaningful these circuits seem to be as objects of study. When we began looking, we expected to find something quite messy. Instead, we’ve found beautiful rich structures, often with symmetry to them. Once you understand what features they’re connecting together, the individual floating point number weights in your neural network become meaningful! <i>You can literally read meaningful algorithms off of the weights.</i>
+
+      <p>Let's consider some examples.
+
+      <h3 id="claim-2-curves">Circuit 1: Curve Detectors</h3>
+
+      <p>In the previous section, we discussed curve detectors, a family of units detecting curves in different angular orientations. In this section, we’ll explore how curve detectors are implemented from earlier features and connect to the rest of the model.
+
+      <p>
+        Curve detectors are primarily implemented from earlier, less sophisticated curve detectors and line detectors. These curve detectors are used in the next layer to create 3D geometry and complex shape detectors. Of course, there’s a long tail of smaller connections to other features, but this seems to be the primary story.
+
+      <p>For this introduction, we’ll focus on the interaction of the early curve detectors and our full curve detectors.
+
+        <figure class="l-page">
+          <img src="./images/curve-circuit.png"/>
+          <!--<figcaption></figcaption>-->
+        </figure>
+
+      <p>Let’s focus even more and look at how a single early curve detector connects to sophisticated curve detector in the same orientation.
+
+      <p>In this case, our model is implementing a 5x5 convolution, so the weights linking these two neurons are a 5x5 set of weights, which can be positive or negative.<d-footnote>
+        Many of the neurons discussed in this article, including curve detectors, live in branches of InceptionV1 that are structured as a 1x1 convolution that reduce the number of channels to a small bottleneck followed by a 3x3 or 5x5 convolution. The weights we present in this essay are the multiplied out version of the 1x1 and larger conv weights. We think it's often useful to  view this as a single low-rank weight matrix, but this technically does ignore one ReLU non-linearity.
+        </d-footnote>
+
+        A positive weight means that if the earlier neuron fires in that position, it excites the late neuron. Conversely a negative weight would mean that it inhibits it.
+
+      <p>What we see are strong positive weights, arranged in the shape of the curve detector. We can think of this as meaning that, at each point along the curve, our curve detector is looking for a “tangent curve” using the earlier curve detector.
+
+
+      <figure class="curve-figure l-body-outset">
+        <div>
+          <img src="./images/curve-weights-a.png"/>
+          <figcaption>The raw weights between the early curve detector and late curve detector in the same orientation are a curve of <span class="positive-text">positive weights</span> surrounded by small <span class="negative-text">negative</span> or zero weights.
+        </div>
+        <div>
+          <img src="./images/curve-weights-b.png"/>
+          <figcaption>This can be interpreted as looking for “tangent curves”
+at each point along the curve.</figcaption>
+        </div>
+        <!--<figcaption></figcaption>-->
+      </figure>
+
+      <p>This is true for every pair of early and full curve detectors in similar orientations. At every point along the curve, it detects the curve in a similar orientation. Similarly, curves in the opposite orientation are inhibitory at every point along the curve.
+
+      <figure class="curve-oreientaions-figure ">
+        <div style="flex-basis: 45%;">
+          <div class="figcaption" style="height: 30px; margin-bottom: 20px;">Curve detectors are <span class="positive-text">excited</span> by earlier detectors <br> in <b>similar orientations</b>...</div>
+          {images/CurveOrientationsA}
+         <!--<img src="./images/curve-orientations-a.png" />-->
+        </div>
+        <div style="flex-basis: 5%; margin-right: 60px;">
+        </div>
+        <div style="flex-basis: 44.8%;">
+          <div class="figcaption" style="height: 30px; margin-bottom: 20px;">... and <span class="negative-text">inhibited</span> by earlier detectors in <br> <b>opposing orientations</b>.</div>
+          {images/CurveOrientationsB}
+          <!--<img src="./images/curve-orientations-b.png" />-->
+        </div>
+      </figure>
+
+      <p>It’s worth reflecting here that we’re looking at neural network weights and they’re meaningful.
+
+      <p>And the structure gets richer the closer you look. For example, if you look at an early curve detector and full curve detector in similar, but not exactly the same orientation you can often see it have stronger positive weights on the side of the curve it is more aligned with.
+
+      <p>It’s also worth noting how the weights rotate with the orientation of the curve detector. The symmetry of the problem is reflected as a symmetry in the weights. We call circuits with exhibiting this phenomenon "equivariant circuits", and will discuss it in a later article.
+
+      <!--<p>[Read more about the curve detector circuit]-->
+
+      <h3 id="claim-2-dog">Circuit 2: Oriented Dog Head Detection</h3>
+
+      <p>The curve detector circuit is a low-level circuit and only spans two layers. In this section, we’ll discuss a higher-level circuit spanning across four layers. This circuit will also teach us about how neural networks implement sophisticated invariances.
+
+      <p>Remember that a huge part of what an ImageNet model has to do is tell apart different animals. In particular, it has to distinguish between a hundred different species of dogs! And so, unsurprisingly, it develops a large number of neurons dedicated to recognizing dog related features, including heads.
+
+      <p>Within this “dog recognition” system, one circuit strikes us as particularly interesting: a collection of neurons that handle dog heads facing to the left and dog heads facing to the right. Over three layers, the network maintains two mirrored pathways, detecting analogous units facing to the left and to the right. At each step, these pathways try to inhibit each other, sharpening the contrast. Finally, it creates invariant neurons which respond to both pathways.
+
+      <style>
+        @media (min-width: 1000px){{
+          .dog-circuit-figure {{
+            grid-column-start: page-start; grid-column-end: page-end; margin-left: -30px; padding-right: 50px;
+          }}
+        }}
+        @media (max-width: 1000px){{
+          .dog-circuit-figure {{
+            grid-column-start: screen-start; grid-column-end: screen-end;
+            padding-left: 20px;
+            padding-right: 20px;
+          }}
+        }}
+      </style>
+
+      <figure class="dog-circuit-figure">
+        {images/DogCircuit}
+        <!--<img src="./images/dog-circuit-2.png"/>-->
+        <!--<figcaption></figcaption>-->
+      </figure>
+
+      <p>We call this pattern “unioning over cases”. The network separately detects two cases (left and right) and then takes a union over them to create invariant "multifaceted"<d-cite bibtex-key="nguyen2016multifaceted"></d-cite> units. Note that, because the two pathways inhibit each other, this circuit actually has some XOR like properties.
+
+      <p>This circuit is striking because the network could have easily done something much less sophisticated.
+        It could easily create invariant neurons by not caring very much about where the eyes, fur and snout went, and just looking for a jumble of them together.
+        But instead, the network has learned to carve apart the left and right cases and handle them separately. We’re somewhat surprised that gradient descent could learn to do this!<d-footnote>To be clear, there are also more direct pathways by which various constituents of heads influence these later head detectors, without going through the left and right pathways</d-footnote>
+      </p>
+
+      <p>But this summary of the circuit is only scratching the surface of what is going on. Every connection between neurons is a convolution, so we can also look at where an input neuron excites the the next one. And the models tends to be doing what you might have optimistically hoped. For example, consider these “head with neck” units. The head is only detected on the correct side:
+
+      <figure style="max-width: 500px;">
+        {images/OrientedDogHeads}
+        <!--<img src="./images/oriented-dog-heads.png"/>-->
+        <!--<figcaption></figcaption>-->
+      </figure>
+
+      <p>
+        The union step is also interesting to look at the details of.
+        The network doesn't indiscriminately respond to the heads into the two orientations:
+        the regions of excitation extend from the center in different directions depending on orientation, allowing snouts to converge in to the same point.
+
+        <figure style="max-width: 620px;">
+            {images/DogMerge}
+          <!--<img src="./images/dog-merge.png"/>-->
+          <!--<figcaption></figcaption>-->
+        </figure>
+
+      <p>There’s a lot more to say about this circuit, so we plan to return to it in a future article and analyze it in depth, including testing our theory of the circuit by editing the weights.
+
+      <!--[Read more about the oriented dog head circuit]-->
+
+      <h3 id="claim-2-superposition">Circuit 3: Cars in Superposition</h3>
+
+      <p>In <code>mixed4c</code>, a mid-late layer of InceptionV1, there is a car detecting neuron. Using features from the previous layers, it looks for wheels at the bottom of its convolutional window, and windows at the top.
+
+      <figure style="grid-column-start: text-start; grid-column-end: text-end;">
+        {images/CarCircuit}
+        <!--<img src="./images/car-circuit.png"/>-->
+        <!--<figcaption></figcaption>-->
+      </figure>
+
+      <p>But then the model does something surprising. Rather than create another pure car detector at the next layer, it spreads its car feature over a number of neurons that seem to primarily be doing something else — in particular, dog detectors.
+
+        <figure class="l-body-outset">
+          {images/Superposition}
+          <!--<img src="./images/superposition.png"/>-->
+          <!--<figcaption></figcaption>-->
+        </figure>
+
+      <p>This circuit suggests that polysemantic neurons are, in some sense, deliberate. That is, you could imagine a world where the process of detecting cars and dogs was deeply intertwined in the model for some reason, and as a result polysemantic neurons were difficult to avoid. But what we’re seeing here is that the model had a “pure neuron” and then mixed it up with other features.
+
+      <p>We call this phenomenon superposition.
+
+      <p>Why would it do such a thing? We believe superposition allows the model to use fewer neurons, conserving them for more important tasks. As long as cars and dogs don’t co-occur, the model can accurately retrieve the dog feature in a later layer, allowing it to store the feature without dedicating a neuron.<d-footnote>Fundamentally, this is a property of the geometry of high-dimensional spaces, which only allow for n orthogonal vectors, but exponentially many almost orthogonal vectors. </d-footnote>
+
+      <h3 id="claim-2-motifs">Circuit Motifs</h3>
+
+      <p>As we've studied circuits throughout InceptionV1 and other models,
+        we've seen the same abstract patterns over and over.
+        Equivariance, as we saw with the curve detectors.
+        Unioning over cases, as we saw with the pose-invariant dog head detector.
+        Superposition, as we saw with the car detector.
+
+      <p>In biology, a circuit motif <d-cite bibtex-key="alon2019introduction"></d-cite> is a recurring pattern in complex graphs like transcription networks or biological neural networks.
+        Motifs are helpful because understanding one motif can give researchers leverage on all graphs where it occurs.
+
+      <p>
+        We think it's quite likely that studying motifs will be important in understanding the circuits of artificial neural networks. In the long run, it may be more important than the study of individual circuits.
+        At the same time, we expect investigations of motifs to be well served by us first building up a solid foundation of well understood circuits first.
+
+
+      <hr>
+
+
+
+      <h2 id="claim-3">Claim 3: Universality</h2>
+
+      <p class="claim-quote">Analogous features and circuits form across models and tasks.
+
+      <p>
+        It’s a widely accepted fact that the first layer of vision models trained on natural images will learn Gabor filters.
+        Once you accept that there are meaningful features in later layers, would it really be surprising for the same features to also form in layers beyond the first one?
+        And once you believe there are analogous features in multiple layers, wouldn't it be natural for them to connect in the same ways?
+
+      <p>
+        Universality (or "convergent learning") of features has been suggested before.
+        Prior work has shown that different neural networks can develop highly correlated neurons <d-cite bibtex-key="li2015convergent"></d-cite>
+        and that they learn similar representations at hidden layers <d-cite bibtex-key="raghu2017svcca,kornblith2019similarity"></d-cite>.
+        This work seems highly suggestive, but there are alternative explanations to analogous features forming.
+        For example, one could imagine two features — such as a fur texture detector and a sophisticated dog body detector — being highly correlated despite being importantly different features.
+        Adopting the meaningful feature-skeptic perspective, it doesn't seem definitive.
+
+      <p>
+        Ideally, one would like to characterize several features and then rigorously demonstrate that those features — and not just correlated ones — are forming across many models.
+        Then, to further establish that analogous circuits form, one would want to find analogous features over several layers of multiple models and show that the same weight structure forms between them in each model.
+
+      <p>
+        Unfortunately, the only evidence we can offer today is anecdotal:
+        we simply have not yet invested enough in the comparative study of features and circuits to give confident answers.
+        With that said, we have observed that a couple low-level features seem to form across a variety of vision model architectures (including AlexNet, InceptionV1, InceptionV3, and residual networks) and in models trained on Places365 instead of ImageNet. We’ve also observed them repeatedly form in vanilla conv nets trained from scratch on ImageNet.
+      </p>
+
+      <style>
+        .diagram-universality {{
+          display: grid;
+          grid-column: text-start / page-end;
+          grid-gap: 1rem;
+          grid-template-columns: 1fr;
+          justify-content: center;
+        }}
+
+        @media (min-width: 1180px) {{
+          .diagram-universality {{
+            grid-column: page;
+            grid-template-columns: 528px 448px;
+          }}
+          .diagram-universality > figure:last-of-type .info {{
+            display: none;
+          }}
+          .diagram-universality > figure:last-of-type li {{
+            grid-template-columns: 1fr;
+          }}
+          .diagram-universality > figure:last-of-type > figcaption {{
+            padding-left: unset;
+          }}
+        }}
+
+        .diagram-universality a {{
+            border-bottom: none;
+            display: inline;
+        }}
+        .diagram-universality a:hover {{
+            border-bottom: none;
+        }}
+        .diagram-universality a:hover img {{
+            filter: brightness(80%);
+        }}
+
+        .diagram-universality h3 {{
+          margin-top: 0;
+        }}
+
+        .diagram-universality h4 {{
+          margin: 4px 0;
+        }}
+
+        .diagram-universality > figure {{
+          margin: 0;
+        }}
+
+        .diagram-universality > figure > figcaption {{
+          padding-left: 9rem;
+        }}
+
+        .diagram-universality ul {{
+          list-style: none;
+          padding-left: unset;
+        }}
+
+        .diagram-universality li {{
+          display: grid;
+          grid-template-columns: 9rem 1fr;
+        }}
+
+        .diagram-universality li .images {{
+          display: grid;
+          grid-template-columns: repeat( auto-fill, 88px);
+          grid-gap: 8px;
+        }}
+
+        .diagram-universality img {{
+          width: 88px;
+          height: 88px;
+          background-color: gray;
+          border-radius: 4px;
+          object-fit: none;
+        }}
+      </style>
+      <figure class="diagram-universality" role="group">
+        <figure>
+          <figcaption>
+            <h3>Curve detectors</h3>
+          </figcaption>
+          <ul>
+            <li>
+              <div class="info">
+                <h4>AlexNet</h4>
+                <span class="figcaption">Krizhevsky et&#8239;al.<d-cite key="krizhevsky2012alexnet"></d-cite></span>
+              </div>
+              <div class="images">
+                <!-- [257, 348, 253, 282, 277, 319] -->
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/curves/AlexNet/unit-0.png"/></a>
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/curves/AlexNet/unit-1.png"/></a>
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/curves/AlexNet/unit-2.png"/></a>
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/curves/AlexNet/unit-3.png"/></a>
+              </div>
+            </li>
+            <li>
+              <div class="info">
+                <h4>InceptionV1</h4>
+                <span class="figcaption">Szegedy et&#8239;al.<d-cite key="szegedy2015going"></d-cite></span>
+              </div>
+              <div class="images">
+                <!-- [379, 406, 385, 343, 342, 388, 340, 330, 349, 324] -->
+                <a href="https://microscope.openai.com/models/inceptionv1/mixed3b_0/379"><img src="images/universality/curves/GoogLeNet/unit-0.png"/></a>
+                <a href="https://microscope.openai.com/models/inceptionv1/mixed3b_0/385"><img src="images/universality/curves/GoogLeNet/unit-1.png"/></a>
+                <a href="https://microscope.openai.com/models/inceptionv1/mixed3b_0/342"><img src="images/universality/curves/GoogLeNet/unit-2.png"/></a>
+                <a href="https://microscope.openai.com/models/inceptionv1/mixed3b_0/340"><img src="images/universality/curves/GoogLeNet/unit-3.png"/></a>
+              </div>
+
+            </li>
+            <li>
+              <div class="info">
+                <h4>VGG19</h4>
+                <span class="figcaption">Simonyan et&#8239;al.<d-cite key="simonyan2014vggnet"></d-cite></span>
+              </div>
+              <div class="images">
+                <!-- [82, 79, 102, 110, 90, 104] -->
+                <!--https://microscope.openai.com/models/vgg19_caffe/conv4_4_conv4_4_0/ ?-->
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/curves/VGG19/unit-0.png"/></a>
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/curves/VGG19/unit-1.png"/></a>
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/curves/VGG19/unit-2.png"/></a>
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/curves/VGG19/unit-3.png"/></a>
+              </div>
+            </li>
+            <li>
+              <div class="info">
+                <h4>ResNetV2-50</h4>
+                <span class="figcaption">He et&#8239;al.<d-cite key="kaiming2015resnet"></d-cite></span>
+              </div>
+              <div class="images">
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/curves/ResNetV2/unit-0.png"/></a>
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/curves/ResNetV2/unit-1.png"/></a>
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/curves/ResNetV2/unit-2.png"/></a>
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/curves/ResNetV2/unit-3.png"/></a>
+              </div>
+            </li>
+          </ul>
+        </figure>
+        <figure>
+          <figcaption>
+            <h3>High-Low Frequency detectors</h3>
+          </figcaption>
+          <ul>
+            <li>
+              <div class="info">
+                <h4>AlexNet</h4>
+                <span class="figcaption">Krizhevsky et&#8239;al.<d-cite key="krizhevsky2012alexnet"></d-cite></span>
+              </div>
+              <div class="images">
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/hilo/AlexNet/unit-2.png"/></a>
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/hilo/AlexNet/unit-1.png"/></a>
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/hilo/AlexNet/unit-3.png"/></a>
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/hilo/AlexNet/unit-0.png"/></a>
+              </div>
+            </li>
+            <li>
+              <div class="info">
+                <h4>InceptionV1</h4>
+                <span class="figcaption">Szegedy et&#8239;al.<d-cite key="szegedy2015going"></d-cite></span>
+              </div>
+              <div class="images">
+                  <!-- Guesses -->
+                <a href="https://microscope.openai.com/models/inceptionv1/mixed3a_0/136"><img src="images/universality/hilo/GoogLeNet/unit-0.png"/></a>
+                <a href="https://microscope.openai.com/models/inceptionv1/mixed3a_0/"><img src="images/universality/hilo/GoogLeNet/unit-1.png"/></a>
+                <a href="https://microscope.openai.com/models/inceptionv1/mixed3a_0/"><img src="images/universality/hilo/GoogLeNet/unit-2.png"/></a>
+                <a href="https://microscope.openai.com/models/inceptionv1/mixed3a_0/"><img src="images/universality/hilo/GoogLeNet/unit-3.png"/></a>
+              </div>
+
+            </li>
+            <li>
+              <div class="info">
+                <h4>VGG19</h4>
+                <span class="figcaption">Simonyan et&#8239;al.<d-cite key="simonyan2014vggnet"></d-cite></span>
+              </div>
+              <div class="images">
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/hilo/VGG19/unit-0.png"/></a>
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/hilo/VGG19/unit-1.png"/></a>
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/hilo/VGG19/unit-2.png"/></a>
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/hilo/VGG19/unit-3.png"/></a>
+              </div>
+            </li>
+            <li>
+              <div class="info">
+                <h4>ResNetV2-50</h4>
+                <span class="figcaption">He et&#8239;al.<d-cite key="kaiming2015resnet"></d-cite></span>
+              </div>
+              <div class="images">
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/hilo/ResNetV2/unit-3.png"/></a>
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/hilo/ResNetV2/unit-2.png"/></a>
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/hilo/ResNetV2/unit-1.png"/></a>
+                <a href="https://microscope.openai.com/models/"><img src="images/universality/hilo/ResNetV2/unit-0.png"/></a>
+              </div>
+            </li>
+          </ul>
+        </figure>
+      </figure>
+
+      <p>
+        These results have led us to suspect that the universality hypothesis is likely true, but further work will be needed to understand if the apparent universality of some low-level vision features is the exception or the rule.
+
+      <p>
+        If it turns out that the universality hypothesis is broadly true in neural networks,
+        it will be tempting to speculate: might biological neural networks also learn similar features?
+        Researchers working at the intersection of neuroscience and deep learning have already shown that the units in artificial vision models can useful for modeling biological neurons <d-cite bibtex-key="yamins2014performance,gucclu2015deep,eickenberg2017seeing"></d-cite>.
+        And some of the features we've discovered in artificial neural networks, such as curve detectors, are also believed to exist in biological neural networks (e.g. <d-cite bibtex-key="jiang2019discrete,pasupathy2001shape"></d-cite>).
+        This seems like significant cause for optimism.
+        <d-footnote>
+        <!--If universality of features holds across artificial and biological neural networks, it seems like it could be a very fruitful correspondence for both fields.-->
+        One particularly exciting possibility might be if artificial neural networks could predict features which were previously unknown but could then be found in biology.
+        (Some neuroscientists we have spoken to have suggested that high-low frequency detectors might be a candidate for this.)
+        If such a prediction could be made, it would be extremely strong evidence for the universality hypothesis.
+        <!--In some cases, the findings of this essay seem similar to fin-->
+        </d-footnote>
+
+        <p>
+          Focusing on the study of circuits, is universality really necessary?
+          Unlike the first two claims, it wouldn’t be completely fatal to circuits research if this claim turned out to be false. But it does greatly inform what kind of research makes sense. We introduced circuits as a kind of “cellular biology of deep learning.” But imagine a world where every species had cells with a completely different set of organelles and proteins. Would it still make sense to study cells in general, or would we limit ourselves to the narrow study of a few kinds of particularly important species of cells? Similarly, imagine the study of anatomy in a world where every species of animal had a completely unrelated anatomy: would we seriously study anything other than humans and a couple domestic animals?
+
+        <p>In the same way, the universality hypothesis determines what form of circuits research makes sense. If it was true in the strongest sense, one could imagine a kind of “periodic table of visual features” which we observe and catalogue across models. On the other hand, if it was mostly false, we would need to focus on a handful of models of particular societal importance and hope they stop changing every year. There might also be in between worlds, where some lessons transfer between models but others need to be learned from scratch.
+
+      <hr>
+
+      <h2 id="natural-science">Interpretability as a Natural Science</h2>
+
+      <p>
+        <i>The Structure of Scientific Revolutions</i> by Thomas Kuhn<d-cite bibtex-key="kuhn1962structure"></d-cite> is a classic text on the history and sociology of science.
+        In it, Kuhn distinguishes between “normal science” in which a scientific community has a paradigm, and “extraordinary science” in which a community lacks a paradigm, either because it never had one or because it was weakened by crisis.
+        It's worth noting that "extraordinary science" is not a desirable state: it's a period where researchers struggle to be productive.
+
+      <p>
+        Kuhn's description of pre-paradigmatic fields feel eerily reminiscent of interpretability today.<d-footnote>
+          We were introduced to Kuhn's work and this connection by conversations with Tom McGrath at DeepMind</d-footnote>
+        There isn’t consensus on what the objects of study are, what methods we should use to answer them, or how to evaluate research results.
+        To quote a recent interview with Ian Goodfellow: "For interpretability, I don't think we even have the right definitions."<d-cite bibtex-key="goodfellow2019interview"></d-cite>
+      </P>
+
+      <p>
+        One particularly challenging aspect of being in a pre-paradigmatic field is that there isn't a shared sense of how to evaluate work in interpretability.
+        There are two common proposals for dealing with this, drawing on the standards of adjacent fields. Some researchers, especially those with a deep learning background, want an “interpretability benchmark” which can evaluate how effective an interpretability method is. Other researchers with an HCI background may wish to evaluate interpretability methods through user studies.
+
+      <p>
+        But interpretability could also borrow from a third paradigm: natural science.
+        In this view, neural networks are an object of empirical investigation, perhaps similar to an organism in biology. Such work would try to make empirical claims about a given network, which could be held to the standard of falsifiability.
+
+      <p>
+        Why don’t we see more of this kind of evaluation of work in interpretability and visualization?<d-footnote>
+          To be clear, we do see researchers who take more of this natural science approach, especially in earlier interpretability research. It just seems less common right now.</d-footnote>
+        Especially given that there’s so much adjacent ML work which does adopt this frame!
+        One reason might be that it’s very difficult to make robustly true statements about the behavior of a neural network as a whole.
+        They’re incredibly complicated objects.
+        It’s also hard to formalize what the interesting empirical statements about them would, exactly, be.
+        And so we often get standards of evaluations more targeted at whether an interpretability method is useful rather than whether we’re learning true statements.
+
+      <p>
+        Circuits side steps these challenges by focusing on tiny subgraphs of a neural network for which rigorous empirical investigation is tractable.
+        They’re very much falsifiable: for example, if you understand a circuit, you should be able to predict what will change if you edit the weights.
+        In fact, for small enough circuits, statements about their behavior become questions of mathematical reasoning.
+        Of course, the cost of this rigor is that statements about circuits are much smaller in scope than overall model behavior.
+        But it seems like, with sufficient effort, statements about model behavior could be broken down into statements about circuits.
+        If so, perhaps circuits could act as a kind of epistemic foundation for interpretability.
+      </p>
+
+
+      <hr>
+
+      <h2 id="closing">Closing Thoughts</h2>
+
+      <p>We take it for granted that the microscope is an important scientific instrument. It’s practically a symbol of science. But this wasn’t always the case, and microscopes didn’t initially take off as a scientific tool. In fact, they seem to have languished for around fifty years. The turning point was when Robert Hooke published Micrographia<d-cite bibtex-key="hooke1666micrographia"></d-cite>, a collection of drawings of things he’d seen using a microscope, including the first picture of a cell.
+      </p>
+
+      <p>
+        Our impression is that there is some anxiety in the interpretability community that we aren’t taken very seriously.
+        That this research is too qualitative.
+        That it isn't scientific.
+        But the lesson of the microscope and cellular biology is that perhaps this is expected.
+        The discovery of cells was a qualitative research result.
+        That didn't stop it from changing the world.
+      </p>
+
+      <br>
+
+
+
+      <section id="thread-nav" class="thread-info">
+          <div class="icon-multiple-pages"></div>
+          <p class="explanation">
+              This article is part of the Circuits thread, a collection of short articles and commentary by an open scientific collaboration delving into the inner workings of neural networks.<br>
+              <!--<a style="border-bottom: none; color: #2e6db7; margin-left: 0px;">🔬Learn how to get involved.</a>-->
+              <!--<a class="overview" href="#">Thread Overview</a>-->
+          </p>
+
+          <a class="prev" href="/2020/circuits/">Circuits Thread</a>
+          <a class="next" href="/2020/circuits/early-vision/">An Overview of Early Vision in IncpetionV1</a>
+          <!--<div class="next" href="#" style="color:#666;">An Overview of Early Vision
+            <div style="color:#999; font-size: 90%; line-height: 140%; margin-top: 4px;">Under discussion in <a href="http://slack.distill.pub/">Distill slack</a> <code>#circuits</code></div>
+          </div>-->
+      </section>
+
+
+
+
+
+    </d-article>
+
+
+    <style>
+      @media(min-width: 700px){{
+        .glossary > p {{
+          padding-left: 30px;
+        }}
+        .glossary > p > b {{
+          margin-left: -20px;
+        }}
+        .glossary > p.sub > b {{
+          --margin-left: 0px;
+        }}
+        .glossary > p:target {{
+          background-color: hsl(54, 78%, 96%);
+          color: #222;
+          padding-top: 10px;
+          margin-top: 5px;
+          padding-bottom: 10px;
+          margin-bottom: 5px;
+          border-radius: 5px;
+        }}
+        .glossary > p:target > b {{
+          color: #000;
+        }}
+      }}
+    </style>
+    <d-appendix>
+      <h3 id="glossary">Glossary</h3>
+
+      <p>
+        This essay introduces some new terminology, and also uses some terminology which isn't common.
+        To help, we provide the following glossary:
+      </p>
+
+      <div class="glossary">
+
+      <p id="glossary-circuit"><b>Circuit</b> -
+        A subgraph of a neural network. Nodes correspond to neurons or directions (linear combinations of neurons).
+        Two nodes have an edge between them if they are in adjacent layers. The edges have weights which are the weights between those neurons (or <i>n<sub>1</sub>Wn<sub>2</sub><sup style="margin-left:-4px;">T</sup></i> if the nodes are linear combinations). For convolutional layers, the weights are 2D matrices representing the weights for  different relative positions of the layers.</p>
+
+      <p id="glossary-circuit-motif"><b>Circuit Motif</b> -
+        A recurring, abstract pattern found in circuits, such as equivariance or unioning over cases. Inspired by the use of circuit motifs in systems biology <d-cite bibtex-key="alon2019introduction"></d-cite>.</p>
+
+      <p id="glossary-client"><b>Client Neuron <span style="font-weight: normal;">or</span> Client Feature</b> -
+        A neuron in a later layer which relies on a particular earlier neuron. For example, a circle detector is a client of curve detectors.</p>
+
+      <p id="glossary-direction"><b>Direction</b> -
+        A linear combination of neurons in a layer. Equivalently, a vector in the representation of a layer. A direction can be an individual neuron (which is a basis direction of the vector space). For intuition about directions as an object, see <a href="https://distill.pub/2018/building-blocks/">Building Blocks</a><d-cite bibtex-key="olah2018building"></d-cite> (in particular, the section titled "What Does the Network See?") and <a href="https://distill.pub/2019/activation-atlas/">Activation Atlases</a><d-cite bibtex-key="carter2019activation"></d-cite>.</p>
+
+      <p id="glossary-downstream"><b>Downstream / Upstream</b> -
+        In a later layer / In an earlier layer.</p>
+
+      <p id="glossary-equivariance"><b>Equivariance</b> -
+        See wikipedia <a href="https://en.wikipedia.org/wiki/Equivariant_map">equivariant map</a>. </p>
+
+      <p id="glossary-family"><b>Family</b> -
+        A set of features found in one layer which detect small variations of the same thing.
+        For example, curve detectors exist in a family detecting curves in different orientations. </p>
+
+      <p id="glossary-feature"><b>Feature</b> -
+        A scalar function of the input. In this essay, neural network features are directions, and often simply individual neurons. We claim such features in neural networks are typically meaningful features which can be rigorously studied (<a href="claim-1">Claim 1</a>).</p>
+
+      <p id="glossary-meaningful-feature" class="sub"><b>Meaningful Feature</b> -
+        A feature that genuinely responds to an articulable property of the input, such as the presence of a curve or a floppy ear. Meaningful features may still be noisy or imperfect.</p>
+
+      <p id="glossary-polysemantic-feature" class="sub"><b>Polysemantic Feature</b> -
+        A feature that responds to multiple unrelated latent variables, such as the cat/car neuron <d-cite bibtex-key="olah2017feature"></d-cite>. This can be seen a special case of a "multifaceted features"<d-cite bibtex-key="nguyen2016multifaceted"></d-cite> which responds to multiple different cases, but include both "real" multi-faceted features such as the pose-invariant dog head or polysemantic neurons. Contrast with pure.</p>
+
+      <p id="glossary-pure-feature" class="sub"><b>Pure Feature</b> -
+        A feature which responds to only a single latent variable. Contrast with polysemantic.</p>
+
+      <p  id="glossary-universal-feature"class="sub"><b>Universal Feature</b> -
+        A feature which reliably forms across different models and tasks.</p>
+
+      <p id="glossary-representation"><b>Representation</b> -
+        The vector space formed by the activations of all neurons in a layer, with vectors of the form <i>(activation of neuron 1, activation of neuron 2, ...)</i>. A representation can be thought of as the collection of all features that exist in a layer. For intuition about representations in vision models, see <a href="https://distill.pub/2019/activation-atlas/">Activation Atlases</a><d-cite bibtex-key="carter2019activation"></d-cite>.</p>
+
+      </div>
+
+
+      <h3>Author Contributions</h3>
+
+      <p><b>Writing:</b> The text of this essay was primarily written by Christopher Olah, drawing extensively on the research and thinking of the entire Clarity team. Nick Cammarata was deeply involved in developing the framing and revising the final text.</p>
+
+      <p><b>Research:</b> This essay articulates themes that developed as a result of several people’s research into how neural networks implement features. Chris began initial attempts to understand the mechanistic implementations of neurons in terms of their weights in 2018, and developed several tools that enabled this line of work. This work was extended by Gabriel Goh, who discovered the first of what we now call motifs (using negative weights for specialization), in addition to describing the mechanisms behind several neurons.  At this point, Nick Cammarata took up this line of research to characterize much larger and deeper circuits, greatly expand the number of neurons we understood mechanistically, and performed detailed, rigorous characterizations of curve detectors. Nick also introduced the connection to Systems biology. Ludwig Schubert performed detailed analysis of high-low frequency detectors. Chris gave research advice and mentorship throughout.</p>
+
+      <p><b>Infrastructure:</b> Michael Petrov, Shan Carter, Ludwig and Nick built a variety of infrastructural tools which made our research possible.</p>
+
+      <h3>Historical Note</h3>
+      <p>
+        The ideas in this introductory essay were previously presented as a keynote talk by Chris Olah at <a href="https://visxai.io/">VISxAI</a> 2019.
+        It was also informally presented at MILA, the Vector Institute, the Redwood Center for Neuroscience, and a private workshop.
+      </p>
+
+      <h3>Acknowledgments</h3>
+      <p>
+        All our work understanding InceptionV1 is indebted to Alex Mordvintsev, whose early explorations of vision models paved pathways we still follow.
+        We're deeply grateful to Nick Barry, and Sophia Sanborn for their deep engagement on potential connections between our work and neuroscience,
+        and to Tom McGrath who pointed out the similarities between Kuhn's "pre-paradigmatic science" and the state interpretability as a field to us.
+        The careful comments and criticism of Brice Menard were also invaluable in sharpening this essay.
+      </p>
+      <p>
+        In addition to Nick and Sophia's deep engagement, we're more generally appreciative of the neuroscience community's engagement with us,
+        especially in sharing hard-won lessons about methodological weaknesses in our work.
+        In particular, we appreciate Brian Wandell pushing us in 2019 on not using tuning curves and the importance of families of neurons, which we think has made our work much stronger.
+        We're also very grateful for the comments and support of Mareike Grotheer, Natalia Bilenko, Bruno Olshausen, Michael Eickenberg, Charles Frye, Philip Sabes, Paul Merolla, James Redd, Thong-Wei Koh, and Ivan Alvarez.
+        We think we have a lot to learn from the neuroscience community and are excited to continue doing so.
+      </p>
+      <p>
+        One of the privileges of working on circuits has been the open collaboration and feedback in the <a href="https://slack.distill.pub">Distill slack</a>'s #circuits channel.
+        We've especially appreciated the detailed feedback we received from Stefan Sietzen, Shahab Bakhtiari, and Flora Liu
+        (Stefan has additionally run with many of these ideas, and we're excited to see his work in future articles in this thread!).
+      </p>
+      <p>
+        We benefitted greatly from the comments of many people on meta-science and framing questions around this essay, but especially appreciated the comments of Arvind Satyanarayan, Miles Brundage, Amanda Askell, Aaron Courville, and Martin Wattenberg.
+        We're grateful to Taco Cohen, Tess Smidt, and Sara Sabour for their extremely helpful comments on equivariance.
+        We're grateful to Nikita Obidin, Nick Barry, and Chelsea Voss for helpful conversation and references about systems biology and circuit motifs. (Nikita and Nick initially introduced Nick Cammarata to circuit motifs.)
+        Finally, we're grateful for the institutional support of OpenAI, and for the support and comments of all our colleagues and friends across institutions, including Dario Amodei, Daniela Amodei, Jonathan Uesato, Laura Ball, Katarina Slama, Alethea Power, Jacob Hilton, Jacob Steinhardt, Tom Brown, Preetum Nakkiran, Ilya Sutskever, Ryan Lowe, Erin McCloskey,  Eli Chen, Fred Hohman, Jason Yosinski, Pallavi Koppol, Reiichrio Nakano, Sam McCandlish, Daniel Dewey, Anna Goldie, Jochen Görtler, Hendrik Strobelt, Ravi Chunduru, Tom White, Roger Grosse, David Duvenaud, Daniel Burkhardt, Janelle Tam, Jeff Clune, Christian Szegedy, Alec Radford, Alex Ray, Evan Hubinger, Scott Gray, Augustus Odena, Mikhial Pavlov, Daniel Filan, Jascha Sohl-Dickstein and Kris Sankaran.
+      </p>
+
+
+      <d-footnote-list></d-footnote-list>
+      <d-citation-list></d-citation-list>
+    </d-appendix>
+
+    <d-bibliography src="bibliography.bib"></d-bibliography>
+
+    <script src="https://distill.pub/template.v2.js"></script>
+
+  </body>
+</html>
