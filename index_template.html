@@ -522,7 +522,7 @@
           <!--<figcaption></figcaption>-->
         </figure>
 
-      <p>Let’s focus even more and look at how a single early curve detector connects to sophisticated curve detector in the same orientation.
+      <p>Let’s focus even more and look at how a single early curve detector connects to a more sophisticated curve detector in the same orientation.
 
       <p>In this case, our model is implementing a 5x5 convolution, so the weights linking these two neurons are a 5x5 set of weights, which can be positive or negative.<d-footnote>
         Many of the neurons discussed in this article, including curve detectors, live in branches of InceptionV1 that are structured as a 1x1 convolution that reduce the number of channels to a small bottleneck followed by a 3x3 or 5x5 convolution. The weights we present in this essay are the multiplied out version of the 1x1 and larger conv weights. We think it's often useful to  view this as a single low-rank weight matrix, but this technically does ignore one ReLU non-linearity.
@@ -903,7 +903,7 @@ at each point along the curve.</figcaption>
       <p>
         If it turns out that the universality hypothesis is broadly true in neural networks,
         it will be tempting to speculate: might biological neural networks also learn similar features?
-        Researchers working at the intersection of neuroscience and deep learning have already shown that the units in artificial vision models can useful for modeling biological neurons <d-cite bibtex-key="yamins2014performance,gucclu2015deep,eickenberg2017seeing"></d-cite>.
+        Researchers working at the intersection of neuroscience and deep learning have already shown that the units in artificial vision models can be useful for modeling biological neurons <d-cite bibtex-key="yamins2014performance,gucclu2015deep,eickenberg2017seeing"></d-cite>.
         And some of the features we've discovered in artificial neural networks, such as curve detectors, are also believed to exist in biological neural networks (e.g. <d-cite bibtex-key="jiang2019discrete,pasupathy2001shape"></d-cite>).
         This seems like significant cause for optimism.
         <d-footnote>
@@ -954,7 +954,7 @@ at each point along the curve.</figcaption>
         And so we often get standards of evaluations more targeted at whether an interpretability method is useful rather than whether we’re learning true statements.
 
       <p>
-        Circuits side steps these challenges by focusing on tiny subgraphs of a neural network for which rigorous empirical investigation is tractable.
+        Circuits sidestep these challenges by focusing on tiny subgraphs of a neural network for which rigorous empirical investigation is tractable.
         They’re very much falsifiable: for example, if you understand a circuit, you should be able to predict what will change if you edit the weights.
         In fact, for small enough circuits, statements about their behavior become questions of mathematical reasoning.
         Of course, the cost of this rigor is that statements about circuits are much smaller in scope than overall model behavior.
