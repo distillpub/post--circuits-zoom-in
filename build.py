@@ -39,7 +39,7 @@ for f in os.listdir("public/images/"):
       if "_" in neuron_id and neuron_id.split("_")[0] in layer_sizes:
         if neuron_id.count("_") > 1:
           neuron_id = neuron_id[:-2]
-        url = "https://storage.googleapis.com/inceptionv1-weight-explorer/%s.html" % neuron_id
+        url = "https://storage.googleapis.com/distill-circuits/inceptionv1-weight-explorer/%s.html" % neuron_id
         #pattern_n = line.split("#pattern")[1].split(")")[0]
         # print("link found!", neuron_id)
         text.append("<a href='%s'>" % url)
