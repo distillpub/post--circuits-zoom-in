@@ -311,7 +311,7 @@
         These units are interesting because they straddle the boundary between features the community broadly agrees exist (e.g. edge detectors) and features for which there's significant skepticism (e.g. high-level features such as ears, automotives, and faces).
       </p>
 
-      <p>We'll focus on curve detectors in layer <code>mixed3b</code>, an early layer of InceptionV1. These units responded to curved lines and boundaries with a radius of around 60 pixels. They are also slightly additionally excited by perpendicular lines along the boundary of the curve, and prefer the two sides of the curve to be different colors.
+      <p>We'll focus on curve detectors in layer <a href="/2020/circuits/early-vision/#mixed3b"><code>mixed3b</code></a>, an early layer of InceptionV1. These units responded to curved lines and boundaries with a radius of around 60 pixels. They are also slightly additionally excited by perpendicular lines along the boundary of the curve, and prefer the two sides of the curve to be different colors.
 
       <p>Curve detectors are found in families of units, with each member of the family detecting the same curve feature in a different orientation. Together, they jointly span the full range of orientations.
 
@@ -422,7 +422,7 @@
 
 
       <p>
-        High-low frequency detectors are an example of a less intuitive type of feature. We find them in early vision, and once you understand what they're doing, they're quite simple. They look for low-frequency patterns on one side of their receptive field, and high-frequency patterns on the other side. Like curve detectors, high-low frequency detectors are found in families of features that look for the  same thing in different orientations.
+        High-low frequency detectors are an example of a less intuitive type of feature. We find them in <a href="/2020/circuits/early-vision/">early vision</a>, and once you understand what they're doing, they're quite simple. They look for low-frequency patterns on one side of their receptive field, and high-frequency patterns on the other side. Like curve detectors, high-low frequency detectors are found in families of features that look for the  same thing in different orientations.
 
       <figure style="grid-column-start: text-start; grid-column-end: page-end;">
         <img src="./images/high-low.png" />
@@ -504,7 +504,7 @@
         To explore this, we find it helpful to study circuits:
         sub-graphs of the network, consisting a set of tightly linked features and the weights between them.
 
-      <p>The remarkable thing is how tractable and meaningful these circuits seem to be as objects of study. When we began looking, we expected to find something quite messy. Instead, we’ve found beautiful rich structures, often with symmetry to them. Once you understand what features they’re connecting together, the individual floating point number weights in your neural network become meaningful! <i>You can literally read meaningful algorithms off of the weights.</i>
+      <p>The remarkable thing is how tractable and meaningful these circuits seem to be as objects of study. When we began looking, we expected to find something quite messy. Instead, we’ve found beautiful rich structures, often with <a href="/2020/circuits/equivariance/">symmetry</a> to them. Once you understand what features they’re connecting together, the individual floating point number weights in your neural network become meaningful! <i>You can literally read meaningful algorithms off of the weights.</i>
 
       <p>Let's consider some examples.
 
